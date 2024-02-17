@@ -26,10 +26,12 @@
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="如何在上億筆使用者中檢查名稱是否存在前言在APP註冊時，有時會被提示使用者名稱已存在，這個功能該如何實現？比較直覺的方法是直接在資料庫中進行檢索，但資料量到達億級別時，這種方法肯定不可行，此篇會利用Redis內建布隆過濾器（Bloom Filter）資料結構實現 使用資料庫查詢1SELECT COUNT(*) FROM users WHERE username &#x3D; ?  此方法會有以下缺點 在資料">
 <meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="http://example.com/pic/BloomFilter/1.png">
 <meta property="article:published_time" content="2024-02-05T04:13:25.000Z">
-<meta property="article:modified_time" content="2024-02-05T04:49:44.035Z">
+<meta property="article:modified_time" content="2024-02-17T10:28:18.632Z">
 <meta property="article:author" content="Lando Hsieh">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/pic/BloomFilter/1.png">
   
   
   
@@ -70,7 +72,7 @@
 
 
 
-<widget class="widget-wrapper post-list"><div class="widget-header dis-select"><span class="name">最近更新</span></div><div class="widget-body fs14"><a class="item title" href="/2024/02/17/MicroservicesMonolithic/"><span class="title">MicroservicesMonolithic</span></a><a class="item title active" href="/2024/02/05/BloomFilter/"><span class="title">Bloom Filter 布隆過濾器</span><svg class="active-icon" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" d="M21 11.098v4.993c0 3.096 0 4.645-.734 5.321c-.35.323-.792.526-1.263.58c-.987.113-2.14-.907-4.445-2.946c-1.02-.901-1.529-1.352-2.118-1.47a2.225 2.225 0 0 0-.88 0c-.59.118-1.099.569-2.118 1.47c-2.305 2.039-3.458 3.059-4.445 2.945a2.238 2.238 0 0 1-1.263-.579C3 20.736 3 19.188 3 16.091v-4.994C3 6.81 3 4.666 4.318 3.333C5.636 2 7.758 2 12 2c4.243 0 6.364 0 7.682 1.332C21 4.665 21 6.81 21 11.098" opacity=".5"/><path fill="currentColor" d="M9 5.25a.75.75 0 0 0 0 1.5h6a.75.75 0 0 0 0-1.5z"/></svg></a><a class="item title" href="/2024/01/31/hello-world/"><span class="title">Lando's blog</span></a></div></widget>
+<widget class="widget-wrapper post-list"><div class="widget-header dis-select"><span class="name">最近更新</span></div><div class="widget-body fs14"><a class="item title active" href="/2024/02/05/BloomFilter/"><span class="title">Bloom Filter 布隆過濾器</span><svg class="active-icon" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" d="M21 11.098v4.993c0 3.096 0 4.645-.734 5.321c-.35.323-.792.526-1.263.58c-.987.113-2.14-.907-4.445-2.946c-1.02-.901-1.529-1.352-2.118-1.47a2.225 2.225 0 0 0-.88 0c-.59.118-1.099.569-2.118 1.47c-2.305 2.039-3.458 3.059-4.445 2.945a2.238 2.238 0 0 1-1.263-.579C3 20.736 3 19.188 3 16.091v-4.994C3 6.81 3 4.666 4.318 3.333C5.636 2 7.758 2 12 2c4.243 0 6.364 0 7.682 1.332C21 4.665 21 6.81 21 11.098" opacity=".5"/><path fill="currentColor" d="M9 5.25a.75.75 0 0 0 0 1.5h6a.75.75 0 0 0 0-1.5z"/></svg></a><a class="item title" href="/2024/02/17/MicroservicesMonolithic/"><span class="title">微服務 vs 單體式架構</span></a></div></widget>
 </div>
 <footer class="footer dis-select"><div class="social-wrap"><a class="social" href="https://github.com/LandoHsieh" target="_blank" rel="external nofollow noopener noreferrer"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/social/08a41b181ce68.svg"/></a></div></footer>
 </div></aside><div class="l_main" id="main">
@@ -84,7 +86,7 @@
     
 <div class="top bread-nav footnote"><div class="left"><div id="breadcrumb"><a class="cap breadcrumb" href="/">首頁</a>
 <span class="sep"></span><a class="cap breadcrumb" href="/">部落格</a></div>
-<div id="post-meta"><span class="created">發布於：</span><time datetime="2024-02-05T04:13:25.000Z">2024-02-05</time></span><span class="updated"><span class="dot"></span>更新於：<time datetime="2024-02-05T04:49:44.035Z">2024-02-05</time></span></div></div>
+<div id="post-meta"><span class="created">發布於：</span><time datetime="2024-02-05T04:13:25.000Z">2024-02-05</time></span><span class="updated"><span class="dot"></span>更新於：<time datetime="2024-02-17T10:28:18.632Z">2024-02-17</time></span></div></div>
 </div>
 
     
@@ -107,7 +109,7 @@
 <p>過濾器核心思想如下</p>
 <ul>
 <li>Bit Array ：一條大型元陣列，每個位置初始值為零，每個位置只會存放0或1，用來表示該元素（使用者名稱）是否存在。</li>
-<li>Hash Functions：過濾器使用多個哈希函數，每個函數可以將輸入的使用者名稱映射到bit array的一個或多個位置。</li>
+<li>Hash Functions：過濾器使用多個哈希函數，每個函數可以將輸入的使用者名稱映射到bit array的一個或多個位置。<br><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="/../pic/BloomFilter/1.png"></li>
 </ul>
 <p>使用上有兩種方法</p>
 <ul>
@@ -147,7 +149,7 @@
 
 
 </article>
-<div class="related-wrap" id="read-next"><section class="body"><div class="item" id="prev"><div class="note">較新文章</div><a href="/2024/02/17/MicroservicesMonolithic/">MicroservicesMonolithic</a></div><div class="item" id="next"><div class="note">較早文章</div><a href="/2024/01/31/hello-world/">Lando's blog</a></div></section></div>
+<div class="related-wrap" id="read-next"><section class="body"><div class="item" id="prev"><div class="note">較新文章</div><a href="/2024/02/17/MicroservicesMonolithic/">微服務 vs 單體式架構</a></div><div class="item" id="next"></div></section></div>
 
 
 

@@ -16,24 +16,24 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="theme-color" content="#f8f8f8">
   
-  <title>MicroservicesMonolithic - Hexo</title>
+  <title>微服務 vs 單體式架構 - Hexo</title>
 
   
-    <meta name="description" content="Microservices &amp; Monolithic ArchitectureMicroservices &amp; Monolithic Architecture我們以往都是透過單體式架構（Monolithic）去處理各種服務，且每個服務可能都依賴於同一個database，在部署上也只打包成一個名為”backend”的container，如下圖  但微服務不一樣的點在於，他是將每個服務獨">
+    <meta name="description" content="Microservices &amp; Monolithic Architecture前言我們以往都是透過單體式架構（Monolithic）去處理各種服務，且每個服務可能都依賴於同一個database，在部署上也只打包成一個名為”backend”的container，如下圖  但微服務不一樣的點在於，他是將每個服務獨立成自己的伺服器，以及配置他們專用的資料庫。 Microservices架構如下圖">
 <meta property="og:type" content="article">
-<meta property="og:title" content="MicroservicesMonolithic">
+<meta property="og:title" content="微服務 vs 單體式架構">
 <meta property="og:url" content="http://example.com/2024/02/17/MicroservicesMonolithic/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="Microservices &amp; Monolithic ArchitectureMicroservices &amp; Monolithic Architecture我們以往都是透過單體式架構（Monolithic）去處理各種服務，且每個服務可能都依賴於同一個database，在部署上也只打包成一個名為”backend”的container，如下圖  但微服務不一樣的點在於，他是將每個服務獨">
+<meta property="og:description" content="Microservices &amp; Monolithic Architecture前言我們以往都是透過單體式架構（Monolithic）去處理各種服務，且每個服務可能都依賴於同一個database，在部署上也只打包成一個名為”backend”的container，如下圖  但微服務不一樣的點在於，他是將每個服務獨立成自己的伺服器，以及配置他們專用的資料庫。 Microservices架構如下圖">
 <meta property="og:locale" content="zh_TW">
-<meta property="og:image" content="http://example.com/Monolithic1.png">
+<meta property="og:image" content="http://example.com/pic/MicroservicesMonolithic/Monolithic1.png">
 <meta property="og:image" content="http://example.com/Microservices%20&%20Monolithic%20Architecture%20767b0425ea6d4424a4386632888fb1bb/%25E6%2588%25AA%25E5%259C%2596_2024-02-16_%25E4%25B8%258A%25E5%258D%258811.36.42.png">
 <meta property="og:image" content="http://example.com/Microservices%20&%20Monolithic%20Architecture%20767b0425ea6d4424a4386632888fb1bb/%25E6%2588%25AA%25E5%259C%2596_2024-02-17_%25E4%25B8%258B%25E5%258D%25885.52.50.png">
 <meta property="article:published_time" content="2024-02-17T09:58:34.000Z">
-<meta property="article:modified_time" content="2024-02-17T10:11:17.003Z">
+<meta property="article:modified_time" content="2024-02-17T10:26:58.966Z">
 <meta property="article:author" content="Lando Hsieh">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/Monolithic1.png">
+<meta name="twitter:image" content="http://example.com/pic/MicroservicesMonolithic/Monolithic1.png">
   
   
   
@@ -66,7 +66,7 @@
 </div>
 <div class="widgets">
 
-<widget class="widget-wrapper toc single" id="data-toc" collapse="false"><div class="widget-header dis-select"><span class="name">本文目錄</span></div><div class="widget-body fs14"><div class="doc-tree active"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Microservices-Monolithic-Architecture-1"><span class="toc-text">Microservices &amp; Monolithic Architecture</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Microservices-vs-Monolithic-Architecture"><span class="toc-text">Microservices vs Monolithic Architecture</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%90%84%E5%80%8B%E6%9C%8D%E5%8B%99%E9%96%93%E5%A6%82%E4%BD%95%E4%BA%92%E7%9B%B8%E6%BA%9D%E9%80%9A%EF%BC%9F"><span class="toc-text">各個服務間如何互相溝通？</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Reference"><span class="toc-text">Reference</span></a></li></ol></li></ol></div></div></widget>
+<widget class="widget-wrapper toc single" id="data-toc" collapse="false"><div class="widget-header dis-select"><span class="name">本文目錄</span></div><div class="widget-body fs14"><div class="doc-tree active"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Microservices-vs-Monolithic-Architecture"><span class="toc-text">Microservices vs Monolithic Architecture</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%90%84%E5%80%8B%E6%9C%8D%E5%8B%99%E9%96%93%E5%A6%82%E4%BD%95%E4%BA%92%E7%9B%B8%E6%BA%9D%E9%80%9A%EF%BC%9F"><span class="toc-text">各個服務間如何互相溝通？</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Reference"><span class="toc-text">Reference</span></a></li></ol></li></ol></div></div></widget>
 
 
 
@@ -74,7 +74,7 @@
 
 
 
-<widget class="widget-wrapper post-list"><div class="widget-header dis-select"><span class="name">最近更新</span></div><div class="widget-body fs14"><a class="item title active" href="/2024/02/17/MicroservicesMonolithic/"><span class="title">MicroservicesMonolithic</span><svg class="active-icon" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" d="M21 11.098v4.993c0 3.096 0 4.645-.734 5.321c-.35.323-.792.526-1.263.58c-.987.113-2.14-.907-4.445-2.946c-1.02-.901-1.529-1.352-2.118-1.47a2.225 2.225 0 0 0-.88 0c-.59.118-1.099.569-2.118 1.47c-2.305 2.039-3.458 3.059-4.445 2.945a2.238 2.238 0 0 1-1.263-.579C3 20.736 3 19.188 3 16.091v-4.994C3 6.81 3 4.666 4.318 3.333C5.636 2 7.758 2 12 2c4.243 0 6.364 0 7.682 1.332C21 4.665 21 6.81 21 11.098" opacity=".5"/><path fill="currentColor" d="M9 5.25a.75.75 0 0 0 0 1.5h6a.75.75 0 0 0 0-1.5z"/></svg></a><a class="item title" href="/2024/02/05/BloomFilter/"><span class="title">Bloom Filter 布隆過濾器</span></a><a class="item title" href="/2024/01/31/hello-world/"><span class="title">Lando's blog</span></a></div></widget>
+<widget class="widget-wrapper post-list"><div class="widget-header dis-select"><span class="name">最近更新</span></div><div class="widget-body fs14"><a class="item title" href="/2024/02/05/BloomFilter/"><span class="title">Bloom Filter 布隆過濾器</span></a><a class="item title active" href="/2024/02/17/MicroservicesMonolithic/"><span class="title">微服務 vs 單體式架構</span><svg class="active-icon" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" d="M21 11.098v4.993c0 3.096 0 4.645-.734 5.321c-.35.323-.792.526-1.263.58c-.987.113-2.14-.907-4.445-2.946c-1.02-.901-1.529-1.352-2.118-1.47a2.225 2.225 0 0 0-.88 0c-.59.118-1.099.569-2.118 1.47c-2.305 2.039-3.458 3.059-4.445 2.945a2.238 2.238 0 0 1-1.263-.579C3 20.736 3 19.188 3 16.091v-4.994C3 6.81 3 4.666 4.318 3.333C5.636 2 7.758 2 12 2c4.243 0 6.364 0 7.682 1.332C21 4.665 21 6.81 21 11.098" opacity=".5"/><path fill="currentColor" d="M9 5.25a.75.75 0 0 0 0 1.5h6a.75.75 0 0 0 0-1.5z"/></svg></a></div></widget>
 </div>
 <footer class="footer dis-select"><div class="social-wrap"><a class="social" href="https://github.com/LandoHsieh" target="_blank" rel="external nofollow noopener noreferrer"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/social/08a41b181ce68.svg"/></a></div></footer>
 </div></aside><div class="l_main" id="main">
@@ -88,19 +88,19 @@
     
 <div class="top bread-nav footnote"><div class="left"><div id="breadcrumb"><a class="cap breadcrumb" href="/">首頁</a>
 <span class="sep"></span><a class="cap breadcrumb" href="/">部落格</a></div>
-<div id="post-meta"><span class="created">發布於：</span><time datetime="2024-02-17T09:58:34.000Z">2024-02-17</time></span><span class="updated"><span class="dot"></span>更新於：<time datetime="2024-02-17T10:11:17.003Z">2024-02-17</time></span></div></div>
+<div id="post-meta"><span class="created">發布於：</span><time datetime="2024-02-17T09:58:34.000Z">2024-02-17</time></span><span class="updated"><span class="dot"></span>更新於：<time datetime="2024-02-17T10:26:58.966Z">2024-02-17</time></span></div></div>
 </div>
 
     
     <div class="bottom">
       <div class="text-area">
-        <h1 class="text title"><span>MicroservicesMonolithic</span></h1>
+        <h1 class="text title"><span>微服務 vs 單體式架構</span></h1>
       </div>
     </div>
     
   </div>
-  </div><article class="md-text content"><h1 id="Microservices-Monolithic-Architecture"><a href="#Microservices-Monolithic-Architecture" class="headerlink" title="Microservices &amp; Monolithic Architecture"></a>Microservices &amp; Monolithic Architecture</h1><h2 id="Microservices-Monolithic-Architecture-1"><a href="#Microservices-Monolithic-Architecture-1" class="headerlink" title="Microservices &amp; Monolithic Architecture"></a>Microservices &amp; Monolithic Architecture</h2><p>我們以往都是透過單體式架構（Monolithic）去處理各種服務，且每個服務可能都依賴於同一個database，在部署上也只打包成一個名為”backend”的container，如下圖</p>
-<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="/Monolithic1.png"></p>
+  </div><article class="md-text content"><h1 id="Microservices-Monolithic-Architecture"><a href="#Microservices-Monolithic-Architecture" class="headerlink" title="Microservices &amp; Monolithic Architecture"></a>Microservices &amp; Monolithic Architecture</h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>我們以往都是透過單體式架構（Monolithic）去處理各種服務，且每個服務可能都依賴於同一個database，在部署上也只打包成一個名為”backend”的container，如下圖</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="/../pic/MicroservicesMonolithic/Monolithic1.png"></p>
 <p>但微服務不一樣的點在於，他是將每個服務獨立成自己的伺服器，以及配置他們專用的資料庫。</p>
 <p>Microservices架構如下圖：</p>
 <p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="/Microservices%20&%20Monolithic%20Architecture%20767b0425ea6d4424a4386632888fb1bb/%25E6%2588%25AA%25E5%259C%2596_2024-02-16_%25E4%25B8%258A%25E5%258D%258811.36.42.png" alt="截圖 2024-02-16 上午11.36.42.png"></p>
@@ -167,13 +167,13 @@
 </tbody></table>
 <h2 id="各個服務間如何互相溝通？"><a href="#各個服務間如何互相溝通？" class="headerlink" title="各個服務間如何互相溝通？"></a>各個服務間如何互相溝通？</h2><p>由於每個服務都是獨立的，那服務之間該如何互相溝通？假設一個電商網站中主要有Customer, Products, Shopping，三種獨立的服務，但Products需要依賴於Customer服務的資料，該怎麼辦？</p>
 <ol>
-<li><p>直接服務間調用：</p>
+<li><p><strong>直接服務間調用</strong>：</p>
 <ul>
 <li><strong>同步調用</strong>：<br> 在Products服務中透過HTTP、gRPC等通訊協議，直接對customer服務發送請求調用資料。</li>
 <li>亦步調用：<br> 使用消息隊列（如RabbitMQ、Kafka等）實現異步通訊，products服務發布消息到隊列，customer服務訂閱相應的消息進行處理，並將結果通過回調或再次發布消息的方式回傳。<br> 這種方式適用於不需要即時響應的場景，能有效分散高峰流量。</li>
 </ul>
 </li>
-<li><p>API網關 (Gateway)</p>
+<li><p><strong>API網關 (Gateway)</strong></p>
 <ul>
 <li><p>使用API gateway作為服務間的中介，所有外部請求都會先經過API gateway，並透過proxy將請求導向相應的服務。</p>
 </li>
@@ -184,7 +184,7 @@
 </li>
 </ul>
 </li>
-<li><p>共享資料庫</p>
+<li><p><strong>共享資料庫</strong></p>
 <ul>
 <li>雖然在微服務架構中提倡每個服務都擁有自己的資料庫，但在某些情況下，服務間也可以通過共享資料庫的方式來達成資料通訊，但要注意資料的一致性與隔離性，避免產生緊耦合。</li>
 </ul>
