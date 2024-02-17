@@ -57,7 +57,7 @@
 <nav class="menu dis-select"></nav>
 </div>
 <div class="widgets">
-<widget class="widget-wrapper post-list"><div class="widget-header dis-select"><span class="name">最近更新</span></div><div class="widget-body fs14"><a class="item title" href="/2024/02/05/BloomFilter/"><span class="title">Bloom Filter 布隆過濾器</span></a><a class="item title" href="/2024/01/31/hello-world/"><span class="title">Lando's blog</span></a></div></widget>
+<widget class="widget-wrapper post-list"><div class="widget-header dis-select"><span class="name">最近更新</span></div><div class="widget-body fs14"><a class="item title" href="/2024/02/17/MicroservicesMonolithic/"><span class="title">MicroservicesMonolithic</span></a><a class="item title" href="/2024/02/05/BloomFilter/"><span class="title">Bloom Filter 布隆過濾器</span></a><a class="item title" href="/2024/01/31/hello-world/"><span class="title">Lando's blog</span></a></div></widget>
 
 
 </div>
@@ -70,7 +70,11 @@
 
 
 <div class="nav-wrap"><nav class="sub post cap"><a class="active" href="/">Recent</a><a href="/archives">Archives</a></nav></div>
-<div class="post-list post"><a class="post-card post" href="/2024/02/05/BloomFilter/">
+<div class="post-list post"><a class="post-card post" href="/2024/02/17/MicroservicesMonolithic/">
+<article class="md-text"><h2 class="post-title">MicroservicesMonolithic</h2><div class="excerpt"><p>Microservices &amp; Monolithic ArchitectureMicroservices &amp; Monolithic Architecture我們以往都是透過單體式架構（Monolithic）去處理各種服務，且每個服務可能都依賴於同一個database，在部署上也只打包成一個名為”backend”的container，如下圖
+
+但微服務不一樣的點在於，他是將每個...</p></div><div class="meta cap"><span class="cap" id="post-meta"><time datetime="2024-02-17T09:58:34.000Z">2024-02-17</time></span></div></article>
+</a><a class="post-card post" href="/2024/02/05/BloomFilter/">
 <article class="md-text"><h2 class="post-title">Bloom Filter 布隆過濾器</h2><div class="excerpt"><p>如何在上億筆使用者中檢查名稱是否存在前言在APP註冊時，有時會被提示使用者名稱已存在，這個功能該如何實現？比較直覺的方法是直接在資料庫中進行檢索，但資料量到達億級別時，這種方法肯定不可行，此篇會利用Redis內建布隆過濾器（Bloom Filter）資料結構實現
 使用資料庫查詢1SELECT COUNT(*) FROM users WHERE username = ?
 
