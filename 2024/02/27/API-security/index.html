@@ -1,0 +1,325 @@
+
+<!DOCTYPE html><html lang="zh-TW">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="hexo-theme" content="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.26.3" theme-name="Stellar" theme-version="1.26.3">
+  
+  <meta name="generator" content="Hexo 7.1.1">
+  <meta http-equiv='x-dns-prefetch-control' content='on' />
+  
+  <meta name="renderer" content="webkit">
+  <meta name="force-rendering" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <meta name="HandheldFriendly" content="True" >
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="theme-color" content="#f8f8f8">
+  
+  <title>如何提升API安全性 - Hexo</title>
+
+  
+    <meta name="description" content="前言API作為資料通訊的大門，我們應該重視它的安全性，即便有些API可以很輕鬆地去進行調用，但不代表應該讓所有API都不受限制地被存取調用。 API可以做很多事，資料請求、處理敏感資訊、CRUD資料庫，甚至可以透過API控制電子設備，因此在APP開發上，針對API做嚴格的身份驗證及管理就會顯得格外重要。 Authentication &amp; Authorization當收到API請求時，通常會">
+<meta property="og:type" content="article">
+<meta property="og:title" content="如何提升API安全性">
+<meta property="og:url" content="http://example.com/2024/02/27/API-security/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="前言API作為資料通訊的大門，我們應該重視它的安全性，即便有些API可以很輕鬆地去進行調用，但不代表應該讓所有API都不受限制地被存取調用。 API可以做很多事，資料請求、處理敏感資訊、CRUD資料庫，甚至可以透過API控制電子設備，因此在APP開發上，針對API做嚴格的身份驗證及管理就會顯得格外重要。 Authentication &amp; Authorization當收到API請求時，通常會">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="http://example.com/pic/API-security/1.webp">
+<meta property="article:published_time" content="2024-02-27T13:08:39.000Z">
+<meta property="article:modified_time" content="2024-02-27T13:14:31.933Z">
+<meta property="article:author" content="Lando Hsieh">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/pic/API-security/1.webp">
+  
+  
+  
+  
+
+  <!-- feed -->
+  
+
+  <link rel="stylesheet" href="/css/main.css?v=1.26.3">
+
+  
+
+  
+
+  
+  
+</head>
+<body>
+
+<div class="l_body content tech" id="start" layout="post" ><aside class="l_left"><div class="sidebar-container">
+
+
+<header class="header"><div class="logo-wrap"><a class="avatar" href="/pic/IMG_8365.JPG"><div class="bg" style="opacity:0;background-image:url(https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/avatar/round/rainbow64@3x.webp);"></div><img no-lazy class="avatar" src="/pic/IMG_8365.JPG" onerror="javascript:this.classList.add('error');this.src='https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/image/2659360.svg';"></a><a class="title" href="/"><div class="main" ff="title">Lando's Blog</div><div class="sub normal cap">歡迎來到藍多的部落格</div><div class="sub hover cap" style="opacity:0">明天的自己要比今天更厲害！</div></a></div></header>
+
+<div class="nav-area">
+<div class="search-wrapper" id="search-wrapper"><form class="search-form"><a class="search-button" onclick="document.getElementById(&quot;search-input&quot;).focus();"><svg t="1705074644177" class="icon search-icon" viewBox="0 0 1025 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1560" width="200" height="200"><path d="M1008.839137 935.96571L792.364903 719.491476a56.783488 56.783488 0 0 0-80.152866 0 358.53545 358.53545 0 1 1 100.857314-335.166073 362.840335 362.840335 0 0 1-3.689902 170.145468 51.248635 51.248635 0 1 0 99.217358 26.444296 462.057693 462.057693 0 1 0-158.255785 242.303546l185.930047 185.725053a51.248635 51.248635 0 0 0 72.568068 0 51.248635 51.248635 0 0 0 0-72.978056z" p-id="1561"></path><path d="M616.479587 615.969233a50.428657 50.428657 0 0 0-61.498362-5.534852 174.655348 174.655348 0 0 1-177.525271 3.484907 49.403684 49.403684 0 0 0-58.833433 6.76482l-3.074918 2.869923a49.403684 49.403684 0 0 0 8.609771 78.10292 277.767601 277.767601 0 0 0 286.992355-5.739847 49.403684 49.403684 0 0 0 8.404776-76.667958z" p-id="1562"></path></svg></a><input type="text" class="search-input" id="search-input" placeholder="搜尋文章"></form><div id="search-result"></div><div class="search-no-result">沒有找到內容！</div></div>
+
+
+<nav class="menu dis-select"></nav>
+</div>
+<div class="widgets">
+
+<widget class="widget-wrapper toc single" id="data-toc" collapse="false"><div class="widget-header dis-select"><span class="name">本文目錄</span></div><div class="widget-body fs14"><div class="doc-tree active"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Authentication-Authorization"><span class="toc-text">Authentication &amp; Authorization</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E9%80%8F%E9%81%8EJWT%E5%AF%A6%E7%8F%BE%E6%8E%88%E6%AC%8A"><span class="toc-text">1. 透過JWT實現授權</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E7%B4%B0%E7%B2%92%E5%BA%A6%E5%AD%98%E5%8F%96%E6%8E%A7%E5%88%B6Fine-Grained-Access-Control"><span class="toc-text">2. 細粒度存取控制Fine-Grained Access Control</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9A%E7%BE%A9%E8%A7%92%E8%89%B2%E5%92%8C%E6%AC%8A%E9%99%90"><span class="toc-text">定義角色和權限</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#RBAC-Role-Based-Access-Control"><span class="toc-text">RBAC (Role-Based Access Control)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ABAC-Attribute-Based-Access-Control"><span class="toc-text">ABAC (Attribute-Based Access Control)</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-API-Gateway%E6%8F%90%E5%8D%87%E5%AE%89%E5%85%A8%E6%80%A7"><span class="toc-text">3. API Gateway提升安全性</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%80%8F%E9%81%8ESSL-TLS%E5%8A%A0%E5%AF%86%E5%82%B3%E8%BC%B8%E8%B3%87%E6%96%99"><span class="toc-text">透過SSL&#x2F;TLS加密傳輸資料</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%B8%BD%E7%B5%90"><span class="toc-text">總結</span></a></li></ol></div></div></widget>
+
+
+
+
+
+
+
+<widget class="widget-wrapper post-list"><div class="widget-header dis-select"><span class="name">最近更新</span></div><div class="widget-body fs14"><a class="item title active" href="/2024/02/27/API-security/"><span class="title">如何提升API安全性</span><svg class="active-icon" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" d="M21 11.098v4.993c0 3.096 0 4.645-.734 5.321c-.35.323-.792.526-1.263.58c-.987.113-2.14-.907-4.445-2.946c-1.02-.901-1.529-1.352-2.118-1.47a2.225 2.225 0 0 0-.88 0c-.59.118-1.099.569-2.118 1.47c-2.305 2.039-3.458 3.059-4.445 2.945a2.238 2.238 0 0 1-1.263-.579C3 20.736 3 19.188 3 16.091v-4.994C3 6.81 3 4.666 4.318 3.333C5.636 2 7.758 2 12 2c4.243 0 6.364 0 7.682 1.332C21 4.665 21 6.81 21 11.098" opacity=".5"/><path fill="currentColor" d="M9 5.25a.75.75 0 0 0 0 1.5h6a.75.75 0 0 0 0-1.5z"/></svg></a><a class="item title" href="/2024/02/14/MicroservicesMonolithic/"><span class="title">微服務 vs 單體式架構</span></a><a class="item title" href="/2024/02/05/BloomFilter/"><span class="title">Bloom Filter 布隆過濾器</span></a></div></widget>
+</div>
+<footer class="footer dis-select"><div class="social-wrap"><a class="social" href="https://github.com/LandoHsieh" target="_blank" rel="external nofollow noopener noreferrer"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/social/08a41b181ce68.svg"/></a></div></footer>
+</div></aside><div class="l_main" id="main">
+
+
+
+
+
+<div class="article banner top">
+  <div class="content">
+    
+<div class="top bread-nav footnote"><div class="left"><div id="breadcrumb"><a class="cap breadcrumb" href="/">首頁</a>
+<span class="sep"></span><a class="cap breadcrumb" href="/">部落格</a></div>
+<div id="post-meta"><span class="created">發布於：</span><time datetime="2024-02-27T13:08:39.000Z">2024-02-27</time></span><span class="updated"><span class="dot"></span>更新於：<time datetime="2024-02-27T13:14:31.933Z">2024-02-27</time></span></div></div>
+</div>
+
+    
+    <div class="bottom">
+      <div class="text-area">
+        <h1 class="text title"><span>如何提升API安全性</span></h1>
+      </div>
+    </div>
+    
+  </div>
+  </div><article class="md-text content"><h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>API作為資料通訊的大門，我們應該重視它的安全性，即便有些API可以很輕鬆地去進行調用，但不代表應該讓所有API都不受限制地被存取調用。</p>
+<p>API可以做很多事，資料請求、處理敏感資訊、CRUD資料庫，甚至可以透過API控制電子設備，因此在APP開發上，針對API做嚴格的身份驗證及管理就會顯得格外重要。</p>
+<h2 id="Authentication-Authorization"><a href="#Authentication-Authorization" class="headerlink" title="Authentication &amp; Authorization"></a><strong>Authentication &amp; Authorization</strong></h2><p>當收到API請求時，通常會先進行 <strong>Authentication以及Authorization 身份驗證以及授權，成功授權才可以進行請求，</strong></p>
+<ul>
+<li><strong>Authentication(驗證）:</strong> 顧名思義就是驗證使用者的身份是否正確，可透過username, password等方式進行驗證，這些資訊可在使用者的請求資訊中取得。</li>
+<li><strong>A</strong>uthorization(授權)：當身份驗證成功，就能對進行授權，回傳資料給使用者。</li>
+</ul>
+<h2 id="1-透過JWT實現授權"><a href="#1-透過JWT實現授權" class="headerlink" title="1. 透過JWT實現授權"></a>1. 透過JWT實現授權</h2><p>JWT (Json Web Token)，通常在使用者成功登入後（驗證帳號密碼），會透過JWT產生一組具有時效性的Token給使用者（可儲存於cookies或localStorage），之後使用者在操作一些功能時必須將token一並附上才可使用。</p>
+<p><strong>生成JWT 程式範例</strong></p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> jwt = <span class="built_in">require</span>(<span class="string">&#x27;jsonwebtoken&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 用戶資訊，可以是任何你想要儲存在 token 中的資訊</span></span><br><span class="line"><span class="keyword">const</span> user = &#123;</span><br><span class="line">    <span class="attr">id</span>: <span class="number">1</span>, <span class="comment">// 假設的用戶 ID</span></span><br><span class="line">    <span class="attr">username</span>: <span class="string">&quot;exampleUser&quot;</span>,</span><br><span class="line">    <span class="attr">email</span>: <span class="string">&quot;user@example.com&quot;</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 密鑰，用於簽名 JWT，應保持秘密</span></span><br><span class="line"><span class="keyword">const</span> secretKey = <span class="string">&quot;yourSecretKey&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 生成 JWT</span></span><br><span class="line"><span class="keyword">const</span> token = jwt.<span class="title function_">sign</span>(user, secretKey, &#123;</span><br><span class="line">    <span class="attr">expiresIn</span>: <span class="string">&#x27;1h&#x27;</span> <span class="comment">// token 有效期，這裡設為 1 小時</span></span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(token);</span><br></pre></td></tr></table></figure>
+
+<p>當使用者欲發送API請求，需要將登入後拿到的token一併附上，server會透過此token進行驗證，並給予授權。</p>
+<p><strong>驗證JWT 程式範例</strong></p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 替換成你的密鑰</span></span><br><span class="line"><span class="keyword">const</span> secretKey = <span class="string">&quot;yourSecretKey&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// JWT 驗證 Middleware</span></span><br><span class="line"><span class="keyword">const</span> <span class="title function_">verifyToken</span> = (<span class="params">req, res, next</span>) =&gt; &#123;</span><br><span class="line">    <span class="comment">// 從請求頭部取得 token</span></span><br><span class="line">    <span class="keyword">const</span> token = req.<span class="property">headers</span>[<span class="string">&#x27;authorization&#x27;</span>];</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (!token) &#123;</span><br><span class="line">        <span class="keyword">return</span> res.<span class="title function_">status</span>(<span class="number">403</span>).<span class="title function_">send</span>(&#123; <span class="attr">message</span>: <span class="string">&quot;未提供 token!&quot;</span> &#125;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="comment">// 驗證 token</span></span><br><span class="line">        <span class="keyword">const</span> decoded = jwt.<span class="title function_">verify</span>(token, secretKey);</span><br><span class="line">        <span class="comment">// 將用戶資訊附加到請求對象</span></span><br><span class="line">        req.<span class="property">user</span> = decoded;</span><br><span class="line">        <span class="title function_">next</span>();</span><br><span class="line">    &#125; <span class="keyword">catch</span> (error) &#123;</span><br><span class="line">        <span class="comment">// 如果驗證失敗，返回錯誤訊息</span></span><br><span class="line">        <span class="keyword">return</span> res.<span class="title function_">status</span>(<span class="number">401</span>).<span class="title function_">send</span>(&#123; <span class="attr">message</span>: <span class="string">&quot;無效的 token!&quot;</span> &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h2 id="2-細粒度存取控制Fine-Grained-Access-Control"><a href="#2-細粒度存取控制Fine-Grained-Access-Control" class="headerlink" title="2. 細粒度存取控制Fine-Grained Access Control"></a>2. 細粒度存取控制<strong>Fine-Grained Access Control</strong></h2><h3 id="定義角色和權限"><a href="#定義角色和權限" class="headerlink" title="定義角色和權限"></a>定義角色和權限</h3><p>定義每個角色可以做什麼事情，像是Admin可以進入控制台介面，User則不行。</p>
+<h3 id="RBAC-Role-Based-Access-Control"><a href="#RBAC-Role-Based-Access-Control" class="headerlink" title="RBAC (Role-Based Access Control)"></a>RBAC (Role-Based Access Control)</h3><p>RBAC是一種基於角色的訪問控制機制，每個角色都被授予一些權限，根據用戶的角色來決定對系統資源的訪問權限。在這種模式下，訪問權限會被賦予角色，用戶會被指派到一個或多個角色，這樣就能獲得相應的訪問權限。</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 假設的用戶資料和角色</span></span><br><span class="line"><span class="keyword">const</span> users = [</span><br><span class="line">    &#123; <span class="attr">id</span>: <span class="number">1</span>, <span class="attr">username</span>: <span class="string">&#x27;Lando&#x27;</span>, <span class="attr">role</span>: <span class="string">&#x27;admin&#x27;</span> &#125;,</span><br><span class="line">    &#123; <span class="attr">id</span>: <span class="number">2</span>, <span class="attr">username</span>: <span class="string">&#x27;Josh&#x27;</span>, <span class="attr">role</span>: <span class="string">&#x27;user&#x27;</span> &#125;</span><br><span class="line">];</span><br><span class="line"></span><br><span class="line"><span class="comment">// 簡單的身份驗證中間件</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">authMiddleware</span>(<span class="params">req, res, next</span>) &#123;</span><br><span class="line">    <span class="keyword">const</span> user = users.<span class="title function_">find</span>(<span class="function"><span class="params">u</span> =&gt;</span> u.<span class="property">username</span> === req.<span class="property">headers</span>.<span class="property">username</span>); <span class="comment">// 假設使用username進行簡單的&quot;身份驗證&quot;</span></span><br><span class="line">    <span class="keyword">if</span> (!user) &#123;</span><br><span class="line">        <span class="keyword">return</span> res.<span class="title function_">status</span>(<span class="number">401</span>).<span class="title function_">send</span>(<span class="string">&#x27;Authentication failed&#x27;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    req.<span class="property">user</span> = user;</span><br><span class="line">    <span class="title function_">next</span>();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 已定義好的角色權限</span></span><br><span class="line"><span class="keyword">const</span> rolesPermissions = &#123;</span><br><span class="line">    <span class="attr">admin</span>: [<span class="string">&#x27;create&#x27;</span>, <span class="string">&#x27;read&#x27;</span>, <span class="string">&#x27;update&#x27;</span>, <span class="string">&#x27;delete&#x27;</span>],</span><br><span class="line">    <span class="attr">user</span>: [<span class="string">&#x27;read&#x27;</span>]</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// RBAC中間件</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">roleMiddleware</span>(<span class="params">allowedRoles</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">function</span>(<span class="params">req, res, next</span>) &#123;</span><br><span class="line">        <span class="keyword">const</span> userRole = req.<span class="property">user</span>.<span class="property">role</span>;</span><br><span class="line">        <span class="keyword">const</span> permissions = rolesPermissions[userRole] || [];</span><br><span class="line">        <span class="keyword">const</span> isAllowed = allowedRoles.<span class="title function_">some</span>(<span class="function"><span class="params">role</span> =&gt;</span> permissions.<span class="title function_">includes</span>(role));</span><br><span class="line">        <span class="keyword">if</span> (!isAllowed) &#123;</span><br><span class="line">            <span class="keyword">return</span> res.<span class="title function_">status</span>(<span class="number">403</span>).<span class="title function_">send</span>(<span class="string">&#x27;Access denied&#x27;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="title function_">next</span>();</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">app.<span class="title function_">get</span>(<span class="string">&#x27;/data&#x27;</span>, authMiddleware, <span class="title function_">roleMiddleware</span>([<span class="string">&#x27;read&#x27;</span>]), <span class="function">(<span class="params">req, res</span>) =&gt;</span> &#123;</span><br><span class="line">    res.<span class="title function_">send</span>(<span class="string">&#x27;Some data accessible by users with read permission&#x27;</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h3 id="ABAC-Attribute-Based-Access-Control"><a href="#ABAC-Attribute-Based-Access-Control" class="headerlink" title="ABAC (Attribute-Based Access Control)"></a>ABAC (<strong>Attribute-Based Access Control</strong>)</h3><p>ABAC能夠提供基於多種條件的細粒度訪問控制，當需要根據用戶的具體屬性（年齡、位置、工作角色等）來細化訪問權限，通常會使用於更複雜或是需要極度安全性的場景，例如軍事系統、政府等。</p>
+<h2 id="3-API-Gateway提升安全性"><a href="#3-API-Gateway提升安全性" class="headerlink" title="3. API Gateway提升安全性"></a>3. API Gateway提升安全性</h2><p>你可以把API網關想像成所有API的前門，所有請求都必須先通過前門才碰得到後面的API，舉個例子，假如每個API都有一樣的身份驗證middleware，這樣只需要在API gateway加入身份驗證，如此一來所有請求都會先進行身份驗證後，再將請求轉發到相應的API route。  </p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="/../pic/API-security/1.webp"></p>
+<p><strong>API網關有以下用途：</strong></p>
+<ul>
+<li><p><strong>增加安全性</strong>：防止未經授權的請求、濫用，或是DDoS攻擊。</p>
+</li>
+<li><p><strong>Rate Limiting &#x2F; Throttling</strong>：速率控制和節流，防止API過度使用，或是確保使用者之間的公平使用，可使用<code>express-rate-limit</code>套件或是其他平台的服務，例如<code>AWS API Gateway</code>, <code>Google Apigee</code>等。</p>
+  <figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> rateLimit = <span class="built_in">require</span>(<span class="string">&#x27;express-rate-limit&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 創建 rate limit 中間件</span></span><br><span class="line"><span class="keyword">const</span> limiter = <span class="title function_">rateLimit</span>(&#123;</span><br><span class="line">  <span class="attr">windowMs</span>: <span class="number">15</span> * <span class="number">60</span> * <span class="number">1000</span>, <span class="comment">// 15 分鐘的時間窗口</span></span><br><span class="line">  <span class="attr">max</span>: <span class="number">100</span>, <span class="comment">// 在時間窗口內每個IP可以發起的最大請求數</span></span><br><span class="line">  <span class="attr">standardHeaders</span>: <span class="literal">true</span>, <span class="comment">// 返回 rate limit 信息於 `RateLimit-*` headers</span></span><br><span class="line">  <span class="attr">legacyHeaders</span>: <span class="literal">false</span>, <span class="comment">// 禁用 `X-RateLimit-*` headers</span></span><br><span class="line">  <span class="attr">message</span>: <span class="string">&#x27;請求過於頻繁，請在一段時間後再試。&#x27;</span> <span class="comment">// 當 rate limit 被觸發時返回的錯誤信息</span></span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 使用這個中間件於你的應用中，例如</span></span><br><span class="line"><span class="comment">// app.use(limiter);</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 你也可以只對特定的路由使用這個中間件</span></span><br><span class="line"><span class="comment">// app.use(&#x27;/api/&#x27;, limiter);</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>資料驗證</strong>：驗證傳入的資料是否符合格式標準，亦可預防SQL Injection等攻擊。</p>
+</li>
+</ul>
+<h2 id="透過SSL-TLS加密傳輸資料"><a href="#透過SSL-TLS加密傳輸資料" class="headerlink" title="透過SSL&#x2F;TLS加密傳輸資料"></a>透過SSL&#x2F;TLS加密傳輸資料</h2><p>到<a target="_blank" rel="noopener" href="https://zerossl.com/?fpr=search&gad_source=1&gclid=CjwKCAiArfauBhApEiwAeoB7qO880pwJ34FaXiTuObBzMwxLNk16eBG_9HcCpqAVXjY_NoCMGxdYmxoCMKIQAvD_BwE">ZeroSSL</a>網站為你的網域申請SSL憑證，申請成功會拿到certificate.crt以及private.key兩個憑證檔案，自行將其放入伺服器資料夾（我是放到 &#x2F;etc&#x2F;ssl 目錄底下 ），再透過nginx.conf設定SSL憑證路徑，保存後執行Nginx即可。</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">server</span> &#123;</span><br><span class="line">    <span class="string">listen</span> <span class="number">443</span> <span class="string">ssl;</span></span><br><span class="line">    <span class="string">server_name</span> <span class="string">yourdomain.com;</span></span><br><span class="line"></span><br><span class="line">    <span class="string">ssl_certificate</span> <span class="string">/path/to/your/certificate.crt;</span> <span class="comment"># Path to your fullchain.pem from CA</span></span><br><span class="line">    <span class="string">ssl_certificate_key</span> <span class="string">/path/to/your/private.key;</span> <span class="comment"># Path to your private key from CA</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 指定TLS版本</span></span><br><span class="line">    <span class="string">ssl_protocols</span> <span class="string">TLSv1.2</span> <span class="string">TLSv1.3;</span></span><br><span class="line">		<span class="comment"># 定義加密套件</span></span><br><span class="line">    <span class="string">ssl_ciphers</span> <span class="string">&#x27;ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256...&#x27;</span><span class="string">;</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 其餘設定</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>ssl_protocols : 指定TLS版本亦可提升安全性，在此指定1.2跟1.3版本的連線，因為這些是目前被認為是安全的協議版本，較舊的協議版本（如 SSL v2、SSL v3、TLS v1.0）因已知的安全漏洞而不建議使用。</li>
+<li>ssl_ciphers : 這個指令用來定義哪些加密套件（cipher suites）被允許用於 SSL&#x2F;TLS 連線。加密套件定義了數據加密、驗證和消息完整性檢查的算法。</li>
+</ul>
+<p>除了像SSL這種加密傳輸的方式以外，也有一些靜態加密的方法</p>
+<ul>
+<li>bcrypt : 加密套件，在存入資料庫之前先對資料進加密。</li>
+<li>MySQL : InnoDB表空間加密，在資料寫入磁碟前被加密，從磁碟讀取時解密。</li>
+<li>MongoDB : 加密儲存引擎，也是在儲存資料之前先將其加密。</li>
+</ul>
+<h2 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h2><p>提升API的安全性除了能夠保障你的數位資產，同時也能夠保障用戶對你的信任，在開發API前不妨連同安全性也一起考慮進去，以防範各種網路威脅。</p>
+
+
+</article>
+<div class="related-wrap" id="read-next"><section class="body"><div class="item" id="prev"></div><div class="item" id="next"><div class="note">較早文章</div><a href="/2024/02/14/MicroservicesMonolithic/">微服務 vs 單體式架構</a></div></section></div>
+
+
+
+
+
+
+<footer class="page-footer footnote"><hr><div class="text"></div></footer>
+<div class='float-panel mobile-only blur' style='display:none'>
+  <button type='button' class='sidebar-toggle mobile' onclick='sidebar.toggle()'>
+    <svg t="1705412886951" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="8331" width="200" height="200"><path d="M638.72 970.666667h-256c-118.186667 0-198.272-25.002667-251.946667-78.72S52.053333 758.186667 52.053333 640V384c0-118.186667 25.002667-198.272 78.72-251.946667S264.533333 53.333333 382.72 53.333333h256c118.186667 0 198.272 25.002667 251.946667 78.72S969.386667 265.813333 969.386667 384v256c0 118.186667-25.002667 198.272-78.72 251.946667S756.906667 970.666667 638.72 970.666667z m-256-853.333334c-100.096 0-165.802667 19.2-206.72 59.946667S116.053333 283.904 116.053333 384v256c0 100.096 19.072 165.802667 59.946667 206.72S282.624 906.666667 382.72 906.666667h256c100.096 0 165.802667-19.072 206.72-59.946667S905.386667 740.096 905.386667 640V384c0-100.096-19.072-165.802667-59.946667-206.72S738.816 117.333333 638.72 117.333333z" p-id="8332"></path><path d="M638.72 970.666667a32 32 0 0 1-32-32V85.333333a32 32 0 0 1 32-32 32 32 0 0 1 32 32v853.333334a32 32 0 0 1-32 32zM340.053333 653.226667a31.914667 31.914667 0 0 1-22.613333-9.386667 32 32 0 0 1 0-45.269333L404.053333 512 317.44 425.386667a32 32 0 0 1 0-45.226667 32 32 0 0 1 45.226667 0l109.226666 109.226667a32 32 0 0 1 0 45.269333L362.666667 643.84a31.914667 31.914667 0 0 1-22.613334 9.386667z" p-id="8333"></path></svg>
+  </button>
+</div>
+<div class="main-mask" onclick="sidebar.toggle()"></div></div></div><div class="scripts">
+<script type="text/javascript">
+  const stellar = {
+    // 懒加载 css https://github.com/filamentgroup/loadCSS
+    loadCSS: (href, before, media, attributes) => {
+      var doc = window.document;
+      var ss = doc.createElement("link");
+      var ref;
+      if (before) {
+        ref = before;
+      } else {
+        var refs = (doc.body || doc.getElementsByTagName("head")[0]).childNodes;
+        ref = refs[refs.length - 1];
+      }
+      var sheets = doc.styleSheets;
+      if (attributes) {
+        for (var attributeName in attributes) {
+          if (attributes.hasOwnProperty(attributeName)) {
+            ss.setAttribute(attributeName, attributes[attributeName]);
+          }
+        }
+      }
+      ss.rel = "stylesheet";
+      ss.href = href;
+      ss.media = "only x";
+      function ready(cb) {
+        if (doc.body) {
+          return cb();
+        }
+        setTimeout(function () {
+          ready(cb);
+        });
+      }
+      ready(function () {
+        ref.parentNode.insertBefore(ss, before ? ref : ref.nextSibling);
+      });
+      var onloadcssdefined = function (cb) {
+        var resolvedHref = ss.href;
+        var i = sheets.length;
+        while (i--) {
+          if (sheets[i].href === resolvedHref) {
+            return cb();
+          }
+        }
+        setTimeout(function () {
+          onloadcssdefined(cb);
+        });
+      };
+      function loadCB() {
+        if (ss.addEventListener) {
+          ss.removeEventListener("load", loadCB);
+        }
+        ss.media = media || "all";
+      }
+      if (ss.addEventListener) {
+        ss.addEventListener("load", loadCB);
+      }
+      ss.onloadcssdefined = onloadcssdefined;
+      onloadcssdefined(loadCB);
+      return ss;
+    },
+
+    // 从 butterfly 和 volantis 获得灵感
+    loadScript: (src, opt) => new Promise((resolve, reject) => {
+      var script = document.createElement('script');
+      if (src.startsWith('/')){
+        src = stellar.config.root + src.substring(1);
+      }
+      script.src = src;
+      if (opt) {
+        for (let key of Object.keys(opt)) {
+          script[key] = opt[key]
+        }
+      } else {
+        // 默认异步，如果需要同步，第二个参数传入 {} 即可
+        script.async = true
+      }
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    }),
+
+    // https://github.com/jerryc127/hexo-theme-butterfly
+    jQuery: (fn) => {
+      if (typeof jQuery === 'undefined') {
+        stellar.loadScript(stellar.plugins.jQuery).then(fn)
+      } else {
+        fn()
+      }
+    }
+  };
+  stellar.version = '1.26.3';
+  stellar.github = 'https://github.com/xaoxuu/hexo-theme-stellar/tree/1.26.3';
+  stellar.config = {
+    date_suffix: {
+      just: '剛剛',
+      min: '分鐘前',
+      hour: '小時前',
+      day: '天前',
+      month: '個月前',
+    },
+    root : '/',
+  };
+
+  // required plugins (only load if needs)
+  stellar.plugins = {
+    jQuery: 'https://cdn.bootcdn.net/ajax/libs/jquery/3.7.1/jquery.min.js'
+  };
+
+  if ('local_search') {
+    stellar.search = {};
+    stellar.search.service = 'local_search';
+    if (stellar.search.service == 'local_search') {
+      let service_obj = Object.assign({}, {"field":"all","path":"/search.json","content":true,"sort":"-date"});
+      stellar.search[stellar.search.service] = service_obj;
+    }
+  }
+
+  // stellar js
+  stellar.plugins.stellar = Object.assign({"sites":"/js/plugins/sites.js","friends":"/js/plugins/friends.js","ghinfo":"/js/plugins/ghinfo.js","timeline":"/js/plugins/timeline.js","linkcard":"/js/plugins/linkcard.js","fcircle":"/js/plugins/fcircle.js","weibo":"/js/plugins/weibo.js","memos":"/js/plugins/memos.js","marked":"/js/plugins/marked.js"});
+
+  stellar.plugins.marked = Object.assign("https://cdn.bootcdn.net/ajax/libs/marked/4.0.18/marked.min.js");
+  // optional plugins
+  if ('true' == 'true') {
+    stellar.plugins.lazyload = Object.assign({"enable":true,"js":"https://cdn.bootcdn.net/ajax/libs/vanilla-lazyload/17.8.4/lazyload.min.js","transition":"fade"});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.swiper = Object.assign({"enable":true,"css":"https://unpkg.com/swiper@10.3/swiper-bundle.min.css","js":"https://unpkg.com/swiper@10.3/swiper-bundle.min.js"});
+  }
+  if ('' == 'true') {
+    stellar.plugins.scrollreveal = Object.assign({"enable":null,"js":"https://cdn.bootcdn.net/ajax/libs/scrollReveal.js/4.0.9/scrollreveal.min.js","distance":"16px","duration":800,"interval":100,"scale":1});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.preload = Object.assign({"enable":true,"service":"flying_pages","flying_pages":"https://cdn.bootcdn.net/ajax/libs/flying-pages/2.1.2/flying-pages.min.js"});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.fancybox = Object.assign({"enable":true,"js":"https://cdn.bootcdn.net/ajax/libs/fancyapps-ui/5.0.22/fancybox/fancybox.umd.min.js","css":"https://cdn.bootcdn.net/ajax/libs/fancyapps-ui/5.0.22/fancybox/fancybox.min.css","selector":null});
+  }
+  if ('false' == 'true') {
+    stellar.plugins.heti = Object.assign({"enable":false,"css":"https://unpkg.com/heti@0.9.2/umd/heti.min.css","js":"https://unpkg.com/heti@0.9.2/umd/heti-addon.min.js"});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.copycode = Object.assign({"enable":true,"js":"/js/plugins/copycode.js","default_text":"Copy","success_text":"Copied","toast":"复制成功"});
+  }
+</script>
+
+<!-- required -->
+<script src="/js/main.js?v=1.26.3" async></script>
+
+<!-- optional -->
+
+
+
+
+
+
+<!-- inject -->
+
+</div></body></html>

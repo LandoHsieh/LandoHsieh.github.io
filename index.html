@@ -57,7 +57,7 @@
 <nav class="menu dis-select"></nav>
 </div>
 <div class="widgets">
-<widget class="widget-wrapper post-list"><div class="widget-header dis-select"><span class="name">最近更新</span></div><div class="widget-body fs14"><a class="item title" href="/2024/02/14/MicroservicesMonolithic/"><span class="title">微服務 vs 單體式架構</span></a><a class="item title" href="/2024/02/05/BloomFilter/"><span class="title">Bloom Filter 布隆過濾器</span></a></div></widget>
+<widget class="widget-wrapper post-list"><div class="widget-header dis-select"><span class="name">最近更新</span></div><div class="widget-body fs14"><a class="item title" href="/2024/02/27/API-security/"><span class="title">如何提升API安全性</span></a><a class="item title" href="/2024/02/14/MicroservicesMonolithic/"><span class="title">微服務 vs 單體式架構</span></a><a class="item title" href="/2024/02/05/BloomFilter/"><span class="title">Bloom Filter 布隆過濾器</span></a></div></widget>
 
 
 </div>
@@ -70,7 +70,11 @@
 
 
 <div class="nav-wrap"><nav class="sub post cap"><a class="active" href="/">Recent</a><a href="/archives">Archives</a></nav></div>
-<div class="post-list post"><a class="post-card post" href="/2024/02/14/MicroservicesMonolithic/">
+<div class="post-list post"><a class="post-card post" href="/2024/02/27/API-security/">
+<article class="md-text"><h2 class="post-title">如何提升API安全性</h2><div class="excerpt"><p>前言API作為資料通訊的大門，我們應該重視它的安全性，即便有些API可以很輕鬆地去進行調用，但不代表應該讓所有API都不受限制地被存取調用。
+API可以做很多事，資料請求、處理敏感資訊、CRUD資料庫，甚至可以透過API控制電子設備，因此在APP開發上，針對API做嚴格的身份驗證及管理就會顯得格外重要。
+Authentication &amp; Authorization當收到API請求時，...</p></div><div class="meta cap"><span class="cap" id="post-meta"><time datetime="2024-02-27T13:08:39.000Z">2024-02-27</time></span></div></article>
+</a><a class="post-card post" href="/2024/02/14/MicroservicesMonolithic/">
 <article class="md-text"><h2 class="post-title">微服務 vs 單體式架構</h2><div class="excerpt"><p>Microservices &amp; Monolithic Architecture前言我們以往都是透過單體式架構（Monolithic）去處理各種服務，且每個服務可能都依賴於同一個database，在部署上也只打包成一個名為”backend”的container，如下圖
 
 但微服務不一樣的點在於，他是將每個服務獨立成自己的伺服器，以及配置他們專用的資料庫。
