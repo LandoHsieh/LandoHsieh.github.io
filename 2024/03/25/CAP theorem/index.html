@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="hexo-theme" content="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.26.3" theme-name="Stellar" theme-version="1.26.3">
-  <meta name="robots" content="noindex,follow">
+  
   <meta name="generator" content="Hexo 7.1.1">
   <meta http-equiv='x-dns-prefetch-control' content='on' />
   
@@ -16,14 +16,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="theme-color" content="#f8f8f8">
   
-  <title>Archives - Lando's Blog</title>
+  <title>Lando's Blog</title>
 
   
-    <meta property="og:type" content="website">
-<meta property="og:title" content="Archives">
-<meta property="og:url" content="http://example.com/archives/2024/02/index.html">
+    <meta name="description" content="CAP定理-分散式系統CAP主要是探討 資料分區 (Partition) 的問題，當為了分散流量處理而新增多個資料庫節點時，每個節點的資料勢必要保持一致，才不會導致有時使用者取得到的是最新資料，有時取得到舊資料，但世界上不存在100%穩定的網路，有時會因為延遲或斷線導致資料庫之間的資料不一致，這就是CAP主要探討的議題。 CAP定義CAP主要有以下三種條件  C 一致性 (Consistency)">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Lando&#39;s Blog">
+<meta property="og:url" content="http://example.com/2024/03/25/CAP%20theorem/index.html">
 <meta property="og:site_name" content="Lando&#39;s Blog">
+<meta property="og:description" content="CAP定理-分散式系統CAP主要是探討 資料分區 (Partition) 的問題，當為了分散流量處理而新增多個資料庫節點時，每個節點的資料勢必要保持一致，才不會導致有時使用者取得到的是最新資料，有時取得到舊資料，但世界上不存在100%穩定的網路，有時會因為延遲或斷線導致資料庫之間的資料不一致，這就是CAP主要探討的議題。 CAP定義CAP主要有以下三種條件  C 一致性 (Consistency)">
 <meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2024-03-25T07:14:56.996Z">
+<meta property="article:modified_time" content="2024-03-25T07:14:56.997Z">
 <meta property="article:author" content="Lando Hsieh">
 <meta name="twitter:card" content="summary">
   
@@ -45,7 +49,7 @@
 </head>
 <body>
 
-<div class="l_body index tech" id="start" layout="undefined" ><aside class="l_left"><div class="sidebar-container">
+<div class="l_body content tech" id="start" layout="post" ><aside class="l_left"><div class="sidebar-container">
 
 
 <header class="header"><div class="logo-wrap"><a class="avatar" href="/pic/IMG_8365.JPG"><div class="bg" style="opacity:0;background-image:url(https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/avatar/round/rainbow64@3x.webp);"></div><img no-lazy class="avatar" src="/pic/IMG_8365.JPG" onerror="javascript:this.classList.add('error');this.src='https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/image/2659360.svg';"></a><a class="title" href="/"><div class="main" ff="title">Lando's Blog</div><div class="sub normal cap">歡迎來到藍多的部落格</div><div class="sub hover cap" style="opacity:0">明天的自己要比今天更厲害！</div></a></div></header>
@@ -57,19 +61,58 @@
 <nav class="menu dis-select"></nav>
 </div>
 <div class="widgets">
+
+<widget class="widget-wrapper toc single" id="data-toc" collapse="false"><div class="widget-header dis-select"><span class="name">本文目錄</span></div><div class="widget-body fs14"><div class="doc-tree active"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#CAP%E5%AE%9A%E7%BE%A9"><span class="toc-text">CAP定義</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CAP%E7%9A%84%E9%81%B8%E6%93%87"><span class="toc-text">CAP的選擇</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#CA-%E4%B8%80%E8%87%B4%E6%80%A7%E3%80%81%E5%8F%AF%E7%94%A8%E6%80%A7%EF%BC%88%E6%9C%80%E4%B8%8D%E8%80%83%E6%85%AE%EF%BC%89"><span class="toc-text">CA 一致性、可用性（最不考慮）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#CP-%E4%B8%80%E8%87%B4%E6%80%A7%E3%80%81%E5%88%86%E5%8D%80%E5%AE%B9%E9%8C%AF%E6%80%A7"><span class="toc-text">CP 一致性、分區容錯性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#AP-%E5%8F%AF%E7%94%A8%E6%80%A7%E3%80%81%E5%88%86%E5%8D%80%E5%AE%B9%E9%8C%AF%E6%80%A7"><span class="toc-text">AP 可用性、分區容錯性</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E5%A0%B4%E5%90%88"><span class="toc-text">使用場合</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%B7%E4%B8%80%E8%87%B4%E6%80%A7-String-Consistency"><span class="toc-text">強一致性 (String Consistency)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%80%E7%B5%82%E4%B8%80%E8%87%B4%E6%80%A7-Eventually-Consistency"><span class="toc-text">最終一致性 (Eventually Consistency)</span></a></li></ol></li></ol></div></div></widget>
+
+
+
+
+
+
+
 <widget class="widget-wrapper post-list"><div class="widget-header dis-select"><span class="name">最近更新</span></div><div class="widget-body fs14"><a class="item title" href="/2024/02/27/API-security/"><span class="title">如何提升API安全性</span></a><a class="item title" href="/2024/02/14/MicroservicesMonolithic/"><span class="title">微服務 vs 單體式架構</span></a><a class="item title" href="/2024/02/05/BloomFilter/"><span class="title">Bloom Filter 布隆過濾器</span></a></div></widget>
-
-
 </div>
 <footer class="footer dis-select"><div class="social-wrap"><a class="social" href="https://github.com/LandoHsieh" target="_blank" rel="external nofollow noopener noreferrer"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/social/08a41b181ce68.svg"/></a></div></footer>
 </div></aside><div class="l_main" id="main">
 
-<header class="header mobile-only"><div class="logo-wrap"><a class="avatar" href="/pic/IMG_8365.JPG"><div class="bg" style="opacity:0;background-image:url(https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/avatar/round/rainbow64@3x.webp);"></div><img no-lazy class="avatar" src="/pic/IMG_8365.JPG" onerror="javascript:this.classList.add('error');this.src='https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/image/2659360.svg';"></a><a class="title" href="/"><div class="main" ff="title">Lando's Blog</div><div class="sub normal cap">歡迎來到藍多的部落格</div><div class="sub hover cap" style="opacity:0">明天的自己要比今天更厲害！</div></a></div></header>
-
- 
 
 
-<div class="nav-wrap"><nav class="sub post cap"><a href="/">Recent</a><a class="active" href="/archives">Archives</a></nav></div><div class="post-list archives"><article class="" id="archive"><div class='archive-header h4'>2024</div><div class="archive-list"><a class='post fs14' href="/2024/03/25/CAP%20theorem/"><time>03-25</time><span>2024-03-25</span></a></div><div class="archive-list"><a class='post fs14' href="/2024/02/27/API-security/"><time>02-27</time><span>如何提升API安全性</span></a></div><div class="archive-list"><a class='post fs14' href="/2024/02/14/MicroservicesMonolithic/"><time>02-14</time><span>微服務 vs 單體式架構</span></a></div><div class="archive-list"><a class='post fs14' href="/2024/02/05/BloomFilter/"><time>02-05</time><span>Bloom Filter 布隆過濾器</span></a></div></article></div>
+
+
+<div class="article banner top">
+  <div class="content">
+    
+<div class="top bread-nav footnote"><div class="left"><div id="breadcrumb"><a class="cap breadcrumb" href="/">首頁</a>
+<span class="sep"></span><a class="cap breadcrumb" href="/">部落格</a></div>
+<div id="post-meta"><span class="created">發布於：</span><time datetime="2024-03-25T07:14:56.996Z">2024-03-25</time></span><span class="updated"><span class="dot"></span>更新於：<time datetime="2024-03-25T07:14:56.997Z">2024-03-25</time></span></div></div>
+</div>
+
+    
+  </div>
+  </div><article class="md-text content"><h1 id="CAP定理-分散式系統"><a href="#CAP定理-分散式系統" class="headerlink" title="CAP定理-分散式系統"></a>CAP定理-分散式系統</h1><p>CAP主要是探討 <strong>資料分區 (Partition)</strong> 的問題，當為了分散流量處理而新增多個資料庫節點時，每個節點的資料勢必要保持一致，才不會導致有時使用者取得到的是最新資料，有時取得到舊資料，但世界上不存在100%穩定的網路，有時會因為延遲或斷線導致資料庫之間的資料不一致，這就是CAP主要探討的議題。</p>
+<h2 id="CAP定義"><a href="#CAP定義" class="headerlink" title="CAP定義"></a>CAP定義</h2><p>CAP主要有以下三種條件</p>
+<ul>
+<li>C 一致性 (Consistency)：使用者Always拿到最新的資料，所有分散式節點對同一份資料的讀取操作，都應該返回相同的值。</li>
+<li>A 可用性 (Availability) : 使用者Always在有限時間內得到回應。</li>
+<li>P 分區容錯性 (Partition tolerance) : 即使發生網路分區，系統也應該要能夠繼續運作。</li>
+</ul>
+<h2 id="CAP的選擇"><a href="#CAP的選擇" class="headerlink" title="CAP的選擇"></a>CAP的選擇</h2><p>CAP定理告訴我們，在分散式系統中，不可能同時滿足ＣＡＰ三種條件，只能選擇其中兩種條件來滿足。</p>
+<h3 id="CA-一致性、可用性（最不考慮）"><a href="#CA-一致性、可用性（最不考慮）" class="headerlink" title="CA 一致性、可用性（最不考慮）"></a>CA 一致性、可用性（最不考慮）</h3><p>不考慮CA是因為，若要滿足這兩個條件，必須確保各個節點的資料必須100%同步，且100％可用不出錯，這代表網路環境必須100%穩定才可實現，或是直接使用單一資料庫的架構（不必考慮資料庫間的網路問題），但這樣的做法就失去了CAP的意義，因此不考慮CA的組合。</p>
+<h3 id="CP-一致性、分區容錯性"><a href="#CP-一致性、分區容錯性" class="headerlink" title="CP 一致性、分區容錯性"></a>CP 一致性、分區容錯性</h3><p>每個節點的讀寫都是最新的資料，也就是達成一致性，但又要在資料分區的狀況下讓系統正常運作，這意味著，必須犧牲掉可用性（Always取得回應），當資料分區時，我們沒辦法給予最新的資料，因此使用者的請求會直接失敗，沒有任何一個資料庫會片面地改變資料的狀態。</p>
+<p>我們保證了資料的C（一致性），但犧牲了使用者總是能得到回應的A（可用性）。</p>
+<h3 id="AP-可用性、分區容錯性"><a href="#AP-可用性、分區容錯性" class="headerlink" title="AP 可用性、分區容錯性"></a>AP 可用性、分區容錯性</h3><p>使用者Always得到回應，同時又要在資料分區狀況下讓系統正常運作，當使用者要新增資料到某個資料庫節點，但因為網路分區造成其他資料庫沒有即時同步，為了滿足Always得到回應，因此犧牲掉C (一致性) ，仍然將資料更新至該節點。</p>
+<h2 id="使用場合"><a href="#使用場合" class="headerlink" title="使用場合"></a>使用場合</h2><h3 id="強一致性-String-Consistency"><a href="#強一致性-String-Consistency" class="headerlink" title="強一致性 (String Consistency)"></a>強一致性 (String Consistency)</h3><p>即為CP，對於一致性要求較高，可以容忍暫時不可用的應用，像是金融交易這類的，資料需要保持一致的場合。</p>
+<h3 id="最終一致性-Eventually-Consistency"><a href="#最終一致性-Eventually-Consistency" class="headerlink" title="最終一致性 (Eventually Consistency)"></a>最終一致性 (Eventually Consistency)</h3><p>即為AP，顧名思義就是“最後”才會保持一致，不必要求當下每個資料庫節點的資料就要立即一致，像是遇到網路暫時中斷或延遲，沒有即時同步資料到其他資料庫，還是可以讓使用者繼續存取資料得到回應（不是最新的資料也沒差），這種會應用在文章留言、影片觀看次數、社交媒體、內容轉發等場合。</p>
+
+
+</article>
+<div class="related-wrap" id="read-next"><section class="body"><div class="item" id="prev"></div><div class="item" id="next"><div class="note">較早文章</div><a href="/2024/02/27/API-security/">如何提升API安全性</a></div></section></div>
+
+
+
+
+
+
 <footer class="page-footer footnote"><hr><div class="text"></div></footer>
 <div class='float-panel mobile-only blur' style='display:none'>
   <button type='button' class='sidebar-toggle mobile' onclick='sidebar.toggle()'>
