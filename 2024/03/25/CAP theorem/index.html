@@ -16,24 +16,25 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="theme-color" content="#f8f8f8">
   
-  <title>Lando's Blog</title>
+  <title>CAP定理-分散式系統 - Lando's Blog</title>
 
   
-    <meta name="description" content="CAP定理-分散式系統CAP主要是探討 資料分區 (Partition) 的問題，當為了分散流量處理而新增多個資料庫節點時，每個節點的資料勢必要保持一致，才不會導致有時使用者取得到的是最新資料，有時取得到舊資料，但世界上不存在100%穩定的網路，有時會因為延遲或斷線導致資料庫之間的資料不一致，這就是CAP主要探討的議題。 CAP定義CAP主要有以下三種條件  C 一致性 (Consistency)">
+    <meta name="description" content="CAP主要是探討 資料分區 (Partition) 的問題，當為了分散流量處理而新增多個資料庫節點時，每個節點的資料勢必要保持一致，才不會導致有時使用者取得到的是最新資料，有時取得到舊資料，但世界上不存在100%穩定的網路，有時會因為延遲或斷線導致資料庫之間的資料不一致，這就是CAP主要探討的議題。 CAP定義CAP主要有以下三種條件  C 一致性 (Consistency)：使用者Always拿">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Lando&#39;s Blog">
+<meta property="og:title" content="CAP定理-分散式系統">
 <meta property="og:url" content="http://example.com/2024/03/25/CAP%20theorem/index.html">
 <meta property="og:site_name" content="Lando&#39;s Blog">
-<meta property="og:description" content="CAP定理-分散式系統CAP主要是探討 資料分區 (Partition) 的問題，當為了分散流量處理而新增多個資料庫節點時，每個節點的資料勢必要保持一致，才不會導致有時使用者取得到的是最新資料，有時取得到舊資料，但世界上不存在100%穩定的網路，有時會因為延遲或斷線導致資料庫之間的資料不一致，這就是CAP主要探討的議題。 CAP定義CAP主要有以下三種條件  C 一致性 (Consistency)">
+<meta property="og:description" content="CAP主要是探討 資料分區 (Partition) 的問題，當為了分散流量處理而新增多個資料庫節點時，每個節點的資料勢必要保持一致，才不會導致有時使用者取得到的是最新資料，有時取得到舊資料，但世界上不存在100%穩定的網路，有時會因為延遲或斷線導致資料庫之間的資料不一致，這就是CAP主要探討的議題。 CAP定義CAP主要有以下三種條件  C 一致性 (Consistency)：使用者Always拿">
 <meta property="og:locale" content="zh_TW">
-<meta property="article:published_time" content="2024-03-25T07:14:56.996Z">
-<meta property="article:modified_time" content="2024-03-25T07:14:56.997Z">
+<meta property="article:published_time" content="2024-03-25T07:18:39.000Z">
+<meta property="article:modified_time" content="2024-03-25T07:20:35.487Z">
 <meta property="article:author" content="Lando Hsieh">
+<meta property="article:tag" content="分散式系統">
 <meta name="twitter:card" content="summary">
   
   
   
-  
+  <meta name="keywords" content="分散式系統">
 
   <!-- feed -->
   
@@ -70,7 +71,7 @@
 
 
 
-<widget class="widget-wrapper post-list"><div class="widget-header dis-select"><span class="name">最近更新</span></div><div class="widget-body fs14"><a class="item title" href="/2024/02/27/API-security/"><span class="title">如何提升API安全性</span></a><a class="item title" href="/2024/02/14/MicroservicesMonolithic/"><span class="title">微服務 vs 單體式架構</span></a><a class="item title" href="/2024/02/05/BloomFilter/"><span class="title">Bloom Filter 布隆過濾器</span></a></div></widget>
+<widget class="widget-wrapper post-list"><div class="widget-header dis-select"><span class="name">最近更新</span></div><div class="widget-body fs14"><a class="item title" href="/2024/02/27/API-security/"><span class="title">如何提升API安全性</span></a><a class="item title active" href="/2024/03/25/CAP%20theorem/"><span class="title">CAP定理-分散式系統</span><svg class="active-icon" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" d="M21 11.098v4.993c0 3.096 0 4.645-.734 5.321c-.35.323-.792.526-1.263.58c-.987.113-2.14-.907-4.445-2.946c-1.02-.901-1.529-1.352-2.118-1.47a2.225 2.225 0 0 0-.88 0c-.59.118-1.099.569-2.118 1.47c-2.305 2.039-3.458 3.059-4.445 2.945a2.238 2.238 0 0 1-1.263-.579C3 20.736 3 19.188 3 16.091v-4.994C3 6.81 3 4.666 4.318 3.333C5.636 2 7.758 2 12 2c4.243 0 6.364 0 7.682 1.332C21 4.665 21 6.81 21 11.098" opacity=".5"/><path fill="currentColor" d="M9 5.25a.75.75 0 0 0 0 1.5h6a.75.75 0 0 0 0-1.5z"/></svg></a><a class="item title" href="/2024/02/14/MicroservicesMonolithic/"><span class="title">微服務 vs 單體式架構</span></a><a class="item title" href="/2024/02/05/BloomFilter/"><span class="title">Bloom Filter 布隆過濾器</span></a></div></widget>
 </div>
 <footer class="footer dis-select"><div class="social-wrap"><a class="social" href="https://github.com/LandoHsieh" target="_blank" rel="external nofollow noopener noreferrer"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/social/08a41b181ce68.svg"/></a></div></footer>
 </div></aside><div class="l_main" id="main">
@@ -84,12 +85,18 @@
     
 <div class="top bread-nav footnote"><div class="left"><div id="breadcrumb"><a class="cap breadcrumb" href="/">首頁</a>
 <span class="sep"></span><a class="cap breadcrumb" href="/">部落格</a></div>
-<div id="post-meta"><span class="created">發布於：</span><time datetime="2024-03-25T07:14:56.996Z">2024-03-25</time></span><span class="updated"><span class="dot"></span>更新於：<time datetime="2024-03-25T07:14:56.997Z">2024-03-25</time></span></div></div>
+<div id="post-meta"><span class="created">發布於：</span><time datetime="2024-03-25T07:18:39.000Z">2024-03-25</time></span><span class="updated"><span class="dot"></span>更新於：<time datetime="2024-03-25T07:20:35.487Z">2024-03-25</time></span></div></div>
 </div>
 
     
+    <div class="bottom">
+      <div class="text-area">
+        <h1 class="text title"><span>CAP定理-分散式系統</span></h1>
+      </div>
+    </div>
+    
   </div>
-  </div><article class="md-text content"><h1 id="CAP定理-分散式系統"><a href="#CAP定理-分散式系統" class="headerlink" title="CAP定理-分散式系統"></a>CAP定理-分散式系統</h1><p>CAP主要是探討 <strong>資料分區 (Partition)</strong> 的問題，當為了分散流量處理而新增多個資料庫節點時，每個節點的資料勢必要保持一致，才不會導致有時使用者取得到的是最新資料，有時取得到舊資料，但世界上不存在100%穩定的網路，有時會因為延遲或斷線導致資料庫之間的資料不一致，這就是CAP主要探討的議題。</p>
+  </div><article class="md-text content"><p>CAP主要是探討 <strong>資料分區 (Partition)</strong> 的問題，當為了分散流量處理而新增多個資料庫節點時，每個節點的資料勢必要保持一致，才不會導致有時使用者取得到的是最新資料，有時取得到舊資料，但世界上不存在100%穩定的網路，有時會因為延遲或斷線導致資料庫之間的資料不一致，這就是CAP主要探討的議題。</p>
 <h2 id="CAP定義"><a href="#CAP定義" class="headerlink" title="CAP定義"></a>CAP定義</h2><p>CAP主要有以下三種條件</p>
 <ul>
 <li>C 一致性 (Consistency)：使用者Always拿到最新的資料，所有分散式節點對同一份資料的讀取操作，都應該返回相同的值。</li>
