@@ -16,25 +16,25 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="theme-color" content="#f8f8f8">
   
-  <title>CAP定理-分散式系統 - Lando's Blog</title>
+  <title>Dart中的const常量 - Lando's Blog</title>
 
   
-    <meta name="description" content="CAP主要是探討 資料分區 (Partition) 的問題，當為了分散流量處理而新增多個資料庫節點時，每個節點的資料勢必要保持一致，才不會導致有時使用者取得到的是最新資料，有時取得到舊資料，但世界上不存在100%穩定的網路，有時會因為延遲或斷線導致資料庫之間的資料不一致，這就是CAP主要探討的議題。 CAP定義CAP主要有以下三種條件  C 一致性 (Consistency)：使用者Always拿">
+    <meta name="description" content="什麼是 const在 Dart 和 Flutter 中，const關鍵字用於創建編譯時期常量。這意味著在編譯時期就確定了對象的值，並且在運行時期無法更改。 const  的優點1. 提升效能 使用  const  可以提升效能，因為常量對象在內存中只會創建一次，並且在多個地方重用。這減少了內存分配和垃圾回收的開銷。 2. 保證不可變性 const  保證對象在創建後無法更改，這有助於避免意外的狀態">
 <meta property="og:type" content="article">
-<meta property="og:title" content="CAP定理-分散式系統">
-<meta property="og:url" content="http://example.com/2024/03/25/CAP%20theorem/index.html">
+<meta property="og:title" content="Dart中的const常量">
+<meta property="og:url" content="http://example.com/2024/07/18/dart-const/index.html">
 <meta property="og:site_name" content="Lando&#39;s Blog">
-<meta property="og:description" content="CAP主要是探討 資料分區 (Partition) 的問題，當為了分散流量處理而新增多個資料庫節點時，每個節點的資料勢必要保持一致，才不會導致有時使用者取得到的是最新資料，有時取得到舊資料，但世界上不存在100%穩定的網路，有時會因為延遲或斷線導致資料庫之間的資料不一致，這就是CAP主要探討的議題。 CAP定義CAP主要有以下三種條件  C 一致性 (Consistency)：使用者Always拿">
+<meta property="og:description" content="什麼是 const在 Dart 和 Flutter 中，const關鍵字用於創建編譯時期常量。這意味著在編譯時期就確定了對象的值，並且在運行時期無法更改。 const  的優點1. 提升效能 使用  const  可以提升效能，因為常量對象在內存中只會創建一次，並且在多個地方重用。這減少了內存分配和垃圾回收的開銷。 2. 保證不可變性 const  保證對象在創建後無法更改，這有助於避免意外的狀態">
 <meta property="og:locale" content="zh_TW">
-<meta property="article:published_time" content="2024-03-25T07:18:39.000Z">
-<meta property="article:modified_time" content="2024-03-25T07:20:35.487Z">
+<meta property="article:published_time" content="2024-07-18T06:31:44.000Z">
+<meta property="article:modified_time" content="2024-07-18T06:33:54.849Z">
 <meta property="article:author" content="Lando Hsieh">
-<meta property="article:tag" content="分散式系統">
+<meta property="article:tag" content="dart">
 <meta name="twitter:card" content="summary">
   
   
   
-  <meta name="keywords" content="分散式系統">
+  <meta name="keywords" content="dart">
 
   <!-- feed -->
   
@@ -63,7 +63,7 @@
 </div>
 <div class="widgets">
 
-<widget class="widget-wrapper toc single" id="data-toc" collapse="false"><div class="widget-header dis-select"><span class="name">本文目錄</span></div><div class="widget-body fs14"><div class="doc-tree active"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#CAP%E5%AE%9A%E7%BE%A9"><span class="toc-text">CAP定義</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CAP%E7%9A%84%E9%81%B8%E6%93%87"><span class="toc-text">CAP的選擇</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#CA-%E4%B8%80%E8%87%B4%E6%80%A7%E3%80%81%E5%8F%AF%E7%94%A8%E6%80%A7%EF%BC%88%E6%9C%80%E4%B8%8D%E8%80%83%E6%85%AE%EF%BC%89"><span class="toc-text">CA 一致性、可用性（最不考慮）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#CP-%E4%B8%80%E8%87%B4%E6%80%A7%E3%80%81%E5%88%86%E5%8D%80%E5%AE%B9%E9%8C%AF%E6%80%A7"><span class="toc-text">CP 一致性、分區容錯性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#AP-%E5%8F%AF%E7%94%A8%E6%80%A7%E3%80%81%E5%88%86%E5%8D%80%E5%AE%B9%E9%8C%AF%E6%80%A7"><span class="toc-text">AP 可用性、分區容錯性</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E5%A0%B4%E5%90%88"><span class="toc-text">使用場合</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%B7%E4%B8%80%E8%87%B4%E6%80%A7-String-Consistency"><span class="toc-text">強一致性 (String Consistency)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%80%E7%B5%82%E4%B8%80%E8%87%B4%E6%80%A7-Eventually-Consistency"><span class="toc-text">最終一致性 (Eventually Consistency)</span></a></li></ol></li></ol></div></div></widget>
+<widget class="widget-wrapper toc single" id="data-toc" collapse="false"><div class="widget-header dis-select"><span class="name">本文目錄</span></div><div class="widget-body fs14"><div class="doc-tree active"><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%80%E9%BA%BC%E6%98%AF-const"><span class="toc-text">什麼是 const</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#const-%E7%9A%84%E5%84%AA%E9%BB%9E"><span class="toc-text">const  的優點</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8-const-%E7%9A%84%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A0%85"><span class="toc-text">使用  const  的注意事項</span></a></li></ol></div></div></widget>
 
 
 
@@ -71,7 +71,7 @@
 
 
 
-<widget class="widget-wrapper post-list"><div class="widget-header dis-select"><span class="name">最近更新</span></div><div class="widget-body fs14"><a class="item title" href="/2024/07/18/dart-const/"><span class="title">Dart中的const常量</span></a><a class="item title" href="/2024/07/18/dart-future-void/"><span class="title">Future void vs void in Dart</span></a><a class="item title" href="/2024/02/27/API-security/"><span class="title">如何提升API安全性</span></a><a class="item title active" href="/2024/03/25/CAP%20theorem/"><span class="title">CAP定理-分散式系統</span><svg class="active-icon" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" d="M21 11.098v4.993c0 3.096 0 4.645-.734 5.321c-.35.323-.792.526-1.263.58c-.987.113-2.14-.907-4.445-2.946c-1.02-.901-1.529-1.352-2.118-1.47a2.225 2.225 0 0 0-.88 0c-.59.118-1.099.569-2.118 1.47c-2.305 2.039-3.458 3.059-4.445 2.945a2.238 2.238 0 0 1-1.263-.579C3 20.736 3 19.188 3 16.091v-4.994C3 6.81 3 4.666 4.318 3.333C5.636 2 7.758 2 12 2c4.243 0 6.364 0 7.682 1.332C21 4.665 21 6.81 21 11.098" opacity=".5"/><path fill="currentColor" d="M9 5.25a.75.75 0 0 0 0 1.5h6a.75.75 0 0 0 0-1.5z"/></svg></a><a class="item title" href="/2024/02/14/MicroservicesMonolithic/"><span class="title">微服務 vs 單體式架構</span></a><a class="item title" href="/2024/02/05/BloomFilter/"><span class="title">Bloom Filter 布隆過濾器</span></a></div></widget>
+<widget class="widget-wrapper post-list"><div class="widget-header dis-select"><span class="name">最近更新</span></div><div class="widget-body fs14"><a class="item title active" href="/2024/07/18/dart-const/"><span class="title">Dart中的const常量</span><svg class="active-icon" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" d="M21 11.098v4.993c0 3.096 0 4.645-.734 5.321c-.35.323-.792.526-1.263.58c-.987.113-2.14-.907-4.445-2.946c-1.02-.901-1.529-1.352-2.118-1.47a2.225 2.225 0 0 0-.88 0c-.59.118-1.099.569-2.118 1.47c-2.305 2.039-3.458 3.059-4.445 2.945a2.238 2.238 0 0 1-1.263-.579C3 20.736 3 19.188 3 16.091v-4.994C3 6.81 3 4.666 4.318 3.333C5.636 2 7.758 2 12 2c4.243 0 6.364 0 7.682 1.332C21 4.665 21 6.81 21 11.098" opacity=".5"/><path fill="currentColor" d="M9 5.25a.75.75 0 0 0 0 1.5h6a.75.75 0 0 0 0-1.5z"/></svg></a><a class="item title" href="/2024/07/18/dart-future-void/"><span class="title">Future void vs void in Dart</span></a><a class="item title" href="/2024/02/27/API-security/"><span class="title">如何提升API安全性</span></a><a class="item title" href="/2024/03/25/CAP%20theorem/"><span class="title">CAP定理-分散式系統</span></a><a class="item title" href="/2024/02/14/MicroservicesMonolithic/"><span class="title">微服務 vs 單體式架構</span></a><a class="item title" href="/2024/02/05/BloomFilter/"><span class="title">Bloom Filter 布隆過濾器</span></a></div></widget>
 </div>
 <footer class="footer dis-select"><div class="social-wrap"><a class="social" href="https://github.com/LandoHsieh" target="_blank" rel="external nofollow noopener noreferrer"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/social/08a41b181ce68.svg"/></a></div></footer>
 </div></aside><div class="l_main" id="main">
@@ -85,35 +85,41 @@
     
 <div class="top bread-nav footnote"><div class="left"><div id="breadcrumb"><a class="cap breadcrumb" href="/">首頁</a>
 <span class="sep"></span><a class="cap breadcrumb" href="/">部落格</a></div>
-<div id="post-meta"><span class="created">發布於：</span><time datetime="2024-03-25T07:18:39.000Z">2024-03-25</time></span><span class="updated"><span class="dot"></span>更新於：<time datetime="2024-03-25T07:20:35.487Z">2024-03-25</time></span></div></div>
+<div id="post-meta"><span class="created">發布於：</span><time datetime="2024-07-18T06:31:44.000Z">2024-07-18</time></span><span class="updated"><span class="dot"></span>更新於：<time datetime="2024-07-18T06:33:54.849Z">2024-07-18</time></span></div></div>
 </div>
 
     
     <div class="bottom">
       <div class="text-area">
-        <h1 class="text title"><span>CAP定理-分散式系統</span></h1>
+        <h1 class="text title"><span>Dart中的const常量</span></h1>
       </div>
     </div>
     
   </div>
-  </div><article class="md-text content"><p>CAP主要是探討 <strong>資料分區 (Partition)</strong> 的問題，當為了分散流量處理而新增多個資料庫節點時，每個節點的資料勢必要保持一致，才不會導致有時使用者取得到的是最新資料，有時取得到舊資料，但世界上不存在100%穩定的網路，有時會因為延遲或斷線導致資料庫之間的資料不一致，這就是CAP主要探討的議題。</p>
-<h2 id="CAP定義"><a href="#CAP定義" class="headerlink" title="CAP定義"></a>CAP定義</h2><p>CAP主要有以下三種條件</p>
-<ul>
-<li>C 一致性 (Consistency)：使用者Always拿到最新的資料，所有分散式節點對同一份資料的讀取操作，都應該返回相同的值。</li>
-<li>A 可用性 (Availability) : 使用者Always在有限時間內得到回應。</li>
-<li>P 分區容錯性 (Partition tolerance) : 即使發生網路分區，系統也應該要能夠繼續運作。</li>
-</ul>
-<h2 id="CAP的選擇"><a href="#CAP的選擇" class="headerlink" title="CAP的選擇"></a>CAP的選擇</h2><p>CAP定理告訴我們，在分散式系統中，不可能同時滿足ＣＡＰ三種條件，只能選擇其中兩種條件來滿足。</p>
-<h3 id="CA-一致性、可用性（最不考慮）"><a href="#CA-一致性、可用性（最不考慮）" class="headerlink" title="CA 一致性、可用性（最不考慮）"></a>CA 一致性、可用性（最不考慮）</h3><p>不考慮CA是因為，若要滿足這兩個條件，必須確保各個節點的資料必須100%同步，且100％可用不出錯，這代表網路環境必須100%穩定才可實現，或是直接使用單一資料庫的架構（不必考慮資料庫間的網路問題），但這樣的做法就失去了CAP的意義，因此不考慮CA的組合。</p>
-<h3 id="CP-一致性、分區容錯性"><a href="#CP-一致性、分區容錯性" class="headerlink" title="CP 一致性、分區容錯性"></a>CP 一致性、分區容錯性</h3><p>每個節點的讀寫都是最新的資料，也就是達成一致性，但又要在資料分區的狀況下讓系統正常運作，這意味著，必須犧牲掉可用性（Always取得回應），當資料分區時，我們沒辦法給予最新的資料，因此使用者的請求會直接失敗，沒有任何一個資料庫會片面地改變資料的狀態。</p>
-<p>我們保證了資料的C（一致性），但犧牲了使用者總是能得到回應的A（可用性）。</p>
-<h3 id="AP-可用性、分區容錯性"><a href="#AP-可用性、分區容錯性" class="headerlink" title="AP 可用性、分區容錯性"></a>AP 可用性、分區容錯性</h3><p>使用者Always得到回應，同時又要在資料分區狀況下讓系統正常運作，當使用者要新增資料到某個資料庫節點，但因為網路分區造成其他資料庫沒有即時同步，為了滿足Always得到回應，因此犧牲掉C (一致性) ，仍然將資料更新至該節點。</p>
-<h2 id="使用場合"><a href="#使用場合" class="headerlink" title="使用場合"></a>使用場合</h2><h3 id="強一致性-String-Consistency"><a href="#強一致性-String-Consistency" class="headerlink" title="強一致性 (String Consistency)"></a>強一致性 (String Consistency)</h3><p>即為CP，對於一致性要求較高，可以容忍暫時不可用的應用，像是金融交易這類的，資料需要保持一致的場合。</p>
-<h3 id="最終一致性-Eventually-Consistency"><a href="#最終一致性-Eventually-Consistency" class="headerlink" title="最終一致性 (Eventually Consistency)"></a>最終一致性 (Eventually Consistency)</h3><p>即為AP，顧名思義就是“最後”才會保持一致，不必要求當下每個資料庫節點的資料就要立即一致，像是遇到網路暫時中斷或延遲，沒有即時同步資料到其他資料庫，還是可以讓使用者繼續存取資料得到回應（不是最新的資料也沒差），這種會應用在文章留言、影片觀看次數、社交媒體、內容轉發等場合。</p>
+  </div><article class="md-text content"><h3 id="什麼是-const"><a href="#什麼是-const" class="headerlink" title="什麼是 const"></a>什麼是 const</h3><p>在 Dart 和 Flutter 中，<code>const</code>關鍵字用於創建編譯時期常量。這意味著在編譯時期就確定了對象的值，並且在運行時期無法更改。</p>
+<h3 id="const-的優點"><a href="#const-的優點" class="headerlink" title="const  的優點"></a><strong><code>const</code>  的優點</strong></h3><p><strong>1. 提升效能</strong></p>
+<p>使用  <code>const</code>  可以提升效能，因為常量對象在內存中只會創建一次，並且在多個地方重用。這減少了內存分配和垃圾回收的開銷。</p>
+<p><strong>2. 保證不可變性</strong></p>
+<p><code>const</code>  保證對象在創建後無法更改，這有助於避免意外的狀態變更，並提高代碼的穩定性和可預測性。</p>
+<h3 id="使用-const-的注意事項"><a href="#使用-const-的注意事項" class="headerlink" title="使用  const  的注意事項"></a><strong>使用  <code>const</code>  的注意事項</strong></h3><p><strong>1. 所有字段必須是  <code>final</code></strong></p>
+<p>當你為一個類定義  <code>const</code>  構造函數時，該類中的所有字段必須是  <code>final</code>，因為  <code>const</code>  構造函數要求對象在編譯時期確定所有屬性。</p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyButton</span> <span class="keyword">extends</span> <span class="title">StatelessWidget</span> </span>&#123;</span><br><span class="line">  <span class="keyword">final</span> <span class="built_in">String</span> text;</span><br><span class="line">  <span class="keyword">final</span> VoidCallback onPressed;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> MyButton(&#123;</span><br><span class="line">    <span class="keyword">super</span>.key,</span><br><span class="line">    <span class="keyword">required</span> <span class="keyword">this</span>.text,</span><br><span class="line">    <span class="keyword">required</span> <span class="keyword">this</span>.onPressed,</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  <span class="meta">@override</span></span><br><span class="line">  Widget build(BuildContext context) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">const</span> Placeholder();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>2. 嵌套的  <code>const</code></strong></p>
+<p>如果一個  <code>const</code>  對象包含其他對象，這些對象也必須是  <code>const</code>。這樣可以確保整個對象樹在編譯時期都是常量。</p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> myList = [</span><br><span class="line">  <span class="keyword">const</span> Text(<span class="string">&#x27;Item 1&#x27;</span>),</span><br><span class="line">  <span class="keyword">const</span> Text(<span class="string">&#x27;Item 2&#x27;</span>),</span><br><span class="line">  <span class="keyword">const</span> Text(<span class="string">&#x27;Item 3&#x27;</span>),</span><br><span class="line">];</span><br></pre></td></tr></table></figure>
+
+<p><strong>3. 使用  <code>const</code>  構造函數</strong></p>
+<p>在 Flutter 中，許多 widget 可以使用  <code>const</code>  構造函數來創建不可變的 widget 樹。這有助於提高效能，因為常量 widget 不需要重新構建。</p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta">@override</span></span><br><span class="line">Widget build(BuildContext context) &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">const</span> Scaffold(</span><br><span class="line">    appBar: AppBar(</span><br><span class="line">      title: Text(<span class="string">&#x27;My App&#x27;</span>),</span><br><span class="line">    ),</span><br><span class="line">    body: Center(</span><br><span class="line">      child: Text(<span class="string">&#x27;Hello, World!&#x27;</span>),</span><br><span class="line">    ),</span><br><span class="line">  );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>4. 使用  <code>const</code>  關鍵字</strong></p>
+<p>在創建常量對象時，確保在構造函數前添加  <code>const</code>  關鍵字。這樣可以明確表示該對象是常量。</p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> myButton = MyButton(</span><br><span class="line">  text: <span class="string">&#x27;Click Me&#x27;</span>,</span><br><span class="line">  onPressed: () &#123;</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;Button Pressed!&#x27;</span>);</span><br><span class="line">  &#125;,</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
 
 
 </article>
-<div class="related-wrap" id="read-next"><section class="body"><div class="item" id="prev"><div class="note">較新文章</div><a href="/2024/07/18/dart-future-void/">Future void vs void in Dart</a></div><div class="item" id="next"><div class="note">較早文章</div><a href="/2024/02/27/API-security/">如何提升API安全性</a></div></section></div>
+<div class="related-wrap" id="read-next"><section class="body"><div class="item" id="prev"></div><div class="item" id="next"><div class="note">較早文章</div><a href="/2024/07/18/dart-future-void/">Future void vs void in Dart</a></div></section></div>
 
 
 
