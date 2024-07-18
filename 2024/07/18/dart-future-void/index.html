@@ -16,25 +16,25 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="theme-color" content="#f8f8f8">
   
-  <title>CAP定理-分散式系統 - Lando's Blog</title>
+  <title>Future void vs void in Dart - Lando's Blog</title>
 
   
-    <meta name="description" content="CAP主要是探討 資料分區 (Partition) 的問題，當為了分散流量處理而新增多個資料庫節點時，每個節點的資料勢必要保持一致，才不會導致有時使用者取得到的是最新資料，有時取得到舊資料，但世界上不存在100%穩定的網路，有時會因為延遲或斷線導致資料庫之間的資料不一致，這就是CAP主要探討的議題。 CAP定義CAP主要有以下三種條件  C 一致性 (Consistency)：使用者Always拿">
+    <meta name="description" content="Future vs void in Dart1. 概述在 Dart 中，Future&lt;void&gt;  和  void  都可以用來定義方法的返回類型，但它們有不同的用途和行為。理解這兩者的區別對於編寫清晰、可維護和正確的異步程式碼至關重要。 2. Future&lt;void&gt;定義Future&lt;void&gt;  表示一個異步操作，這個操作在完成時不會返回任何值。它允許調用者">
 <meta property="og:type" content="article">
-<meta property="og:title" content="CAP定理-分散式系統">
-<meta property="og:url" content="http://example.com/2024/03/25/CAP%20theorem/index.html">
+<meta property="og:title" content="Future void vs void in Dart">
+<meta property="og:url" content="http://example.com/2024/07/18/dart-future-void/index.html">
 <meta property="og:site_name" content="Lando&#39;s Blog">
-<meta property="og:description" content="CAP主要是探討 資料分區 (Partition) 的問題，當為了分散流量處理而新增多個資料庫節點時，每個節點的資料勢必要保持一致，才不會導致有時使用者取得到的是最新資料，有時取得到舊資料，但世界上不存在100%穩定的網路，有時會因為延遲或斷線導致資料庫之間的資料不一致，這就是CAP主要探討的議題。 CAP定義CAP主要有以下三種條件  C 一致性 (Consistency)：使用者Always拿">
+<meta property="og:description" content="Future vs void in Dart1. 概述在 Dart 中，Future&lt;void&gt;  和  void  都可以用來定義方法的返回類型，但它們有不同的用途和行為。理解這兩者的區別對於編寫清晰、可維護和正確的異步程式碼至關重要。 2. Future&lt;void&gt;定義Future&lt;void&gt;  表示一個異步操作，這個操作在完成時不會返回任何值。它允許調用者">
 <meta property="og:locale" content="zh_TW">
-<meta property="article:published_time" content="2024-03-25T07:18:39.000Z">
-<meta property="article:modified_time" content="2024-03-25T07:20:35.487Z">
+<meta property="article:published_time" content="2024-07-18T06:01:32.000Z">
+<meta property="article:modified_time" content="2024-07-18T06:11:24.987Z">
 <meta property="article:author" content="Lando Hsieh">
-<meta property="article:tag" content="分散式系統">
+<meta property="article:tag" content="dart">
 <meta name="twitter:card" content="summary">
   
   
   
-  <meta name="keywords" content="分散式系統">
+  <meta name="keywords" content="dart">
 
   <!-- feed -->
   
@@ -63,7 +63,7 @@
 </div>
 <div class="widgets">
 
-<widget class="widget-wrapper toc single" id="data-toc" collapse="false"><div class="widget-header dis-select"><span class="name">本文目錄</span></div><div class="widget-body fs14"><div class="doc-tree active"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#CAP%E5%AE%9A%E7%BE%A9"><span class="toc-text">CAP定義</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CAP%E7%9A%84%E9%81%B8%E6%93%87"><span class="toc-text">CAP的選擇</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#CA-%E4%B8%80%E8%87%B4%E6%80%A7%E3%80%81%E5%8F%AF%E7%94%A8%E6%80%A7%EF%BC%88%E6%9C%80%E4%B8%8D%E8%80%83%E6%85%AE%EF%BC%89"><span class="toc-text">CA 一致性、可用性（最不考慮）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#CP-%E4%B8%80%E8%87%B4%E6%80%A7%E3%80%81%E5%88%86%E5%8D%80%E5%AE%B9%E9%8C%AF%E6%80%A7"><span class="toc-text">CP 一致性、分區容錯性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#AP-%E5%8F%AF%E7%94%A8%E6%80%A7%E3%80%81%E5%88%86%E5%8D%80%E5%AE%B9%E9%8C%AF%E6%80%A7"><span class="toc-text">AP 可用性、分區容錯性</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E5%A0%B4%E5%90%88"><span class="toc-text">使用場合</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%B7%E4%B8%80%E8%87%B4%E6%80%A7-String-Consistency"><span class="toc-text">強一致性 (String Consistency)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%80%E7%B5%82%E4%B8%80%E8%87%B4%E6%80%A7-Eventually-Consistency"><span class="toc-text">最終一致性 (Eventually Consistency)</span></a></li></ol></li></ol></div></div></widget>
+<widget class="widget-wrapper toc single" id="data-toc" collapse="false"><div class="widget-header dis-select"><span class="name">本文目錄</span></div><div class="widget-body fs14"><div class="doc-tree active"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E6%A6%82%E8%BF%B0"><span class="toc-text">1. 概述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-Future"><span class="toc-text">2. Future&lt;void&gt;</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9A%E7%BE%A9"><span class="toc-text">定義</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E6%83%85%E5%A2%83"><span class="toc-text">使用情境</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AF%84%E4%BE%8B"><span class="toc-text">範例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%87%8D%E9%BB%9E"><span class="toc-text">重點</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-void"><span class="toc-text">3. void</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9A%E7%BE%A9-1"><span class="toc-text">定義</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E6%83%85%E5%A2%83-1"><span class="toc-text">使用情境</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AF%84%E4%BE%8B-1"><span class="toc-text">範例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%87%8D%E9%BB%9E-1"><span class="toc-text">重點</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E6%AF%94%E8%BC%83"><span class="toc-text">4. 比較</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-%E7%B8%BD%E7%B5%90"><span class="toc-text">5. 總結</span></a></li></ol></div></div></widget>
 
 
 
@@ -71,7 +71,7 @@
 
 
 
-<widget class="widget-wrapper post-list"><div class="widget-header dis-select"><span class="name">最近更新</span></div><div class="widget-body fs14"><a class="item title" href="/2024/07/18/dart-future-void/"><span class="title">Future void vs void in Dart</span></a><a class="item title" href="/2024/02/27/API-security/"><span class="title">如何提升API安全性</span></a><a class="item title active" href="/2024/03/25/CAP%20theorem/"><span class="title">CAP定理-分散式系統</span><svg class="active-icon" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" d="M21 11.098v4.993c0 3.096 0 4.645-.734 5.321c-.35.323-.792.526-1.263.58c-.987.113-2.14-.907-4.445-2.946c-1.02-.901-1.529-1.352-2.118-1.47a2.225 2.225 0 0 0-.88 0c-.59.118-1.099.569-2.118 1.47c-2.305 2.039-3.458 3.059-4.445 2.945a2.238 2.238 0 0 1-1.263-.579C3 20.736 3 19.188 3 16.091v-4.994C3 6.81 3 4.666 4.318 3.333C5.636 2 7.758 2 12 2c4.243 0 6.364 0 7.682 1.332C21 4.665 21 6.81 21 11.098" opacity=".5"/><path fill="currentColor" d="M9 5.25a.75.75 0 0 0 0 1.5h6a.75.75 0 0 0 0-1.5z"/></svg></a><a class="item title" href="/2024/02/14/MicroservicesMonolithic/"><span class="title">微服務 vs 單體式架構</span></a><a class="item title" href="/2024/02/05/BloomFilter/"><span class="title">Bloom Filter 布隆過濾器</span></a></div></widget>
+<widget class="widget-wrapper post-list"><div class="widget-header dis-select"><span class="name">最近更新</span></div><div class="widget-body fs14"><a class="item title active" href="/2024/07/18/dart-future-void/"><span class="title">Future void vs void in Dart</span><svg class="active-icon" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" d="M21 11.098v4.993c0 3.096 0 4.645-.734 5.321c-.35.323-.792.526-1.263.58c-.987.113-2.14-.907-4.445-2.946c-1.02-.901-1.529-1.352-2.118-1.47a2.225 2.225 0 0 0-.88 0c-.59.118-1.099.569-2.118 1.47c-2.305 2.039-3.458 3.059-4.445 2.945a2.238 2.238 0 0 1-1.263-.579C3 20.736 3 19.188 3 16.091v-4.994C3 6.81 3 4.666 4.318 3.333C5.636 2 7.758 2 12 2c4.243 0 6.364 0 7.682 1.332C21 4.665 21 6.81 21 11.098" opacity=".5"/><path fill="currentColor" d="M9 5.25a.75.75 0 0 0 0 1.5h6a.75.75 0 0 0 0-1.5z"/></svg></a><a class="item title" href="/2024/02/27/API-security/"><span class="title">如何提升API安全性</span></a><a class="item title" href="/2024/03/25/CAP%20theorem/"><span class="title">CAP定理-分散式系統</span></a><a class="item title" href="/2024/02/14/MicroservicesMonolithic/"><span class="title">微服務 vs 單體式架構</span></a><a class="item title" href="/2024/02/05/BloomFilter/"><span class="title">Bloom Filter 布隆過濾器</span></a></div></widget>
 </div>
 <footer class="footer dis-select"><div class="social-wrap"><a class="social" href="https://github.com/LandoHsieh" target="_blank" rel="external nofollow noopener noreferrer"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/social/08a41b181ce68.svg"/></a></div></footer>
 </div></aside><div class="l_main" id="main">
@@ -85,35 +85,67 @@
     
 <div class="top bread-nav footnote"><div class="left"><div id="breadcrumb"><a class="cap breadcrumb" href="/">首頁</a>
 <span class="sep"></span><a class="cap breadcrumb" href="/">部落格</a></div>
-<div id="post-meta"><span class="created">發布於：</span><time datetime="2024-03-25T07:18:39.000Z">2024-03-25</time></span><span class="updated"><span class="dot"></span>更新於：<time datetime="2024-03-25T07:20:35.487Z">2024-03-25</time></span></div></div>
+<div id="post-meta"><span class="created">發布於：</span><time datetime="2024-07-18T06:01:32.000Z">2024-07-18</time></span><span class="updated"><span class="dot"></span>更新於：<time datetime="2024-07-18T06:11:24.987Z">2024-07-18</time></span></div></div>
 </div>
 
     
     <div class="bottom">
       <div class="text-area">
-        <h1 class="text title"><span>CAP定理-分散式系統</span></h1>
+        <h1 class="text title"><span>Future void vs void in Dart</span></h1>
       </div>
     </div>
     
   </div>
-  </div><article class="md-text content"><p>CAP主要是探討 <strong>資料分區 (Partition)</strong> 的問題，當為了分散流量處理而新增多個資料庫節點時，每個節點的資料勢必要保持一致，才不會導致有時使用者取得到的是最新資料，有時取得到舊資料，但世界上不存在100%穩定的網路，有時會因為延遲或斷線導致資料庫之間的資料不一致，這就是CAP主要探討的議題。</p>
-<h2 id="CAP定義"><a href="#CAP定義" class="headerlink" title="CAP定義"></a>CAP定義</h2><p>CAP主要有以下三種條件</p>
-<ul>
-<li>C 一致性 (Consistency)：使用者Always拿到最新的資料，所有分散式節點對同一份資料的讀取操作，都應該返回相同的值。</li>
-<li>A 可用性 (Availability) : 使用者Always在有限時間內得到回應。</li>
-<li>P 分區容錯性 (Partition tolerance) : 即使發生網路分區，系統也應該要能夠繼續運作。</li>
-</ul>
-<h2 id="CAP的選擇"><a href="#CAP的選擇" class="headerlink" title="CAP的選擇"></a>CAP的選擇</h2><p>CAP定理告訴我們，在分散式系統中，不可能同時滿足ＣＡＰ三種條件，只能選擇其中兩種條件來滿足。</p>
-<h3 id="CA-一致性、可用性（最不考慮）"><a href="#CA-一致性、可用性（最不考慮）" class="headerlink" title="CA 一致性、可用性（最不考慮）"></a>CA 一致性、可用性（最不考慮）</h3><p>不考慮CA是因為，若要滿足這兩個條件，必須確保各個節點的資料必須100%同步，且100％可用不出錯，這代表網路環境必須100%穩定才可實現，或是直接使用單一資料庫的架構（不必考慮資料庫間的網路問題），但這樣的做法就失去了CAP的意義，因此不考慮CA的組合。</p>
-<h3 id="CP-一致性、分區容錯性"><a href="#CP-一致性、分區容錯性" class="headerlink" title="CP 一致性、分區容錯性"></a>CP 一致性、分區容錯性</h3><p>每個節點的讀寫都是最新的資料，也就是達成一致性，但又要在資料分區的狀況下讓系統正常運作，這意味著，必須犧牲掉可用性（Always取得回應），當資料分區時，我們沒辦法給予最新的資料，因此使用者的請求會直接失敗，沒有任何一個資料庫會片面地改變資料的狀態。</p>
-<p>我們保證了資料的C（一致性），但犧牲了使用者總是能得到回應的A（可用性）。</p>
-<h3 id="AP-可用性、分區容錯性"><a href="#AP-可用性、分區容錯性" class="headerlink" title="AP 可用性、分區容錯性"></a>AP 可用性、分區容錯性</h3><p>使用者Always得到回應，同時又要在資料分區狀況下讓系統正常運作，當使用者要新增資料到某個資料庫節點，但因為網路分區造成其他資料庫沒有即時同步，為了滿足Always得到回應，因此犧牲掉C (一致性) ，仍然將資料更新至該節點。</p>
-<h2 id="使用場合"><a href="#使用場合" class="headerlink" title="使用場合"></a>使用場合</h2><h3 id="強一致性-String-Consistency"><a href="#強一致性-String-Consistency" class="headerlink" title="強一致性 (String Consistency)"></a>強一致性 (String Consistency)</h3><p>即為CP，對於一致性要求較高，可以容忍暫時不可用的應用，像是金融交易這類的，資料需要保持一致的場合。</p>
-<h3 id="最終一致性-Eventually-Consistency"><a href="#最終一致性-Eventually-Consistency" class="headerlink" title="最終一致性 (Eventually Consistency)"></a>最終一致性 (Eventually Consistency)</h3><p>即為AP，顧名思義就是“最後”才會保持一致，不必要求當下每個資料庫節點的資料就要立即一致，像是遇到網路暫時中斷或延遲，沒有即時同步資料到其他資料庫，還是可以讓使用者繼續存取資料得到回應（不是最新的資料也沒差），這種會應用在文章留言、影片觀看次數、社交媒體、內容轉發等場合。</p>
+  </div><article class="md-text content"><h1 id="Future-vs-void-in-Dart"><a href="#Future-vs-void-in-Dart" class="headerlink" title="Future vs void in Dart"></a>Future<void> vs void in Dart</h1><h2 id="1-概述"><a href="#1-概述" class="headerlink" title="1. 概述"></a>1. 概述</h2><p>在 Dart 中，<code>Future&lt;void&gt;</code>  和  <code>void</code>  都可以用來定義方法的返回類型，但它們有不同的用途和行為。理解這兩者的區別對於編寫清晰、可維護和正確的異步程式碼至關重要。</p>
+<h2 id="2-Future"><a href="#2-Future" class="headerlink" title="2. Future&lt;void&gt;"></a>2. <code>Future&lt;void&gt;</code></h2><h3 id="定義"><a href="#定義" class="headerlink" title="定義"></a>定義</h3><p><code>Future&lt;void&gt;</code>  表示一個異步操作，這個操作在完成時不會返回任何值。它允許調用者等待操作完成並進行錯誤處理。</p>
+<h3 id="使用情境"><a href="#使用情境" class="headerlink" title="使用情境"></a>使用情境</h3><p>當方法需要執行異步操作並且調用者需要等待操作完成時。當方法可能會拋出異步錯誤並且需要錯誤處理時。</p>
+<h3 id="範例"><a href="#範例" class="headerlink" title="範例"></a>範例</h3><figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">Future&lt;<span class="keyword">void</span>&gt; fetchData() <span class="keyword">async</span> &#123;</span><br><span class="line">  <span class="comment">// 模擬一個異步操作，例如網絡請求</span></span><br><span class="line">  <span class="keyword">await</span> Future.delayed(<span class="built_in">Duration</span>(seconds: <span class="number">2</span>));</span><br><span class="line">  <span class="built_in">print</span>(<span class="string">&#x27;Data fetched&#x27;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">void</span> main() <span class="keyword">async</span> &#123;</span><br><span class="line">  <span class="built_in">print</span>(<span class="string">&#x27;Fetching data...&#x27;</span>);</span><br><span class="line">  <span class="keyword">await</span> fetchData();</span><br><span class="line">  <span class="built_in">print</span>(<span class="string">&#x27;Data fetch complete&#x27;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="重點"><a href="#重點" class="headerlink" title="重點"></a>重點</h3><p>明確的異步操作：<code>Future&lt;void&gt;</code>  明確表示這是異步操作。等待異步操作完成：調用者可以使用  <code>await</code>  等待操作完成。錯誤處理：調用者可以使用  <code>try-catch</code>  進行錯誤處理。</p>
+<h2 id="3-void"><a href="#3-void" class="headerlink" title="3. void"></a>3. <code>void</code></h2><h3 id="定義-1"><a href="#定義-1" class="headerlink" title="定義"></a>定義</h3><p><code>void</code>  表示方法不會返回任何值。這通常用於同步方法，但也可以用於異步方法（不推薦）。</p>
+<h3 id="使用情境-1"><a href="#使用情境-1" class="headerlink" title="使用情境"></a>使用情境</h3><p>當方法是同步的並且不需要返回值時。當方法是異步的但調用者不需要等待操作完成（不推薦）。</p>
+<h3 id="範例-1"><a href="#範例-1" class="headerlink" title="範例"></a>範例</h3><figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span> printMessage() &#123;</span><br><span class="line">  <span class="built_in">print</span>(<span class="string">&#x27;Hello, World!&#x27;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">void</span> main() &#123;</span><br><span class="line">  printMessage();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="重點-1"><a href="#重點-1" class="headerlink" title="重點"></a>重點</h3><p>同步操作：通常用於同步方法。無法等待異步操作完成：如果用於異步方法，調用者無法等待操作完成，可能導致競態條件。</p>
+<h2 id="4-比較"><a href="#4-比較" class="headerlink" title="4. 比較"></a>4. 比較</h2><table>
+<thead>
+<tr>
+<th>特性</th>
+<th><code>Future&lt;void&gt;</code></th>
+<th><code>void</code></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>返回類型</td>
+<td>異步操作，不返回值</td>
+<td>同步操作，不返回值</td>
+</tr>
+<tr>
+<td>等待操作完成</td>
+<td>可以使用 <code>await</code> 等待操作完成</td>
+<td>無法等待操作完成</td>
+</tr>
+<tr>
+<td>錯誤處理</td>
+<td>可以使用 <code>try-catch</code> 進行錯誤處理</td>
+<td>只能處理同步錯誤</td>
+</tr>
+<tr>
+<td>使用情境</td>
+<td>當需要執行異步操作並等待完成時</td>
+<td>當方法是同步且不需要返回值時</td>
+</tr>
+<tr>
+<td>典型範例</td>
+<td>網絡請求、文件操作等異步操作</td>
+<td>打印消息、計算等同步操作</td>
+</tr>
+</tbody></table>
+<h2 id="5-總結"><a href="#5-總結" class="headerlink" title="5. 總結"></a>5. 總結</h2><p><code>Future&lt;void&gt;</code>：適用於異步操作，允許調用者等待操作完成並進行錯誤處理。應該用於需要異步執行的任務。<code>void</code>：適用於同步操作，不允許調用者等待操作完成。應該用於不需要返回值的同步方法。</p>
 
 
 </article>
-<div class="related-wrap" id="read-next"><section class="body"><div class="item" id="prev"><div class="note">較新文章</div><a href="/2024/07/18/dart-future-void/">Future void vs void in Dart</a></div><div class="item" id="next"><div class="note">較早文章</div><a href="/2024/02/27/API-security/">如何提升API安全性</a></div></section></div>
+<div class="related-wrap" id="read-next"><section class="body"><div class="item" id="prev"></div><div class="item" id="next"><div class="note">較早文章</div><a href="/2024/03/25/CAP%20theorem/">CAP定理-分散式系統</a></div></section></div>
 
 
 
