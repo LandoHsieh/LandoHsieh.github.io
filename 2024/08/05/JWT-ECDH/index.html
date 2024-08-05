@@ -1,0 +1,331 @@
+
+<!DOCTYPE html><html lang="zh-TW">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="hexo-theme" content="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.26.3" theme-name="Stellar" theme-version="1.26.3">
+  
+  <meta name="generator" content="Hexo 7.1.1">
+  <meta http-equiv='x-dns-prefetch-control' content='on' />
+  
+  <meta name="renderer" content="webkit">
+  <meta name="force-rendering" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <meta name="HandheldFriendly" content="True" >
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="theme-color" content="#f8f8f8">
+  
+  <title>ECDH加密搭配JWT提升安全性 - Lando's Blog</title>
+
+  
+    <meta name="description" content="前言一般生成 JWT 時，都是透過設定好的固定字串當作 JWT 的密鑰（Secret key），然後再將 JWT 傳送到後端，並用相同的 Secret key 去做驗證，但這樣的做法安全性相對較低，如果固定的 Secret Key 被洩漏，攻擊者可以偽造 JWT，並且無法防止重放攻擊。 當使用 JWT（JSON Web Token）搭配 ECDH（橢圓曲線 Diffie-Hellman）密鑰交換來">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ECDH加密搭配JWT提升安全性">
+<meta property="og:url" content="http://example.com/2024/08/05/JWT-ECDH/index.html">
+<meta property="og:site_name" content="Lando&#39;s Blog">
+<meta property="og:description" content="前言一般生成 JWT 時，都是透過設定好的固定字串當作 JWT 的密鑰（Secret key），然後再將 JWT 傳送到後端，並用相同的 Secret key 去做驗證，但這樣的做法安全性相對較低，如果固定的 Secret Key 被洩漏，攻擊者可以偽造 JWT，並且無法防止重放攻擊。 當使用 JWT（JSON Web Token）搭配 ECDH（橢圓曲線 Diffie-Hellman）密鑰交換來">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2024-08-05T01:45:18.000Z">
+<meta property="article:modified_time" content="2024-08-05T01:47:50.804Z">
+<meta property="article:author" content="Lando Hsieh">
+<meta property="article:tag" content="ASP.NET">
+<meta name="twitter:card" content="summary">
+  
+  
+  
+  <meta name="keywords" content="ASP.NET">
+
+  <!-- feed -->
+  
+
+  <link rel="stylesheet" href="/css/main.css?v=1.26.3">
+
+  
+
+  
+
+  
+  
+</head>
+<body>
+
+<div class="l_body content tech" id="start" layout="post" ><aside class="l_left"><div class="sidebar-container">
+
+
+<header class="header"><div class="logo-wrap"><a class="avatar" href="/pic/IMG_8365.JPG"><div class="bg" style="opacity:0;background-image:url(https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/avatar/round/rainbow64@3x.webp);"></div><img no-lazy class="avatar" src="/pic/IMG_8365.JPG" onerror="javascript:this.classList.add('error');this.src='https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/image/2659360.svg';"></a><a class="title" href="/"><div class="main" ff="title">Lando's Blog</div><div class="sub normal cap">歡迎來到藍多的部落格</div><div class="sub hover cap" style="opacity:0">明天的自己要比今天更厲害！</div></a></div></header>
+
+<div class="nav-area">
+<div class="search-wrapper" id="search-wrapper"><form class="search-form"><a class="search-button" onclick="document.getElementById(&quot;search-input&quot;).focus();"><svg t="1705074644177" class="icon search-icon" viewBox="0 0 1025 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1560" width="200" height="200"><path d="M1008.839137 935.96571L792.364903 719.491476a56.783488 56.783488 0 0 0-80.152866 0 358.53545 358.53545 0 1 1 100.857314-335.166073 362.840335 362.840335 0 0 1-3.689902 170.145468 51.248635 51.248635 0 1 0 99.217358 26.444296 462.057693 462.057693 0 1 0-158.255785 242.303546l185.930047 185.725053a51.248635 51.248635 0 0 0 72.568068 0 51.248635 51.248635 0 0 0 0-72.978056z" p-id="1561"></path><path d="M616.479587 615.969233a50.428657 50.428657 0 0 0-61.498362-5.534852 174.655348 174.655348 0 0 1-177.525271 3.484907 49.403684 49.403684 0 0 0-58.833433 6.76482l-3.074918 2.869923a49.403684 49.403684 0 0 0 8.609771 78.10292 277.767601 277.767601 0 0 0 286.992355-5.739847 49.403684 49.403684 0 0 0 8.404776-76.667958z" p-id="1562"></path></svg></a><input type="text" class="search-input" id="search-input" placeholder="搜尋文章"></form><div id="search-result"></div><div class="search-no-result">沒有找到內容！</div></div>
+
+
+<nav class="menu dis-select"></nav>
+</div>
+<div class="widgets">
+
+<widget class="widget-wrapper toc single" id="data-toc" collapse="false"><div class="widget-header dis-select"><span class="name">本文目錄</span></div><div class="widget-body fs14"><div class="doc-tree active"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E6%83%85%E5%A2%83"><span class="toc-text">使用情境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%B7%E9%AB%94%E6%AD%A5%E9%A9%9F%E8%88%87%E7%A8%8B%E5%BC%8F%E7%A2%BC%E7%AF%84%E4%BE%8B"><span class="toc-text">具體步驟與程式碼範例</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E7%94%9F%E6%88%90%E5%AF%86%E9%91%B0%E5%B0%8D"><span class="toc-text">1. 生成密鑰對</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E7%94%9F%E6%88%90-Server-%E7%AB%AF%E5%92%8C-Device-%E7%AB%AF%E7%9A%84%E5%85%AC%E7%A7%81%E9%91%B0%E5%B0%8D"><span class="toc-text">2. 生成 Server 端和 Device 端的公私鑰對</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E5%89%B5%E5%BB%BA-JWT"><span class="toc-text">3. 創建 JWT</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E9%A9%97%E8%AD%89-JWT"><span class="toc-text">4. 驗證 JWT</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ECDH-%E5%AF%86%E9%91%B0%E4%BA%A4%E6%8F%9B%E5%84%AA%E7%BC%BA%E9%BB%9E"><span class="toc-text">ECDH 密鑰交換優缺點</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%84%AA%E9%BB%9E"><span class="toc-text">優點</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BC%BA%E9%BB%9E"><span class="toc-text">缺點</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%B8%BD%E7%B5%90"><span class="toc-text">總結</span></a></li></ol></div></div></widget>
+
+
+
+
+
+
+
+<widget class="widget-wrapper post-list"><div class="widget-header dis-select"><span class="name">最近更新</span></div><div class="widget-body fs14"><a class="item title active" href="/2024/08/05/JWT-ECDH/"><span class="title">ECDH加密搭配JWT提升安全性</span><svg class="active-icon" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" d="M21 11.098v4.993c0 3.096 0 4.645-.734 5.321c-.35.323-.792.526-1.263.58c-.987.113-2.14-.907-4.445-2.946c-1.02-.901-1.529-1.352-2.118-1.47a2.225 2.225 0 0 0-.88 0c-.59.118-1.099.569-2.118 1.47c-2.305 2.039-3.458 3.059-4.445 2.945a2.238 2.238 0 0 1-1.263-.579C3 20.736 3 19.188 3 16.091v-4.994C3 6.81 3 4.666 4.318 3.333C5.636 2 7.758 2 12 2c4.243 0 6.364 0 7.682 1.332C21 4.665 21 6.81 21 11.098" opacity=".5"/><path fill="currentColor" d="M9 5.25a.75.75 0 0 0 0 1.5h6a.75.75 0 0 0 0-1.5z"/></svg></a><a class="item title" href="/2024/07/24/Flutter-riverpod/"><span class="title">Flutter Riverpod 狀態管理工具</span></a><a class="item title" href="/2024/07/18/dart-const/"><span class="title">Dart中的const常量</span></a><a class="item title" href="/2024/07/18/dart-future-void/"><span class="title">Future void vs void in Dart</span></a><a class="item title" href="/2024/02/27/API-security/"><span class="title">如何提升API安全性</span></a><a class="item title" href="/2024/03/25/CAP%20theorem/"><span class="title">CAP定理-分散式系統</span></a><a class="item title" href="/2024/02/14/MicroservicesMonolithic/"><span class="title">微服務 vs 單體式架構</span></a><a class="item title" href="/2024/02/05/BloomFilter/"><span class="title">Bloom Filter 布隆過濾器</span></a></div></widget>
+</div>
+<footer class="footer dis-select"><div class="social-wrap"><a class="social" href="https://github.com/LandoHsieh" target="_blank" rel="external nofollow noopener noreferrer"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/social/08a41b181ce68.svg"/></a></div></footer>
+</div></aside><div class="l_main" id="main">
+
+
+
+
+
+<div class="article banner top">
+  <div class="content">
+    
+<div class="top bread-nav footnote"><div class="left"><div id="breadcrumb"><a class="cap breadcrumb" href="/">首頁</a>
+<span class="sep"></span><a class="cap breadcrumb" href="/">部落格</a></div>
+<div id="post-meta"><span class="created">發布於：</span><time datetime="2024-08-05T01:45:18.000Z">2024-08-05</time></span><span class="updated"><span class="dot"></span>更新於：<time datetime="2024-08-05T01:47:50.804Z">2024-08-05</time></span></div></div>
+</div>
+
+    
+    <div class="bottom">
+      <div class="text-area">
+        <h1 class="text title"><span>ECDH加密搭配JWT提升安全性</span></h1>
+      </div>
+    </div>
+    
+  </div>
+  </div><article class="md-text content"><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a><strong>前言</strong></h2><p><strong>一般生成 JWT 時，都是透過設定好的固定字串當作 JWT 的密鑰（Secret key），然後再將 JWT 傳送到後端，並用相同的 Secret key 去做驗證，但這樣的做法安全性相對較低，如果固定的 Secret Key 被洩漏，攻擊者可以偽造 JWT，並且無法防止重放攻擊。</strong></p>
+<p><strong>當使用 JWT（JSON Web Token）搭配 ECDH（橢圓曲線 Diffie-Hellman）密鑰交換來提升安全性時，主要目的是利用 ECDH 生成的共享秘密密鑰來簽名和驗證 JWT。這樣可以確保 JWT 的完整性和來源的可信性，並且在通信過程中不會暴露實際的簽名密鑰。</strong></p>
+<p><strong>此篇將探討如何使用 ECDH 橢圓曲線進行密鑰交換生成 Secret Key 提升 JWT 的安全性。</strong></p>
+<h2 id="使用情境"><a href="#使用情境" class="headerlink" title="使用情境"></a>使用情境</h2><p><strong>假設有一個 IoT 設備（Device）需要對雲端服務（Server）發送 API 請求，請求中需要包含生成的 JTW，透過 JWT 驗證請求是否有效。以下是一個具體的使用情境：</strong></p>
+<ol>
+<li><p><strong>Device 初始化：第一次啟用 Device 時要做的事</strong></p>
+<ul>
+<li><strong>Device 中生成一對 ECC 密鑰對（<code>dPub</code>和<code>dPri</code>），並將 dPub 傳送到後端 DB 儲存。（每個 Device 都有一個儲存自己 dPub 的欄位）</strong></li>
+<li><strong>Server 中生成一對 ECC 密鑰對（<code>sPub</code>和<code>sPri</code>），將 sPub 傳送給 Device 中儲存（亦可直接編譯在 Device 內）</strong></li>
+</ul>
+<p><strong>這樣 Server 端就會有 dPub, sPub, sPri 三個，而 Device 內就會有 dPub, dPri, sPub 三個</strong></p>
+</li>
+<li><p><strong>當 Device 要對 Server 發送 API 請求時</strong></p>
+<ul>
+<li><strong>Device 透過<code>dPri</code>跟<code>sPub</code>生成共享密鑰 (Secret Key)</strong></li>
+<li><strong>Device 用這個 Secret key 跟 Payload 簽名 JWT (payload 中包含 Device UUID)</strong></li>
+<li><strong>Device 將簽名好的 JWT 發送到 Server</strong></li>
+<li><strong>Server 收到 JWT 後，將 <code>sPri</code>與<code>dPub</code>生成共享密鑰 (Secret Key)</strong></li>
+<li><strong>Server 用這組密鑰驗證 JWT 是否有效，有效則處理 request</strong></li>
+</ul>
+</li>
+</ol>
+<h2 id="具體步驟與程式碼範例"><a href="#具體步驟與程式碼範例" class="headerlink" title="具體步驟與程式碼範例"></a>具體步驟與程式碼範例</h2><p>下面就用 ASP.NET 來做個範例，用於生成和驗證使用 ECDH 密鑰交換的 JWT：</p>
+<h3 id="1-生成密鑰對"><a href="#1-生成密鑰對" class="headerlink" title="1. 生成密鑰對"></a>1. 生成密鑰對</h3><figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> ECDsa _ecdsa;</span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> ECDsa _ecdsaByDevice;</span><br><span class="line"><span class="function"><span class="keyword">static</span> <span class="title">JwtValidatorController</span>()</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">// 當Controller第一次被使用時生成ECDsa密鑰</span></span><br><span class="line">    _ecdsa = ECDsa.Create(ECCurve.NamedCurves.nistP256);</span><br><span class="line">    _ecdsaByDevice = ECDsa.Create(ECCurve.NamedCurves.nistP256);</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="2-生成-Server-端和-Device-端的公私鑰對"><a href="#2-生成-Server-端和-Device-端的公私鑰對" class="headerlink" title="2. 生成 Server 端和 Device 端的公私鑰對"></a>2. 生成 Server 端和 Device 端的公私鑰對</h3><figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">[<span class="meta">HttpGet(<span class="string">&quot;generateKeyByServer&quot;</span>)</span>]</span><br><span class="line"><span class="function"><span class="keyword">public</span> IActionResult <span class="title">GenerateKeys</span>()</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">byte</span>[] publicKey = _ecdsa.ExportSubjectPublicKeyInfo();</span><br><span class="line">    <span class="built_in">string</span> publicKeyBase64 = Convert.ToBase64String(publicKey);</span><br><span class="line"></span><br><span class="line">    <span class="built_in">byte</span>[] privateKey = _ecdsa.ExportPkcs8PrivateKey();</span><br><span class="line">    <span class="built_in">string</span> privateKeyBase64 = Convert.ToBase64String(privateKey);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> keys = <span class="keyword">new</span></span><br><span class="line">    &#123;</span><br><span class="line">        PublicKey = publicKeyBase64,</span><br><span class="line">        PrivateKey = privateKeyBase64</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> Ok(keys);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">[<span class="meta">HttpGet(<span class="string">&quot;generateKeyByDevice&quot;</span>)</span>]</span><br><span class="line"><span class="function"><span class="keyword">public</span> IActionResult <span class="title">GenerateKeysByDevice</span>()</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">byte</span>[] publicKey = _ecdsaByDevice.ExportSubjectPublicKeyInfo();</span><br><span class="line">    <span class="built_in">string</span> publicKeyBase64 = Convert.ToBase64String(publicKey);</span><br><span class="line"></span><br><span class="line">    <span class="built_in">byte</span>[] privateKey = _ecdsaByDevice.ExportPkcs8PrivateKey();</span><br><span class="line">    <span class="built_in">string</span> privateKeyBase64 = Convert.ToBase64String(privateKey);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> keys = <span class="keyword">new</span></span><br><span class="line">    &#123;</span><br><span class="line">        PublicKey = publicKeyBase64,</span><br><span class="line">        PrivateKey = privateKeyBase64</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> Ok(keys);</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="3-創建-JWT"><a href="#3-創建-JWT" class="headerlink" title="3. 創建 JWT"></a>3. 創建 JWT</h3><figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">CreateJwtRequest</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="built_in">string</span> ServerPublicKey &#123; <span class="keyword">get</span>; <span class="keyword">set</span>; &#125;</span><br><span class="line">    <span class="keyword">public</span> <span class="built_in">string</span> DevciePrivateKey &#123; <span class="keyword">get</span>; <span class="keyword">set</span>; &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">[<span class="meta">HttpPost(<span class="string">&quot;create-jwt&quot;</span>)</span>]</span><br><span class="line"><span class="function"><span class="keyword">public</span> IActionResult <span class="title">CreateJwt</span>(<span class="params">[FromBody] CreateJwtRequest request</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">var</span> diffieHellmanA = ECDiffieHellman.Create();</span><br><span class="line">    diffieHellmanA.ImportSubjectPublicKeyInfo(Convert.FromBase64String(request.ServerPublicKey), <span class="keyword">out</span> _);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> diffieHellmanB = ECDiffieHellman.Create();</span><br><span class="line">    diffieHellmanB.ImportPkcs8PrivateKey(Convert.FromBase64String(request.DevciePrivateKey), <span class="keyword">out</span> _);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> derivedKey = diffieHellmanB.DeriveKeyMaterial(diffieHellmanA.PublicKey);</span><br><span class="line">    <span class="keyword">var</span> signingCredentials = <span class="keyword">new</span> SigningCredentials(<span class="keyword">new</span> SymmetricSecurityKey(derivedKey), SecurityAlgorithms.HmacSha256);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> header = <span class="keyword">new</span> JwtHeader(signingCredentials);</span><br><span class="line">    <span class="keyword">var</span> payload = <span class="keyword">new</span> JwtPayload</span><br><span class="line">    &#123;</span><br><span class="line">        &#123; JwtRegisteredClaimNames.Sub, <span class="string">&quot;testuser&quot;</span> &#125;,</span><br><span class="line">        &#123; JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString() &#125;,</span><br><span class="line">        &#123; <span class="string">&quot;exp&quot;</span>, DateTimeOffset.UtcNow.AddMinutes(<span class="number">5</span>).ToUnixTimeSeconds() &#125;</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> token = <span class="keyword">new</span> JwtSecurityToken(header, payload);</span><br><span class="line">    <span class="keyword">var</span> tokenHandler = <span class="keyword">new</span> JwtSecurityTokenHandler();</span><br><span class="line">    <span class="built_in">string</span> jwt = tokenHandler.WriteToken(token);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> Ok(<span class="keyword">new</span> &#123; Token = jwt &#125;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="4-驗證-JWT"><a href="#4-驗證-JWT" class="headerlink" title="4. 驗證 JWT"></a>4. 驗證 JWT</h3><figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">VaildateJwtKey</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="built_in">string</span> Jwt &#123; <span class="keyword">get</span>; <span class="keyword">set</span>; &#125;</span><br><span class="line">    <span class="keyword">public</span> <span class="built_in">string</span> DevicePublicKey &#123; <span class="keyword">get</span>; <span class="keyword">set</span>; &#125;</span><br><span class="line">    <span class="keyword">public</span> <span class="built_in">string</span> ServerPrivateKey &#123; <span class="keyword">get</span>; <span class="keyword">set</span>; &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">[<span class="meta">HttpPost(<span class="string">&quot;validate-jwt&quot;</span>)</span>]</span><br><span class="line"><span class="function"><span class="keyword">public</span> IActionResult <span class="title">ValidateJwt</span>(<span class="params">[FromBody] VaildateJwtKey request</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">var</span> tokenHandler = <span class="keyword">new</span> JwtSecurityTokenHandler();</span><br><span class="line">    <span class="keyword">var</span> jwtToken = tokenHandler.ReadJwtToken(request.Jwt);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> diffieHellmanA = ECDiffieHellman.Create();</span><br><span class="line">    diffieHellmanA.ImportPkcs8PrivateKey(Convert.FromBase64String(request.ServerPrivateKey), <span class="keyword">out</span> _);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> diffieHellmanB = ECDiffieHellman.Create();</span><br><span class="line">    diffieHellmanB.ImportSubjectPublicKeyInfo(Convert.FromBase64String(request.DevicePublicKey), <span class="keyword">out</span> _);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> derivedKey = diffieHellmanA.DeriveKeyMaterial(diffieHellmanB.PublicKey);</span><br><span class="line">    <span class="keyword">var</span> validationParameters = <span class="keyword">new</span> TokenValidationParameters</span><br><span class="line">    &#123;</span><br><span class="line">        ValidateIssuer = <span class="literal">false</span>,</span><br><span class="line">        ValidateAudience = <span class="literal">false</span>,</span><br><span class="line">        ValidateLifetime = <span class="literal">true</span>,</span><br><span class="line">        IssuerSigningKey = <span class="keyword">new</span> SymmetricSecurityKey(derivedKey)</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">try</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">var</span> principal = tokenHandler.ValidateToken(request.Jwt, validationParameters, <span class="keyword">out</span> <span class="keyword">var</span> validatedToken);</span><br><span class="line">        <span class="keyword">var</span> claims = principal.Claims.Select(c =&gt; <span class="keyword">new</span> &#123; c.Type, c.Value &#125;);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> Ok(<span class="keyword">new</span> &#123; Valid = <span class="literal">true</span>, Claims = claims &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">catch</span> (Exception ex)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> BadRequest(<span class="keyword">new</span> &#123; Valid = <span class="literal">false</span>, Error = ex.Message &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>這樣，你就可以使用 ECDH 密鑰交換來生成共享的秘密密鑰，並使用該密鑰來簽名和驗證 JWT，從而提升 JWT 的安全性。</p>
+<h2 id="ECDH-密鑰交換優缺點"><a href="#ECDH-密鑰交換優缺點" class="headerlink" title="ECDH 密鑰交換優缺點"></a><strong>ECDH 密鑰交換優缺點</strong></h2><h3 id="優點"><a href="#優點" class="headerlink" title="優點"></a><strong>優點</strong></h3><p><strong>高安全性：<br>◦ ECDH 密鑰交換協議確保只有通信雙方能生成相同的共享秘密密鑰，第三方無法獲取這個密鑰。<br>◦ 每次通信都可以生成新的共享秘密密鑰，防止重放攻擊。</strong></p>
+<p><strong>動態密鑰生成：<br>◦ 每次通信都可以生成新的共享秘密密鑰，進一步提高安全性。</strong></p>
+<p><strong>防篡改和偽造：<br>◦ 由於密鑰交換過程中不傳輸私鑰，攻擊者無法偽造 JWT。</strong></p>
+<h3 id="缺點"><a href="#缺點" class="headerlink" title="缺點"></a><strong>缺點</strong></h3><p><strong>實現複雜：<br>◦ 需要實現 ECDH 密鑰交換協議，增加了實現的複雜性。<br>◦ 需要管理公私鑰對，增加了開發和運維的負擔。</strong></p>
+<p><strong>性能較低：<br>◦ 生成和驗證 JWT 的過程中需要進行複雜的計算，性能較低。</strong></p>
+<h2 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h2><p>使用 ECDH 密鑰交換來生成共享的秘密密鑰，並使用該秘密密鑰來簽名和驗證 JWT，具有以下優點：</p>
+<ol>
+<li><strong>提高安全性</strong>：<ul>
+<li>ECDH 密鑰交換確保只有通信雙方能生成相同的共享秘密密鑰，第三方無法獲取這個密鑰。</li>
+<li>使用共享的秘密密鑰來簽名和驗證 JWT，確保 JWT 的完整性和來源的可信性。</li>
+</ul>
+</li>
+<li><strong>簡化密鑰管理</strong>：<ul>
+<li>雙方只需交換公鑰，無需共享私鑰，減少了密鑰管理的複雜性和風險。</li>
+</ul>
+</li>
+<li><strong>動態密鑰生成</strong>：<ul>
+<li>每次通信都可以生成新的共享秘密密鑰，進一步提高安全性。</li>
+</ul>
+</li>
+</ol>
+
+
+</article>
+<div class="related-wrap" id="read-next"><section class="body"><div class="item" id="prev"></div><div class="item" id="next"><div class="note">較早文章</div><a href="/2024/07/24/Flutter-riverpod/">Flutter Riverpod 狀態管理工具</a></div></section></div>
+
+
+
+
+
+
+<footer class="page-footer footnote"><hr><div class="text"></div></footer>
+<div class='float-panel mobile-only blur' style='display:none'>
+  <button type='button' class='sidebar-toggle mobile' onclick='sidebar.toggle()'>
+    <svg t="1705412886951" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="8331" width="200" height="200"><path d="M638.72 970.666667h-256c-118.186667 0-198.272-25.002667-251.946667-78.72S52.053333 758.186667 52.053333 640V384c0-118.186667 25.002667-198.272 78.72-251.946667S264.533333 53.333333 382.72 53.333333h256c118.186667 0 198.272 25.002667 251.946667 78.72S969.386667 265.813333 969.386667 384v256c0 118.186667-25.002667 198.272-78.72 251.946667S756.906667 970.666667 638.72 970.666667z m-256-853.333334c-100.096 0-165.802667 19.2-206.72 59.946667S116.053333 283.904 116.053333 384v256c0 100.096 19.072 165.802667 59.946667 206.72S282.624 906.666667 382.72 906.666667h256c100.096 0 165.802667-19.072 206.72-59.946667S905.386667 740.096 905.386667 640V384c0-100.096-19.072-165.802667-59.946667-206.72S738.816 117.333333 638.72 117.333333z" p-id="8332"></path><path d="M638.72 970.666667a32 32 0 0 1-32-32V85.333333a32 32 0 0 1 32-32 32 32 0 0 1 32 32v853.333334a32 32 0 0 1-32 32zM340.053333 653.226667a31.914667 31.914667 0 0 1-22.613333-9.386667 32 32 0 0 1 0-45.269333L404.053333 512 317.44 425.386667a32 32 0 0 1 0-45.226667 32 32 0 0 1 45.226667 0l109.226666 109.226667a32 32 0 0 1 0 45.269333L362.666667 643.84a31.914667 31.914667 0 0 1-22.613334 9.386667z" p-id="8333"></path></svg>
+  </button>
+</div>
+<div class="main-mask" onclick="sidebar.toggle()"></div></div></div><div class="scripts">
+<script type="text/javascript">
+  const stellar = {
+    // 懒加载 css https://github.com/filamentgroup/loadCSS
+    loadCSS: (href, before, media, attributes) => {
+      var doc = window.document;
+      var ss = doc.createElement("link");
+      var ref;
+      if (before) {
+        ref = before;
+      } else {
+        var refs = (doc.body || doc.getElementsByTagName("head")[0]).childNodes;
+        ref = refs[refs.length - 1];
+      }
+      var sheets = doc.styleSheets;
+      if (attributes) {
+        for (var attributeName in attributes) {
+          if (attributes.hasOwnProperty(attributeName)) {
+            ss.setAttribute(attributeName, attributes[attributeName]);
+          }
+        }
+      }
+      ss.rel = "stylesheet";
+      ss.href = href;
+      ss.media = "only x";
+      function ready(cb) {
+        if (doc.body) {
+          return cb();
+        }
+        setTimeout(function () {
+          ready(cb);
+        });
+      }
+      ready(function () {
+        ref.parentNode.insertBefore(ss, before ? ref : ref.nextSibling);
+      });
+      var onloadcssdefined = function (cb) {
+        var resolvedHref = ss.href;
+        var i = sheets.length;
+        while (i--) {
+          if (sheets[i].href === resolvedHref) {
+            return cb();
+          }
+        }
+        setTimeout(function () {
+          onloadcssdefined(cb);
+        });
+      };
+      function loadCB() {
+        if (ss.addEventListener) {
+          ss.removeEventListener("load", loadCB);
+        }
+        ss.media = media || "all";
+      }
+      if (ss.addEventListener) {
+        ss.addEventListener("load", loadCB);
+      }
+      ss.onloadcssdefined = onloadcssdefined;
+      onloadcssdefined(loadCB);
+      return ss;
+    },
+
+    // 从 butterfly 和 volantis 获得灵感
+    loadScript: (src, opt) => new Promise((resolve, reject) => {
+      var script = document.createElement('script');
+      if (src.startsWith('/')){
+        src = stellar.config.root + src.substring(1);
+      }
+      script.src = src;
+      if (opt) {
+        for (let key of Object.keys(opt)) {
+          script[key] = opt[key]
+        }
+      } else {
+        // 默认异步，如果需要同步，第二个参数传入 {} 即可
+        script.async = true
+      }
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    }),
+
+    // https://github.com/jerryc127/hexo-theme-butterfly
+    jQuery: (fn) => {
+      if (typeof jQuery === 'undefined') {
+        stellar.loadScript(stellar.plugins.jQuery).then(fn)
+      } else {
+        fn()
+      }
+    }
+  };
+  stellar.version = '1.26.3';
+  stellar.github = 'https://github.com/xaoxuu/hexo-theme-stellar/tree/1.26.3';
+  stellar.config = {
+    date_suffix: {
+      just: '剛剛',
+      min: '分鐘前',
+      hour: '小時前',
+      day: '天前',
+      month: '個月前',
+    },
+    root : '/',
+  };
+
+  // required plugins (only load if needs)
+  stellar.plugins = {
+    jQuery: 'https://cdn.bootcdn.net/ajax/libs/jquery/3.7.1/jquery.min.js'
+  };
+
+  if ('local_search') {
+    stellar.search = {};
+    stellar.search.service = 'local_search';
+    if (stellar.search.service == 'local_search') {
+      let service_obj = Object.assign({}, {"field":"all","path":"/search.json","content":true,"sort":"-date"});
+      stellar.search[stellar.search.service] = service_obj;
+    }
+  }
+
+  // stellar js
+  stellar.plugins.stellar = Object.assign({"sites":"/js/plugins/sites.js","friends":"/js/plugins/friends.js","ghinfo":"/js/plugins/ghinfo.js","timeline":"/js/plugins/timeline.js","linkcard":"/js/plugins/linkcard.js","fcircle":"/js/plugins/fcircle.js","weibo":"/js/plugins/weibo.js","memos":"/js/plugins/memos.js","marked":"/js/plugins/marked.js"});
+
+  stellar.plugins.marked = Object.assign("https://cdn.bootcdn.net/ajax/libs/marked/4.0.18/marked.min.js");
+  // optional plugins
+  if ('true' == 'true') {
+    stellar.plugins.lazyload = Object.assign({"enable":true,"js":"https://cdn.bootcdn.net/ajax/libs/vanilla-lazyload/17.8.4/lazyload.min.js","transition":"fade"});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.swiper = Object.assign({"enable":true,"css":"https://unpkg.com/swiper@10.3/swiper-bundle.min.css","js":"https://unpkg.com/swiper@10.3/swiper-bundle.min.js"});
+  }
+  if ('' == 'true') {
+    stellar.plugins.scrollreveal = Object.assign({"enable":null,"js":"https://cdn.bootcdn.net/ajax/libs/scrollReveal.js/4.0.9/scrollreveal.min.js","distance":"16px","duration":800,"interval":100,"scale":1});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.preload = Object.assign({"enable":true,"service":"flying_pages","flying_pages":"https://cdn.bootcdn.net/ajax/libs/flying-pages/2.1.2/flying-pages.min.js"});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.fancybox = Object.assign({"enable":true,"js":"https://cdn.bootcdn.net/ajax/libs/fancyapps-ui/5.0.22/fancybox/fancybox.umd.min.js","css":"https://cdn.bootcdn.net/ajax/libs/fancyapps-ui/5.0.22/fancybox/fancybox.min.css","selector":null});
+  }
+  if ('false' == 'true') {
+    stellar.plugins.heti = Object.assign({"enable":false,"css":"https://unpkg.com/heti@0.9.2/umd/heti.min.css","js":"https://unpkg.com/heti@0.9.2/umd/heti-addon.min.js"});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.copycode = Object.assign({"enable":true,"js":"/js/plugins/copycode.js","default_text":"Copy","success_text":"Copied","toast":"复制成功"});
+  }
+</script>
+
+<!-- required -->
+<script src="/js/main.js?v=1.26.3" async></script>
+
+<!-- optional -->
+
+
+
+
+
+
+<!-- inject -->
+
+</div></body></html>
