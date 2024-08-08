@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="hexo-theme" content="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.26.3" theme-name="Stellar" theme-version="1.26.3">
-  <meta name="robots" content="noindex,follow">
+  
   <meta name="generator" content="Hexo 7.1.1">
   <meta http-equiv='x-dns-prefetch-control' content='on' />
   
@@ -16,16 +16,26 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="theme-color" content="#f8f8f8">
   
-  <title>Archives - Lando's Blog</title>
+  <title>RunFlutterOnIOS - Lando's Blog</title>
 
   
-    <meta property="og:type" content="website">
-<meta property="og:title" content="Archives">
-<meta property="og:url" content="http://example.com/archives/2024/03/index.html">
+    <meta name="description" content="在 iPhone 上運行 Flutter 專案前言平常在 VS Code 上執行專案的方法不外乎就是先打開 IOS Simulator，然後再到 main.dart 中去 Start Debugging 快速啟動專案，那如果要在 iPhone 上運行專案，並且能夠 hot reload，該怎麼做？ 步驟 安裝 Xcode：確保你已經安裝了最新版本的 Xcode。  連接 iPhone：使用 USB">
+<meta property="og:type" content="article">
+<meta property="og:title" content="RunFlutterOnIOS">
+<meta property="og:url" content="http://example.com/2024/08/08/RunFlutterOnIOS/index.html">
 <meta property="og:site_name" content="Lando&#39;s Blog">
+<meta property="og:description" content="在 iPhone 上運行 Flutter 專案前言平常在 VS Code 上執行專案的方法不外乎就是先打開 IOS Simulator，然後再到 main.dart 中去 Start Debugging 快速啟動專案，那如果要在 iPhone 上運行專案，並且能夠 hot reload，該怎麼做？ 步驟 安裝 Xcode：確保你已經安裝了最新版本的 Xcode。  連接 iPhone：使用 USB">
 <meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="http://example.com/pic/RunFlutterOnIOS/Xnip2024-07-23_16-34-49.jpg">
+<meta property="og:image" content="http://example.com/pic/RunFlutterOnIOS/Xnip2024-07-23_16-55-41.jpg">
+<meta property="og:image" content="http://example.com/pic/RunFlutterOnIOS/Xnip2024-07-23_16-56-34.jpg">
+<meta property="og:image" content="http://example.com/pic/RunFlutterOnIOS/Xnip2024-07-23_17-17-38.jpg">
+<meta property="og:image" content="http://example.com/pic/RunFlutterOnIOS/Xnip2024-07-23_17-20-01.jpg">
+<meta property="article:published_time" content="2024-08-08T00:32:51.000Z">
+<meta property="article:modified_time" content="2024-08-08T00:40:34.988Z">
 <meta property="article:author" content="Lando Hsieh">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/pic/RunFlutterOnIOS/Xnip2024-07-23_16-34-49.jpg">
   
   
   
@@ -45,7 +55,7 @@
 </head>
 <body>
 
-<div class="l_body index tech" id="start" layout="undefined" ><aside class="l_left"><div class="sidebar-container">
+<div class="l_body content tech" id="start" layout="post" ><aside class="l_left"><div class="sidebar-container">
 
 
 <header class="header"><div class="logo-wrap"><a class="avatar" href="/pic/IMG_8365.JPG"><div class="bg" style="opacity:0;background-image:url(https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/avatar/round/rainbow64@3x.webp);"></div><img no-lazy class="avatar" src="/pic/IMG_8365.JPG" onerror="javascript:this.classList.add('error');this.src='https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/image/2659360.svg';"></a><a class="title" href="/"><div class="main" ff="title">藍多的學習筆記</div><div class="sub normal cap">這裡記錄學習新知（偶爾更新）</div><div class="sub hover cap" style="opacity:0">明天的自己要比今天更厲害！</div></a></div></header>
@@ -57,19 +67,74 @@
 <nav class="menu dis-select"></nav>
 </div>
 <div class="widgets">
-<widget class="widget-wrapper post-list"><div class="widget-header dis-select"><span class="name">最近更新</span></div><div class="widget-body fs14"><a class="item title" href="/2024/08/08/RunFlutterOnIOS/"><span class="title">RunFlutterOnIOS</span></a><a class="item title" href="/2024/08/07/Flutter-ModalRoute/"><span class="title">如何在頁面導航時傳遞資料</span></a><a class="item title" href="/2024/08/05/JWT-ECDH/"><span class="title">ECDH加密搭配JWT提升安全性</span></a><a class="item title" href="/2024/07/24/Flutter-riverpod/"><span class="title">Flutter Riverpod 狀態管理工具</span></a><a class="item title" href="/2024/07/18/dart-const/"><span class="title">Dart中的const常量</span></a><a class="item title" href="/2024/07/18/dart-future-void/"><span class="title">Future void vs void in Dart</span></a><a class="item title" href="/2024/02/27/API-security/"><span class="title">如何提升API安全性</span></a><a class="item title" href="/2024/03/25/CAP%20theorem/"><span class="title">CAP定理-分散式系統</span></a><a class="item title" href="/2024/02/14/MicroservicesMonolithic/"><span class="title">微服務 vs 單體式架構</span></a><a class="item title" href="/2024/02/05/BloomFilter/"><span class="title">Bloom Filter 布隆過濾器</span></a></div></widget>
+
+<widget class="widget-wrapper toc single" id="data-toc" collapse="false"><div class="widget-header dis-select"><span class="name">本文目錄</span></div><div class="widget-body fs14"><div class="doc-tree active"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%AD%A5%E9%A9%9F"><span class="toc-text">步驟</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%87%E6%8F%9B%E6%88%90%E5%8F%A6%E4%B8%80%E5%80%8B%E5%B0%88%E6%A1%88%E5%8D%BB%E4%B8%8D%E8%83%BD%E5%9F%B7%E8%A1%8C%EF%BC%9F"><span class="toc-text">切換成另一個專案卻不能執行？</span></a></li></ol></div></div></widget>
 
 
+
+
+
+
+
+<widget class="widget-wrapper post-list"><div class="widget-header dis-select"><span class="name">最近更新</span></div><div class="widget-body fs14"><a class="item title active" href="/2024/08/08/RunFlutterOnIOS/"><span class="title">RunFlutterOnIOS</span><svg class="active-icon" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" d="M21 11.098v4.993c0 3.096 0 4.645-.734 5.321c-.35.323-.792.526-1.263.58c-.987.113-2.14-.907-4.445-2.946c-1.02-.901-1.529-1.352-2.118-1.47a2.225 2.225 0 0 0-.88 0c-.59.118-1.099.569-2.118 1.47c-2.305 2.039-3.458 3.059-4.445 2.945a2.238 2.238 0 0 1-1.263-.579C3 20.736 3 19.188 3 16.091v-4.994C3 6.81 3 4.666 4.318 3.333C5.636 2 7.758 2 12 2c4.243 0 6.364 0 7.682 1.332C21 4.665 21 6.81 21 11.098" opacity=".5"/><path fill="currentColor" d="M9 5.25a.75.75 0 0 0 0 1.5h6a.75.75 0 0 0 0-1.5z"/></svg></a><a class="item title" href="/2024/08/07/Flutter-ModalRoute/"><span class="title">如何在頁面導航時傳遞資料</span></a><a class="item title" href="/2024/08/05/JWT-ECDH/"><span class="title">ECDH加密搭配JWT提升安全性</span></a><a class="item title" href="/2024/07/24/Flutter-riverpod/"><span class="title">Flutter Riverpod 狀態管理工具</span></a><a class="item title" href="/2024/07/18/dart-const/"><span class="title">Dart中的const常量</span></a><a class="item title" href="/2024/07/18/dart-future-void/"><span class="title">Future void vs void in Dart</span></a><a class="item title" href="/2024/02/27/API-security/"><span class="title">如何提升API安全性</span></a><a class="item title" href="/2024/03/25/CAP%20theorem/"><span class="title">CAP定理-分散式系統</span></a><a class="item title" href="/2024/02/14/MicroservicesMonolithic/"><span class="title">微服務 vs 單體式架構</span></a><a class="item title" href="/2024/02/05/BloomFilter/"><span class="title">Bloom Filter 布隆過濾器</span></a></div></widget>
 </div>
 <footer class="footer dis-select"><div class="social-wrap"><a class="social" href="https://github.com/LandoHsieh" target="_blank" rel="external nofollow noopener noreferrer"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/social/08a41b181ce68.svg"/></a></div></footer>
 </div></aside><div class="l_main" id="main">
 
-<header class="header mobile-only"><div class="logo-wrap"><a class="avatar" href="/pic/IMG_8365.JPG"><div class="bg" style="opacity:0;background-image:url(https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/avatar/round/rainbow64@3x.webp);"></div><img no-lazy class="avatar" src="/pic/IMG_8365.JPG" onerror="javascript:this.classList.add('error');this.src='https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/image/2659360.svg';"></a><a class="title" href="/"><div class="main" ff="title">藍多的學習筆記</div><div class="sub normal cap">這裡記錄學習新知（偶爾更新）</div><div class="sub hover cap" style="opacity:0">明天的自己要比今天更厲害！</div></a></div></header>
-
- 
 
 
-<div class="nav-wrap"><nav class="sub post cap"><a href="/">Recent</a><a href="/tags">標籤</a><a class="active" href="/archives">Archives</a></nav></div><div class="post-list archives"><article class="" id="archive"><div class='archive-header h4'>2024</div><div class="archive-list"><a class='post fs14' href="/2024/08/08/RunFlutterOnIOS/"><time>08-08</time><span>RunFlutterOnIOS</span></a></div><div class="archive-list"><a class='post fs14' href="/2024/08/07/Flutter-ModalRoute/"><time>08-07</time><span>如何在頁面導航時傳遞資料</span></a></div><div class="archive-list"><a class='post fs14' href="/2024/08/05/JWT-ECDH/"><time>08-05</time><span>ECDH加密搭配JWT提升安全性</span></a></div><div class="archive-list"><a class='post fs14' href="/2024/07/24/Flutter-riverpod/"><time>07-24</time><span>Flutter Riverpod 狀態管理工具</span></a></div><div class="archive-list"><a class='post fs14' href="/2024/07/18/dart-const/"><time>07-18</time><span>Dart中的const常量</span></a></div><div class="archive-list"><a class='post fs14' href="/2024/07/18/dart-future-void/"><time>07-18</time><span>Future void vs void in Dart</span></a></div><div class="archive-list"><a class='post fs14' href="/2024/03/25/CAP%20theorem/"><time>03-25</time><span>CAP定理-分散式系統</span></a></div><div class="archive-list"><a class='post fs14' href="/2024/02/27/API-security/"><time>02-27</time><span>如何提升API安全性</span></a></div><div class="archive-list"><a class='post fs14' href="/2024/02/14/MicroservicesMonolithic/"><time>02-14</time><span>微服務 vs 單體式架構</span></a></div><div class="archive-list"><a class='post fs14' href="/2024/02/05/BloomFilter/"><time>02-05</time><span>Bloom Filter 布隆過濾器</span></a></div></article></div>
+
+
+<div class="article banner top">
+  <div class="content">
+    
+<div class="top bread-nav footnote"><div class="left"><div id="breadcrumb"><a class="cap breadcrumb" href="/">首頁</a>
+<span class="sep"></span><a class="cap breadcrumb" href="/">部落格</a></div>
+<div id="post-meta"><span class="created">發布於：</span><time datetime="2024-08-08T00:32:51.000Z">2024-08-08</time></span><span class="updated"><span class="dot"></span>更新於：<time datetime="2024-08-08T00:40:34.988Z">2024-08-08</time></span></div></div>
+</div>
+
+    
+    <div class="bottom">
+      <div class="text-area">
+        <h1 class="text title"><span>RunFlutterOnIOS</span></h1>
+      </div>
+    </div>
+    
+  </div>
+  </div><article class="md-text content"><h1 id="在-iPhone-上運行-Flutter-專案"><a href="#在-iPhone-上運行-Flutter-專案" class="headerlink" title="在 iPhone 上運行 Flutter 專案"></a>在 iPhone 上運行 Flutter 專案</h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>平常在 VS Code 上執行專案的方法不外乎就是先打開 IOS Simulator，然後再到 main.dart 中去 Start Debugging 快速啟動專案，那如果要在 iPhone 上運行專案，並且能夠 hot reload，該怎麼做？</p>
+<h2 id="步驟"><a href="#步驟" class="headerlink" title="步驟"></a>步驟</h2><ol>
+<li><p><strong>安裝 Xcode：</strong>確保你已經安裝了最新版本的 Xcode。</p>
+</li>
+<li><p><strong>連接 iPhone：</strong>使用 USB 數據線將 iPhone 連接到你的 Mac。</p>
+</li>
+<li><p>打開 Xcode：在專案中打上 <code>open ios/Runner.xcworkspace</code>開啟 Xcode</p>
+</li>
+<li><p>確保達成以下條件<br><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="/../pic/RunFlutterOnIOS/Xnip2024-07-23_16-34-49.jpg"></p>
+</li>
+<li><p><strong>到 VS Code 左側欄 Flutter 的 Extenstion 內，選擇自己裝置</strong></p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="/../pic/RunFlutterOnIOS/Xnip2024-07-23_16-55-41.jpg"></p>
+</li>
+<li><p>對 main.dart 按下 Start Debugging<br><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="/../pic/RunFlutterOnIOS/Xnip2024-07-23_16-56-34.jpg"></p>
+</li>
+<li><p>此時，第一次執行手機上會出現未受信任開發者的提示<br>到 <strong>設定 → 一般 → VPN 與裝置管理 → 信任開發者</strong></p>
+</li>
+<li><p>信任後，重新執行專案，手機的 APP 就會正常啟動了！</p>
+</li>
+</ol>
+<h2 id="切換成另一個專案卻不能執行？"><a href="#切換成另一個專案卻不能執行？" class="headerlink" title="切換成另一個專案卻不能執行？"></a>切換成另一個專案卻不能執行？</h2><p>假設第一個專案為的名稱為 <code>ecommerce_shop</code>，那預設的 Bundle Identifier 就會是<code>com.example.ecommerceShop</code> ，這時，你如果要切換成另一個專案，假設名為 <code>todo_app</code> ，這時他的預設 Bundle Identifier 會是 <code>com.example.todoApp</code> ，等於你的帳號底下有兩個<code>com.example</code></p>
+<p>，這時就會出錯，如下圖<br><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="/../pic/RunFlutterOnIOS/Xnip2024-07-23_17-17-38.jpg"></p>
+<p>所以你要將 Bundle Identifier 改成唯一標識符，例如 <code>com.landohsieh.todoApp</code> 如下</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="/../pic/RunFlutterOnIOS/Xnip2024-07-23_17-20-01.jpg"><br>然後再去執行一次專案，就能成功在手機上運作嘍！</p>
+
+
+</article>
+<div class="related-wrap" id="read-next"><section class="body"><div class="item" id="prev"></div><div class="item" id="next"><div class="note">較早文章</div><a href="/2024/08/07/Flutter-ModalRoute/">如何在頁面導航時傳遞資料</a></div></section></div>
+
+
+
+
+
+
 <footer class="page-footer footnote"><hr><div class="text"></div></footer>
 <div class='float-panel mobile-only blur' style='display:none'>
   <button type='button' class='sidebar-toggle mobile' onclick='sidebar.toggle()'>
