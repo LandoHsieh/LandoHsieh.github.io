@@ -16,15 +16,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="theme-color" content="#f8f8f8">
   
-  <title>RunFlutterOnIOS - Lando's Blog</title>
+  <title>在iPhone上運行Flutter專案 - Lando's Blog</title>
 
   
-    <meta name="description" content="在 iPhone 上運行 Flutter 專案前言平常在 VS Code 上執行專案的方法不外乎就是先打開 IOS Simulator，然後再到 main.dart 中去 Start Debugging 快速啟動專案，那如果要在 iPhone 上運行專案，並且能夠 hot reload，該怎麼做？ 步驟 安裝 Xcode：確保你已經安裝了最新版本的 Xcode。  連接 iPhone：使用 USB">
+    <meta name="description" content="前言平常在 VS Code 上執行專案的方法不外乎就是先打開 IOS Simulator，然後再到 main.dart 中去 Start Debugging 快速啟動專案，那如果要在 iPhone 上運行專案，並且能夠 hot reload，該怎麼做？ 步驟 安裝 Xcode：確保你已經安裝了最新版本的 Xcode。  連接 iPhone：使用 USB 數據線將 iPhone 連接到你的 Mac。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="RunFlutterOnIOS">
+<meta property="og:title" content="在iPhone上運行Flutter專案">
 <meta property="og:url" content="http://example.com/2024/08/08/RunFlutterOnIOS/index.html">
 <meta property="og:site_name" content="Lando&#39;s Blog">
-<meta property="og:description" content="在 iPhone 上運行 Flutter 專案前言平常在 VS Code 上執行專案的方法不外乎就是先打開 IOS Simulator，然後再到 main.dart 中去 Start Debugging 快速啟動專案，那如果要在 iPhone 上運行專案，並且能夠 hot reload，該怎麼做？ 步驟 安裝 Xcode：確保你已經安裝了最新版本的 Xcode。  連接 iPhone：使用 USB">
+<meta property="og:description" content="前言平常在 VS Code 上執行專案的方法不外乎就是先打開 IOS Simulator，然後再到 main.dart 中去 Start Debugging 快速啟動專案，那如果要在 iPhone 上運行專案，並且能夠 hot reload，該怎麼做？ 步驟 安裝 Xcode：確保你已經安裝了最新版本的 Xcode。  連接 iPhone：使用 USB 數據線將 iPhone 連接到你的 Mac。">
 <meta property="og:locale" content="zh_TW">
 <meta property="og:image" content="http://example.com/pic/RunFlutterOnIOS/Xnip2024-07-23_16-34-49.jpg">
 <meta property="og:image" content="http://example.com/pic/RunFlutterOnIOS/Xnip2024-07-23_16-55-41.jpg">
@@ -32,14 +32,15 @@
 <meta property="og:image" content="http://example.com/pic/RunFlutterOnIOS/Xnip2024-07-23_17-17-38.jpg">
 <meta property="og:image" content="http://example.com/pic/RunFlutterOnIOS/Xnip2024-07-23_17-20-01.jpg">
 <meta property="article:published_time" content="2024-08-08T00:32:51.000Z">
-<meta property="article:modified_time" content="2024-08-08T00:40:34.988Z">
+<meta property="article:modified_time" content="2024-08-08T01:31:21.097Z">
 <meta property="article:author" content="Lando Hsieh">
+<meta property="article:tag" content="Flutter">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://example.com/pic/RunFlutterOnIOS/Xnip2024-07-23_16-34-49.jpg">
   
   
   
-  
+  <meta name="keywords" content="Flutter">
 
   <!-- feed -->
   
@@ -76,7 +77,7 @@
 
 
 
-<widget class="widget-wrapper post-list"><div class="widget-header dis-select"><span class="name">最近更新</span></div><div class="widget-body fs14"><a class="item title active" href="/2024/08/08/RunFlutterOnIOS/"><span class="title">RunFlutterOnIOS</span><svg class="active-icon" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" d="M21 11.098v4.993c0 3.096 0 4.645-.734 5.321c-.35.323-.792.526-1.263.58c-.987.113-2.14-.907-4.445-2.946c-1.02-.901-1.529-1.352-2.118-1.47a2.225 2.225 0 0 0-.88 0c-.59.118-1.099.569-2.118 1.47c-2.305 2.039-3.458 3.059-4.445 2.945a2.238 2.238 0 0 1-1.263-.579C3 20.736 3 19.188 3 16.091v-4.994C3 6.81 3 4.666 4.318 3.333C5.636 2 7.758 2 12 2c4.243 0 6.364 0 7.682 1.332C21 4.665 21 6.81 21 11.098" opacity=".5"/><path fill="currentColor" d="M9 5.25a.75.75 0 0 0 0 1.5h6a.75.75 0 0 0 0-1.5z"/></svg></a><a class="item title" href="/2024/08/07/Flutter-ModalRoute/"><span class="title">如何在頁面導航時傳遞資料</span></a><a class="item title" href="/2024/08/05/JWT-ECDH/"><span class="title">ECDH加密搭配JWT提升安全性</span></a><a class="item title" href="/2024/07/24/Flutter-riverpod/"><span class="title">Flutter Riverpod 狀態管理工具</span></a><a class="item title" href="/2024/07/18/dart-const/"><span class="title">Dart中的const常量</span></a><a class="item title" href="/2024/07/18/dart-future-void/"><span class="title">Future void vs void in Dart</span></a><a class="item title" href="/2024/02/27/API-security/"><span class="title">如何提升API安全性</span></a><a class="item title" href="/2024/03/25/CAP%20theorem/"><span class="title">CAP定理-分散式系統</span></a><a class="item title" href="/2024/02/14/MicroservicesMonolithic/"><span class="title">微服務 vs 單體式架構</span></a><a class="item title" href="/2024/02/05/BloomFilter/"><span class="title">Bloom Filter 布隆過濾器</span></a></div></widget>
+<widget class="widget-wrapper post-list"><div class="widget-header dis-select"><span class="name">最近更新</span></div><div class="widget-body fs14"><a class="item title active" href="/2024/08/08/RunFlutterOnIOS/"><span class="title">在iPhone上運行Flutter專案</span><svg class="active-icon" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" d="M21 11.098v4.993c0 3.096 0 4.645-.734 5.321c-.35.323-.792.526-1.263.58c-.987.113-2.14-.907-4.445-2.946c-1.02-.901-1.529-1.352-2.118-1.47a2.225 2.225 0 0 0-.88 0c-.59.118-1.099.569-2.118 1.47c-2.305 2.039-3.458 3.059-4.445 2.945a2.238 2.238 0 0 1-1.263-.579C3 20.736 3 19.188 3 16.091v-4.994C3 6.81 3 4.666 4.318 3.333C5.636 2 7.758 2 12 2c4.243 0 6.364 0 7.682 1.332C21 4.665 21 6.81 21 11.098" opacity=".5"/><path fill="currentColor" d="M9 5.25a.75.75 0 0 0 0 1.5h6a.75.75 0 0 0 0-1.5z"/></svg></a><a class="item title" href="/2024/08/07/Flutter-ModalRoute/"><span class="title">如何在頁面導航時傳遞資料</span></a><a class="item title" href="/2024/08/05/JWT-ECDH/"><span class="title">ECDH加密搭配JWT提升安全性</span></a><a class="item title" href="/2024/07/24/Flutter-riverpod/"><span class="title">Flutter Riverpod 狀態管理工具</span></a><a class="item title" href="/2024/07/18/dart-const/"><span class="title">Dart中的const常量</span></a><a class="item title" href="/2024/07/18/dart-future-void/"><span class="title">Future void vs void in Dart</span></a><a class="item title" href="/2024/02/27/API-security/"><span class="title">如何提升API安全性</span></a><a class="item title" href="/2024/03/25/CAP%20theorem/"><span class="title">CAP定理-分散式系統</span></a><a class="item title" href="/2024/02/14/MicroservicesMonolithic/"><span class="title">微服務 vs 單體式架構</span></a><a class="item title" href="/2024/02/05/BloomFilter/"><span class="title">Bloom Filter 布隆過濾器</span></a></div></widget>
 </div>
 <footer class="footer dis-select"><div class="social-wrap"><a class="social" href="https://github.com/LandoHsieh" target="_blank" rel="external nofollow noopener noreferrer"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/social/08a41b181ce68.svg"/></a></div></footer>
 </div></aside><div class="l_main" id="main">
@@ -90,41 +91,40 @@
     
 <div class="top bread-nav footnote"><div class="left"><div id="breadcrumb"><a class="cap breadcrumb" href="/">首頁</a>
 <span class="sep"></span><a class="cap breadcrumb" href="/">部落格</a></div>
-<div id="post-meta"><span class="created">發布於：</span><time datetime="2024-08-08T00:32:51.000Z">2024-08-08</time></span><span class="updated"><span class="dot"></span>更新於：<time datetime="2024-08-08T00:40:34.988Z">2024-08-08</time></span></div></div>
+<div id="post-meta"><span class="created">發布於：</span><time datetime="2024-08-08T00:32:51.000Z">2024-08-08</time></span><span class="updated"><span class="dot"></span>更新於：<time datetime="2024-08-08T01:31:21.097Z">2024-08-08</time></span></div></div>
 </div>
 
     
     <div class="bottom">
       <div class="text-area">
-        <h1 class="text title"><span>RunFlutterOnIOS</span></h1>
+        <h1 class="text title"><span>在iPhone上運行Flutter專案</span></h1>
       </div>
     </div>
     
   </div>
-  </div><article class="md-text content"><h1 id="在-iPhone-上運行-Flutter-專案"><a href="#在-iPhone-上運行-Flutter-專案" class="headerlink" title="在 iPhone 上運行 Flutter 專案"></a>在 iPhone 上運行 Flutter 專案</h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>平常在 VS Code 上執行專案的方法不外乎就是先打開 IOS Simulator，然後再到 main.dart 中去 Start Debugging 快速啟動專案，那如果要在 iPhone 上運行專案，並且能夠 hot reload，該怎麼做？</p>
+  </div><article class="md-text content"><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p><strong>平常在 VS Code 上執行專案的方法不外乎就是先打開 IOS Simulator，然後再到 main.dart 中去 Start Debugging 快速啟動專案，那如果要在 iPhone 上運行專案，並且能夠 hot reload，該怎麼做？</strong></p>
 <h2 id="步驟"><a href="#步驟" class="headerlink" title="步驟"></a>步驟</h2><ol>
-<li><p><strong>安裝 Xcode：</strong>確保你已經安裝了最新版本的 Xcode。</p>
+<li><p><strong>安裝 Xcode：確保你已經安裝了最新版本的 Xcode。</strong></p>
 </li>
-<li><p><strong>連接 iPhone：</strong>使用 USB 數據線將 iPhone 連接到你的 Mac。</p>
+<li><p><strong>連接 iPhone：使用 USB 數據線將 iPhone 連接到你的 Mac。</strong></p>
 </li>
-<li><p>打開 Xcode：在專案中打上 <code>open ios/Runner.xcworkspace</code>開啟 Xcode</p>
+<li><p><strong>打開 Xcode：在專案中打上 <code>open ios/Runner.xcworkspace</code>開啟 Xcode</strong></p>
 </li>
-<li><p>確保達成以下條件<br><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="/../pic/RunFlutterOnIOS/Xnip2024-07-23_16-34-49.jpg"></p>
+<li><p><strong>確保達成以下條件</strong><br><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="/../pic/RunFlutterOnIOS/Xnip2024-07-23_16-34-49.jpg"></p>
 </li>
 <li><p><strong>到 VS Code 左側欄 Flutter 的 Extenstion 內，選擇自己裝置</strong></p>
 <p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="/../pic/RunFlutterOnIOS/Xnip2024-07-23_16-55-41.jpg"></p>
 </li>
-<li><p>對 main.dart 按下 Start Debugging<br><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="/../pic/RunFlutterOnIOS/Xnip2024-07-23_16-56-34.jpg"></p>
+<li><p><strong>對 main.dart 按下 Start Debugging</strong><br><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="/../pic/RunFlutterOnIOS/Xnip2024-07-23_16-56-34.jpg"></p>
 </li>
-<li><p>此時，第一次執行手機上會出現未受信任開發者的提示<br>到 <strong>設定 → 一般 → VPN 與裝置管理 → 信任開發者</strong></p>
+<li><p><strong>此時，第一次執行手機上會出現未受信任開發者的提示</strong><br><strong>到 設定 → 一般 → VPN 與裝置管理 → 信任開發者</strong></p>
 </li>
-<li><p>信任後，重新執行專案，手機的 APP 就會正常啟動了！</p>
+<li><p><strong>信任後，重新執行專案，手機的 APP 就會正常啟動了！</strong></p>
 </li>
 </ol>
-<h2 id="切換成另一個專案卻不能執行？"><a href="#切換成另一個專案卻不能執行？" class="headerlink" title="切換成另一個專案卻不能執行？"></a>切換成另一個專案卻不能執行？</h2><p>假設第一個專案為的名稱為 <code>ecommerce_shop</code>，那預設的 Bundle Identifier 就會是<code>com.example.ecommerceShop</code> ，這時，你如果要切換成另一個專案，假設名為 <code>todo_app</code> ，這時他的預設 Bundle Identifier 會是 <code>com.example.todoApp</code> ，等於你的帳號底下有兩個<code>com.example</code></p>
-<p>，這時就會出錯，如下圖<br><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="/../pic/RunFlutterOnIOS/Xnip2024-07-23_17-17-38.jpg"></p>
-<p>所以你要將 Bundle Identifier 改成唯一標識符，例如 <code>com.landohsieh.todoApp</code> 如下</p>
-<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="/../pic/RunFlutterOnIOS/Xnip2024-07-23_17-20-01.jpg"><br>然後再去執行一次專案，就能成功在手機上運作嘍！</p>
+<h2 id="切換成另一個專案卻不能執行？"><a href="#切換成另一個專案卻不能執行？" class="headerlink" title="切換成另一個專案卻不能執行？"></a>切換成另一個專案卻不能執行？</h2><p><strong>假設第一個專案為的名稱為 <code>ecommerce_shop</code>，那預設的 Bundle Identifier 就會是<code>com.example.ecommerceShop</code> ，這時，你如果要切換成另一個專案，假設名為 <code>todo_app</code> ，這時他的預設 Bundle Identifier 會是 <code>com.example.todoApp</code> ，等於你的帳號底下有兩個<code>com.example</code>，這時就會出錯，如下圖</strong><br><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="/../pic/RunFlutterOnIOS/Xnip2024-07-23_17-17-38.jpg"></p>
+<p><strong>所以你要將 Bundle Identifier 改成唯一標識符，例如 <code>com.landohsieh.todoApp</code> 如下</strong></p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="/../pic/RunFlutterOnIOS/Xnip2024-07-23_17-20-01.jpg"><br><strong>然後再去執行一次專案，就能成功在手機上運作嘍！</strong></p>
 
 
 </article>
