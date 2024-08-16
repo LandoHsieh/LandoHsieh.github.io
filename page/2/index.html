@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="hexo-theme" content="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.26.3" theme-name="Stellar" theme-version="1.26.3">
-  <meta name="robots" content="noindex,follow">
+  
   <meta name="generator" content="Hexo 7.1.1">
   <meta http-equiv='x-dns-prefetch-control' content='on' />
   
@@ -16,12 +16,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="theme-color" content="#f8f8f8">
   
-  <title>標籤：Flutter Package - Lando's Blog</title>
+  <title>Lando's Blog</title>
 
   
     <meta property="og:type" content="website">
 <meta property="og:title" content="Lando&#39;s Blog">
-<meta property="og:url" content="http://example.com/tags/Flutter-Package/index.html">
+<meta property="og:url" content="http://example.com/page/2/index.html">
 <meta property="og:site_name" content="Lando&#39;s Blog">
 <meta property="og:locale" content="zh_TW">
 <meta property="article:author" content="Lando Hsieh">
@@ -66,17 +66,21 @@
 
 <header class="header mobile-only"><div class="logo-wrap"><a class="avatar" href="/pic/IMG_8365.JPG"><div class="bg" style="opacity:0;background-image:url(https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/avatar/round/rainbow64@3x.webp);"></div><img no-lazy class="avatar" src="/pic/IMG_8365.JPG" onerror="javascript:this.classList.add('error');this.src='https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/image/2659360.svg';"></a><a class="title" href="/"><div class="main" ff="title">藍多的學習筆記</div><div class="sub normal cap">這裡記錄學習新知（偶爾更新）</div><div class="sub hover cap" style="opacity:0">明天的自己要比今天更厲害！</div></a></div></header>
 
- 
 
 
 
+<div class="nav-wrap"><nav class="sub post cap"><a class="active" href="/">Recent</a><a href="/tags">標籤</a><a href="/archives">Archives</a></nav></div>
+<div class="post-list post"><a class="post-card post" href="/2024/02/05/BloomFilter/">
+<article class="md-text"><h2 class="post-title">Bloom Filter 布隆過濾器</h2><div class="excerpt"><p>如何在上億筆使用者中檢查名稱是否存在前言在APP註冊時，有時會被提示使用者名稱已存在，這個功能該如何實現？比較直覺的方法是直接在資料庫中進行檢索，但資料量到達億級別時，這種方法肯定不可行，此篇會利用Redis內建布隆過濾器（Bloom Filter）資料結構實現
+使用資料庫查詢1SELECT COUNT(*) FROM users WHERE username = ?
 
-<div class="nav-wrap"><nav class="sub post cap"><a href="/">Recent</a><a class="active" href="/tags">標籤：Flutter Package</a><a href="/archives">Archives</a></nav></div>
-<div class="post-list post"><a class="post-card post" href="/2024/07/24/Flutter-riverpod/">
-<article class="md-text"><h2 class="post-title">Flutter Riverpod 狀態管理工具</h2><div class="excerpt"><p>什麼是 Riverpod？Riverpod 是由 Remi Rousselet 創建的一個強大且靈活的狀態管理解決方案。它旨在解決 Provider 包的一些限制，提供更好的可測試性、更多的靈活性和更少的全局狀態依賴。
-安裝在你的 Flutter 項目中添加  flutter_riverpod  依賴項。
-1234dependencies:  flutter:    sdk: flutter...</p></div><div class="meta cap"><span class="cap" id="post-meta"><time datetime="2024-07-24T08:02:45.000Z">2024-07-24</time></span></div></article>
+此方法會有以下缺點
+...</p></div><div class="meta cap"><span class="cap" id="post-meta"><time datetime="2024-02-05T04:13:25.000Z">2024-02-05</time></span></div></article>
 </a></div>
+
+  <div class='paginator-wrap dis-select'>
+  <a class="extend prev" rel="prev" href="/"></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><span class="extend next" rel="next"></span>
+  </div>
 
 
 <footer class="page-footer footnote"><hr><div class="text"></div></footer>
