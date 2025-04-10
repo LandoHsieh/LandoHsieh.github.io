@@ -17,27 +17,30 @@
   <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#000">
   <meta name="theme-color" content="#f9fafb">
   
-  <title>📝 Flutter 錯誤筆記：Lexical or Preprocessor Issue (Include of non-modular header…) - Lando's Blog</title>
+  <title>Flutter 整合 MSAL(Microsoft Authentication Library) 筆記 - Lando's Blog</title>
 
   
-    <meta name="description" content="🔍 前言今天在執行 Flutter + Firebase 的專案時遇到一個問題，發生在 Xcode 15+ 版本。當執行 flutter run，Firebase 的 firebase_messaging 會報錯以下這則訊息： 1Lexical or Preprocessor Issue Include of non-modular header inside framework module">
+    <meta name="description" content="這篇筆記會教你 Flutter 專案中整合 Microsoft Authentication Library (MSAL)，包含 iOS 和 Android 平台的完整設定步驟。 整合 MSAL 登入流程 (iOS)Azure Portal 新增 iOS 平台 到 Azure Portal 註冊你的 APP  管理 → 驗證，新增 iOS&#x2F;Android 平台   iOS 只需要把你的">
 <meta property="og:type" content="article">
-<meta property="og:title" content="📝 Flutter 錯誤筆記：Lexical or Preprocessor Issue (Include of non-modular header…)">
-<meta property="og:url" content="http://example.com/2025/03/03/Xcode_Error_Lexical_or_Preprocessor_Issue/index.html">
+<meta property="og:title" content="Flutter 整合 MSAL(Microsoft Authentication Library) 筆記">
+<meta property="og:url" content="http://example.com/2025/04/10/Flutter-Msal-note/index.html">
 <meta property="og:site_name" content="Lando&#39;s Blog">
-<meta property="og:description" content="🔍 前言今天在執行 Flutter + Firebase 的專案時遇到一個問題，發生在 Xcode 15+ 版本。當執行 flutter run，Firebase 的 firebase_messaging 會報錯以下這則訊息： 1Lexical or Preprocessor Issue Include of non-modular header inside framework module">
+<meta property="og:description" content="這篇筆記會教你 Flutter 專案中整合 Microsoft Authentication Library (MSAL)，包含 iOS 和 Android 平台的完整設定步驟。 整合 MSAL 登入流程 (iOS)Azure Portal 新增 iOS 平台 到 Azure Portal 註冊你的 APP  管理 → 驗證，新增 iOS&#x2F;Android 平台   iOS 只需要把你的">
 <meta property="og:locale" content="zh_TW">
-<meta property="og:image" content="http://example.com/pic/Xcode_Error_Lexical_or_Preprocessor_Issue/Xnip2025-02-27_09-42-05.jpg">
-<meta property="article:published_time" content="2025-03-03T03:32:51.000Z">
-<meta property="article:modified_time" content="2025-03-03T06:35:28.785Z">
+<meta property="og:image" content="http://example.com/pic/Flutter-Msal-note/Xnip2025-04-10_13-55-02.jpg">
+<meta property="og:image" content="http://example.com/pic/Flutter-Msal-note/Xnip2025-04-10_13-58-46.jpg">
+<meta property="og:image" content="http://example.com/pic/Flutter-Msal-note/Xnip2025-04-10_14-06-48.jpg">
+<meta property="og:image" content="http://example.com/pic/Flutter-Msal-note/Xnip2025-04-10_14-52-51.jpg">
+<meta property="og:image" content="http://example.com/pic/Flutter-Msal-note/Xnip2025-04-10_14-51-48.jpg">
+<meta property="article:published_time" content="2025-04-10T07:15:42.000Z">
+<meta property="article:modified_time" content="2025-04-10T07:25:16.023Z">
 <meta property="article:author" content="Lando Hsieh">
-<meta property="article:tag" content="Flutter錯誤筆記">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/pic/Xcode_Error_Lexical_or_Preprocessor_Issue/Xnip2025-02-27_09-42-05.jpg">
+<meta name="twitter:image" content="http://example.com/pic/Flutter-Msal-note/Xnip2025-04-10_13-55-02.jpg">
   
   
   
-  <meta name="keywords" content="Flutter錯誤筆記">
+  
 
   <!-- feed -->
   
@@ -79,60 +82,116 @@
   <div class="content">
     <div class="top bread-nav footnote"><div class="left"><div class="flex-row" id="breadcrumb"><a class="cap breadcrumb" href="/">首頁</a>
 <span class="sep"></span><a class="cap breadcrumb" href="/">網誌</a></div>
-<div class="flex-row" id="post-meta"><span class="text created">發布於：<time datetime="2025-03-03T03:32:51.000Z">2025-03-03</time></span><span class="sep updated"></span><span class="text updated">更新於：<time datetime="2025-03-03T06:35:28.785Z">2025-03-03</time></span></div></div></div>
+<div class="flex-row" id="post-meta"><span class="text created">發布於：<time datetime="2025-04-10T07:15:42.000Z">2025-04-10</time></span><span class="sep updated"></span><span class="text updated">更新於：<time datetime="2025-04-10T07:25:16.023Z">2025-04-10</time></span></div></div></div>
     
     <div class="bottom only-title">
       
       <div class="text-area">
-        <h1 class="text title"><span>📝 Flutter 錯誤筆記：Lexical or Preprocessor Issue (Include of non-modular header…)</span></h1>
+        <h1 class="text title"><span>Flutter 整合 MSAL(Microsoft Authentication Library) 筆記</span></h1>
         
       </div>
     </div>
     
   </div>
-  </div><article class="md-text content"><h3 id="🔍-前言"><a href="#🔍-前言" class="headerlink" title="🔍 前言"></a><strong>🔍 前言</strong></h3><p>今天在執行 <strong>Flutter + Firebase</strong> 的專案時遇到一個問題，發生在 <strong>Xcode 15+ 版本</strong>。當執行 flutter run，Firebase 的 firebase_messaging 會報錯以下這則訊息：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Lexical or Preprocessor Issue Include of non-modular header inside framework module &#x27;firebase_messaging&#x27;.</span><br></pre></td></tr></table></figure>
+  </div><article class="md-text content"><p>這篇筆記會教你 Flutter 專案中整合 Microsoft Authentication Library (MSAL)，包含 iOS 和 Android 平台的完整設定步驟。</p>
+<h2 id="整合-MSAL-登入流程-iOS"><a href="#整合-MSAL-登入流程-iOS" class="headerlink" title="整合 MSAL 登入流程 (iOS)"></a>整合 MSAL 登入流程 (iOS)</h2><h3 id="Azure-Portal-新增-iOS-平台"><a href="#Azure-Portal-新增-iOS-平台" class="headerlink" title="Azure Portal 新增 iOS 平台"></a>Azure Portal 新增 iOS 平台</h3><ol>
+<li><p>到 <a target="_blank" rel="noopener" href="https://portal.azure.com/#view/Microsoft_AAD_RegisteredApps/ApplicationsListBlade">Azure Portal</a> 註冊你的 APP</p>
+</li>
+<li><p>管理 → 驗證，新增 iOS&#x2F;Android 平台</p>
+<div class="tag-plugin image"><div class="image-bg"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="/pic/Flutter-Msal-note/Xnip2025-04-10_13-55-02.jpg" data-fancybox="true"/></div></div>
+</li>
+<li><p>iOS 只需要把你的 APP Bundle ID 加入配套識別碼即可</p>
+<div class="tag-plugin image"><div class="image-bg"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="/pic/Flutter-Msal-note/Xnip2025-04-10_13-58-46.jpg" data-fancybox="true"/></div></div></li>
+</ol>
+<h3 id="Runner-設定"><a href="#Runner-設定" class="headerlink" title="Runner 設定"></a>Runner 設定</h3><ol>
+<li><p>在你的專案中用 terminal 打開 Runner.xcworkspace，或輸入以下指令</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">open ios/Runner.xcworkspace/</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>添加一個 <code>Keychain Sharing</code> 的 Capability，並將 <code>com.microsoft.adalcache</code> 加入 Keychain Group 中</p>
+<div class="tag-plugin image"><div class="image-bg"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="/pic/Flutter-Msal-note/Xnip2025-04-10_14-06-48.jpg" data-fancybox="true"/></div></div>
 
-<p>這導致整個專案無法成功編譯。</p>
-<p>後來發現這個錯誤主要發生在 <strong>Xcode 更新後</strong>，影響了一些第三方套件（例如 Firebase）。避免以後發生同樣問題，為此整理了一篇筆記。</p>
-<h3 id="🤔-為什麼會發生這個錯誤？"><a href="#🤔-為什麼會發生這個錯誤？" class="headerlink" title="🤔 為什麼會發生這個錯誤？"></a><strong>🤔 為什麼會發生這個錯誤？</strong></h3><p>這與 <strong>Xcode 的模組化編譯規則</strong> 有關。Xcode 在較新的版本中，更嚴格地限制了 <strong>非模組化（Non-modular）Header 檔案</strong> 的引用方式。</p>
-<p>在 Apple 的模組化編譯模式（Modular Build System）下，每個 Framework（或 Module）內部的 Header 應該被明確標記為 <strong>public 或 private</strong>，避免開發者直接使用內部 API。</p>
-<p>但還是有一些 <strong>第三方套件（如 Firebase）</strong> 仍然包含了一些非模組化的 Header 檔案，而 Xcode 預設不允許這種方式，因此在 firebase_messaging 嘗試引用這些檔案時，編譯器會報錯。</p>
-<h3 id="✅-解決方案"><a href="#✅-解決方案" class="headerlink" title="✅ 解決方案"></a><strong>✅ 解決方案</strong></h3><p>解法是修改 <strong>Xcode 的 Build Settings</strong>，允許專案使用 <strong>非模組化的 Header 檔案</strong>：</p>
-<div class="tag-plugin image"><div class="image-bg"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="/pic/Xcode_Error_Lexical_or_Preprocessor_Issue/Xnip2025-02-27_09-42-05.jpg" data-fancybox="true"/></div></div>
+<p>這麼做是因為，MSAL 登入後會將使用者的登入資訊存放在 Keychain iOS 的安全儲存系統中，儲存的內容包括如下</p>
+<ul>
+<li>Access Token</li>
+<li>Refresh Token</li>
+<li>ID Token</li>
+<li>使用者帳戶資訊</li>
+<li>Token 的過期時間等</li>
+</ul>
+<p>也因此，就算重新打開 APP，也會繼續顯示為登入狀態，如果要登出的話，就要呼叫<code>signOut()</code>動作，會自動清除 keychain 中的登入資訊。</p>
+<p>清除的內容會有以下：</p>
+<ul>
+<li>清除 Keychain 中儲存的所有認證資訊</li>
+<li>移除快取的 token</li>
+<li>清除當前登入的帳戶資訊</li>
+</ul>
+</li>
+</ol>
+<h3 id="Info-plist-設定"><a href="#Info-plist-設定" class="headerlink" title="Info.plist 設定"></a>Info.plist 設定</h3><ol>
+<li><p>（必要）加入 redirect URI scheme（這段是為了在你登入後將登入資訊回傳給你的 APP，一定要加）</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;key&gt;CFBundleURLTypes&lt;/key&gt;</span><br><span class="line">&lt;array&gt;</span><br><span class="line">  &lt;dict&gt;</span><br><span class="line">      &lt;key&gt;CFBundleURLSchemes&lt;/key&gt;</span><br><span class="line">      &lt;array&gt;</span><br><span class="line">          &lt;string&gt;msauth.$(PRODUCT_BUNDLE_IDENTIFIER)&lt;/string&gt;</span><br><span class="line">      &lt;/array&gt;</span><br><span class="line">  &lt;/dict&gt;</span><br><span class="line">&lt;/array&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>（可選）如果手機有安裝 Microsoft 的 Authenticator 這個 APP 的話，你希望在你 APP MSAL 登入時，都自動打開 Authenticator APP 來做登入，就要加入以下 Scheme，但若純粹指定使用 webview 來登入，就不需要（但也可以保留）</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;key&gt;LSApplicationQueriesSchemes&lt;/key&gt;</span><br><span class="line">&lt;array&gt;</span><br><span class="line">  &lt;string&gt;msauthv2&lt;/string&gt;</span><br><span class="line">  &lt;string&gt;msauthv3&lt;/string&gt;</span><br><span class="line">&lt;/array&gt;</span><br></pre></td></tr></table></figure></li>
+</ol>
+<p>接下來就可以開始寫程式碼使用 MSAL 登入了</p>
+<h3 id="程式碼"><a href="#程式碼" class="headerlink" title="程式碼"></a>程式碼</h3><p>initial MSAL, iOS 的部分只需要寫入你的 Authority 參數即可<br>通常為 <code>“[https://login.microsoftonline.com/common](https://login.microsoftonline.com/common)”</code></p>
+<p>common：所有帳號都能存取<br>organizations：只允許組織帳號存取<br>xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx：特定組織帳號</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">msalClient = await SingleAccountPca.create(</span><br><span class="line">      appleConfig: AppleConfig(</span><br><span class="line">        authority: dotenv.env[<span class="string">&#x27;AAD_APPLE_AUTHORITY&#x27;</span>] ?? <span class="string">&#x27;&#x27;</span>,</span><br><span class="line">        authorityType: AuthorityType.aad,</span><br><span class="line">        broker: Broker.webView,</span><br><span class="line">      ),</span><br><span class="line">    );</span><br></pre></td></tr></table></figure>
 
-<p>1️⃣ <strong>打開 Xcode，開啟 Flutter 專案的 iOS 目錄</strong></p>
-<p>•	執行 open ios&#x2F;Runner.xcworkspace（要用 xcworkspace 而不是 xcodeproj）。</p>
-<p>2️⃣ <strong>進入 Build Settings</strong></p>
-<p>•	在左側選擇 Runner，切換到 <strong>Build Settings</strong>。</p>
-<p>•	在搜尋框輸入 Allow Non-modular Includes In Framework Modules。</p>
-<p>3️⃣ <strong>將此設定改為 YES</strong></p>
-<p>•	預設情況下，這個選項是 NO，這代表 <strong>Xcode 會強制遵守模組化規則</strong>。</p>
-<p>•	設為 YES 後，Xcode 允許 <strong>在 Framework Modules 內部包含非模組化 Header</strong>，這樣 Firebase 就不會因為這個限制而報錯。</p>
-<p>4️⃣ <strong>重新執行 Flutter 專案</strong></p>
-<p>•	執行 flutter clean 清除快取。</p>
-<p>•	執行 cd ios &amp;&amp; pod install 重新安裝 iOS 依賴。</p>
-<p>•	回到專案根目錄，執行 flutter run，應該就能順利編譯。</p>
-<h3 id="🎯-為什麼這樣能解決問題？"><a href="#🎯-為什麼這樣能解決問題？" class="headerlink" title="🎯 為什麼這樣能解決問題？"></a><strong>🎯 為什麼這樣能解決問題？</strong></h3><p>設定 <code>Allow Non-modular Includes In Framework Modules = YES</code> 之後，Xcode 會允許 <strong>第三方套件（如 Firebase）引用未標記為模組化的 Header 檔案</strong>。</p>
-<p>本質上，這個設定是放寬了 Xcode 的嚴格規則，讓專案可以繼續使用這些 <strong>非模組化的 Header 檔案</strong>，避免編譯時報錯。</p>
-<p>不過這並非解決問題根本的方法，最好的方式還是 <strong>等待 Firebase 更新以適配新的 Xcode</strong>，或者手動調整 Firebase 的 module.modulemap 來明確標記 Header 的可見性（這需要修改 Firebase 套件的內部結構，風險較高）。</p>
-<h3 id="💡-建議"><a href="#💡-建議" class="headerlink" title="💡 建議"></a><strong>💡 建議</strong></h3><p>1️⃣ <strong>確保 Firebase SDK 是最新版本</strong></p>
-<p>•	如果 Firebase 已經釋出針對 Xcode 15+ 的更新，應該優先更新，而不是長期依賴 <code>Allow Non-modular Includes In Framework Modules = YES</code>。</p>
-<p>•	更新方式：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">flutter pub upgrade firebase_messaging</span><br><span class="line">cd ios &amp;&amp; pod update</span><br></pre></td></tr></table></figure>
+<p>broker 的部分為選擇要跳出來的登入頁面是哪一種，這邊指定 webView</p>
+<h2 id="整合-MSAL-登入流程-Android"><a href="#整合-MSAL-登入流程-Android" class="headerlink" title="整合 MSAL 登入流程 (Android)"></a>整合 MSAL 登入流程 (Android)</h2><h3 id="Azure-Portal-新增-Android-平台"><a href="#Azure-Portal-新增-Android-平台" class="headerlink" title="Azure Portal 新增 Android 平台"></a>Azure Portal 新增 Android 平台</h3><ol>
+<li><p>跟 iOS 差不多，只是多新增一個 Android 的平台</p>
+<div class="tag-plugin image"><div class="image-bg"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="/pic/Flutter-Msal-note/Xnip2025-04-10_14-52-51.jpg" data-fancybox="true"/></div></div>
+</li>
+<li><p>套件名稱填入你的 Bundle ID</p>
+<div class="tag-plugin image"><div class="image-bg"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="/pic/Flutter-Msal-note/Xnip2025-04-10_14-51-48.jpg" data-fancybox="true"/></div></div>
+</li>
+<li><p>簽章雜湊用以下指令在你的 terminal 中執行，注意以下兩點</p>
+<ul>
+<li><code>app/</code> 底下記得先產生好 release 用的 <code>upload-keystore.jks</code></li>
+<li>指令要在你的專案跟目錄中執行</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">keytool -exportcert -<span class="built_in">alias</span> androidreleasekey -keystore app/upload-keystore.jks | openssl sha1 -binary | openssl <span class="built_in">base64</span></span><br></pre></td></tr></table></figure></li>
+</ol>
+<h3 id="建立-msal-config-json"><a href="#建立-msal-config-json" class="headerlink" title="建立 msal_config.json"></a>建立 msal_config.json</h3><p>在你的專案中建立 <code>msal_config.json</code> （放哪裏都可以，我是放在<code>assets/</code> 內，記得到<code>pubspec.yaml</code> 指定該資料夾，否則引用不到）</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;account_mode&quot;</span><span class="punctuation">:</span> <span class="string">&quot;SINGLE&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;broker_redirect_uri_registered&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">false</span></span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;authorization_user_agent&quot;</span><span class="punctuation">:</span> <span class="string">&quot;BROWSER&quot;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
 
-<p>2️⃣ <strong>避免直接修改 Xcode 設定，除非必要</strong></p>
-<p>•	這個設定是 <strong>降低 Xcode 的編譯嚴格性</strong>，雖然能解決問題，但長遠來看，還是要讓專案符合 Apple 的模組化規範。</p>
-<p>3️⃣ <strong>如果遇到其他 Firebase 相關錯誤，可以試試這些步驟</strong></p>
-<p>•	flutter clean</p>
-<p>•	rm -rf ios&#x2F;Pods ios&#x2F;Podfile.lock</p>
-<p>•	cd ios &amp;&amp; pod install</p>
-<p>•	flutter run</p>
-<h3 id="🏁-總結"><a href="#🏁-總結" class="headerlink" title="🏁 總結"></a><strong>🏁 總結</strong></h3><p><strong>問題：Xcode 15+ 變更編譯規則，導致 Firebase 的 firebase_messaging 無法使用非模組化的 Header。</strong></p>
-<p><strong>解法：在 Xcode Build Settings 設定 <code>Allow Non-modular Includes In Framework Modules = YES</code>，放寬 Xcode 的模組化限制。</strong></p>
-<p><strong>建議：</strong></p>
-<p>•	<strong>長期來看，應該等待 Firebase 官方更新</strong>，避免直接修改 Xcode 設定。</p>
-<p>•	<strong>確保 Firebase SDK 維持最新版本</strong>，減少未來與 Xcode 的相容性問題。</p>
+<h3 id="AndroidManifest-xml-添加依賴"><a href="#AndroidManifest-xml-添加依賴" class="headerlink" title="AndroidManifest.xml 添加依賴"></a>AndroidManifest.xml 添加依賴</h3><p>到 <code>android/app/src/main/AndroidManifest.xml</code> 添加以下</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">application</span>&gt;</span></span><br><span class="line">...</span><br><span class="line"></span><br><span class="line">  <span class="tag">&lt;<span class="name">activity</span> <span class="attr">android:name</span>=<span class="string">&quot;com.microsoft.identity.client.BrowserTabActivity&quot;</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">intent-filter</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">action</span> <span class="attr">android:name</span>=<span class="string">&quot;android.intent.action.VIEW&quot;</span> /&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">category</span> <span class="attr">android:name</span>=<span class="string">&quot;android.intent.category.DEFAULT&quot;</span> /&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">category</span> <span class="attr">android:name</span>=<span class="string">&quot;android.intent.category.BROWSABLE&quot;</span> /&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">data</span></span></span><br><span class="line"><span class="tag">              <span class="attr">android:host</span>=<span class="string">&quot;這邊填入你的 Bundle ID&quot;</span></span></span><br><span class="line"><span class="tag">              <span class="attr">android:path</span>=<span class="string">&quot;/你剛用指令生成的簽章雜湊值&quot;</span></span></span><br><span class="line"><span class="tag">              <span class="attr">android:scheme</span>=<span class="string">&quot;msauth&quot;</span> /&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">intent-filter</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">activity</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">application</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="程式碼-1"><a href="#程式碼-1" class="headerlink" title="程式碼"></a>程式碼</h3><ul>
+<li>填入你的 <code>Client ID</code></li>
+<li>指定 <code>msal_config.json</code> 位置</li>
+<li>填入 <code>Redirect URI</code> （用簽章雜湊產生的 URI）</li>
+</ul>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">msalClient = <span class="keyword">await</span> SingleAccountPca.create(</span><br><span class="line">      clientId: dotenv.env[<span class="string">&#x27;AAD_CLIENT_ID&#x27;</span>] ?? <span class="string">&#x27;&#x27;</span>,</span><br><span class="line">      androidConfig: AndroidConfig(</span><br><span class="line">        configFilePath: <span class="string">&#x27;assets/msal_config.json&#x27;</span>,</span><br><span class="line">        redirectUri: dotenv.env[<span class="string">&#x27;AAD_ANDROID_REDIRECT_URI&#x27;</span>] ?? <span class="string">&#x27;&#x27;</span>,</span><br><span class="line">      ),</span><br><span class="line">    );</span><br></pre></td></tr></table></figure>
+
+<h2 id="aad-oauth-以及-msal-auth-兩者套件差異？"><a href="#aad-oauth-以及-msal-auth-兩者套件差異？" class="headerlink" title="aad_oauth 以及 msal_auth 兩者套件差異？"></a>aad_oauth 以及 msal_auth 兩者套件差異？</h2><h3 id="aad-oauth"><a href="#aad-oauth" class="headerlink" title="aad_oauth"></a>aad_oauth</h3><ul>
+<li><strong>用途</strong>：主要用於與 Azure Active Directory (AAD) 進行 OAuth 認證。</li>
+<li><strong>功能</strong>: 提供簡單的 OAuth2 認證流程，能夠獲取 access_token 和刷新 token。</li>
+<li><strong>適用場景</strong>: 適合需要與 Azure AD  整合的 App，特別是那些不需要複雜的身份驗證邏輯的應用。</li>
+</ul>
+<h3 id="msal-auth"><a href="#msal-auth" class="headerlink" title="msal_auth"></a>msal_auth</h3><ul>
+<li><strong>用途</strong>: 基於 Microsoft Authentication Library (MSAL) 的身份驗證套件。</li>
+<li><strong>功能</strong>: 提供更全面的身份驗證功能，包括支援多組織帳戶、帳戶切換、token 緩存等。</li>
+<li><strong>適用場景</strong>: 適合需要更複雜的身份驗證邏輯的應用程序，特別是那些需要支持多組織帳戶或需要更高級的身份驗證功能的應用。</li>
+</ul>
+<h3 id="結論"><a href="#結論" class="headerlink" title="結論"></a>結論</h3><p><strong>aad_oauth 用於</strong></p>
+<ul>
+<li>專案規模小</li>
+<li>快速實現簡單認證</li>
+<li>不需特別安全需求</li>
+<li>原型開發或概念驗證</li>
+</ul>
+<p><strong>msal_auth 用於</strong></p>
+<ul>
+<li>需要企業級的安全性</li>
+<li>需要支援 Microsoft Authenticator</li>
+<li>需要處理複雜的認證場景</li>
+<li>需要與 Microsoft 服務深度整合</li>
+<li>長期維護的專案</li>
+</ul>
 
 <div class="article-footer fs14">
     <section id="license">
@@ -142,7 +201,7 @@
     </section>
     </div>
 </article>
-<div class="related-wrap" id="read-next"><section class="body"><div class="item" id="prev"><div class="note">較新文章</div><a href="/2025/04/10/Flutter-Msal-note/">Flutter 整合 MSAL(Microsoft Authentication Library) 筆記</a></div><div class="item" id="next"><div class="note">較早文章</div><a href="/2024/08/16/HowJWTWork/">JWT是如何組成的</a></div></section></div>
+<div class="related-wrap" id="read-next"><section class="body"><div class="item" id="prev"></div><div class="item" id="next"><div class="note">較早文章</div><a href="/2025/03/03/Xcode_Error_Lexical_or_Preprocessor_Issue/">📝 Flutter 錯誤筆記：Lexical or Preprocessor Issue (Include of non-modular header…)</a></div></section></div>
 
 
 
@@ -156,7 +215,7 @@
 
 
 
-<widget class="widget-wrapper toc" id="data-toc" collapse="false"><div class="widget-header dis-select"><span class="name">本文目錄</span><a class="cap-action" onclick="sidebar.toggleTOC()" ><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6h11m-11 6h11m-11 6h11M4 6h1v4m-1 0h2m0 8H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg></a></div><div class="widget-body"><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%F0%9F%94%8D-%E5%89%8D%E8%A8%80"><span class="toc-text">🔍 前言</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%F0%9F%A4%94-%E7%82%BA%E4%BB%80%E9%BA%BC%E6%9C%83%E7%99%BC%E7%94%9F%E9%80%99%E5%80%8B%E9%8C%AF%E8%AA%A4%EF%BC%9F"><span class="toc-text">🤔 為什麼會發生這個錯誤？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E2%9C%85-%E8%A7%A3%E6%B1%BA%E6%96%B9%E6%A1%88"><span class="toc-text">✅ 解決方案</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%F0%9F%8E%AF-%E7%82%BA%E4%BB%80%E9%BA%BC%E9%80%99%E6%A8%A3%E8%83%BD%E8%A7%A3%E6%B1%BA%E5%95%8F%E9%A1%8C%EF%BC%9F"><span class="toc-text">🎯 為什麼這樣能解決問題？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%F0%9F%92%A1-%E5%BB%BA%E8%AD%B0"><span class="toc-text">💡 建議</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%F0%9F%8F%81-%E7%B8%BD%E7%B5%90"><span class="toc-text">🏁 總結</span></a></li></ol></div><div class="widget-footer">
+<widget class="widget-wrapper toc" id="data-toc" collapse="false"><div class="widget-header dis-select"><span class="name">本文目錄</span><a class="cap-action" onclick="sidebar.toggleTOC()" ><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6h11m-11 6h11m-11 6h11M4 6h1v4m-1 0h2m0 8H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg></a></div><div class="widget-body"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B4%E5%90%88-MSAL-%E7%99%BB%E5%85%A5%E6%B5%81%E7%A8%8B-iOS"><span class="toc-text">整合 MSAL 登入流程 (iOS)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Azure-Portal-%E6%96%B0%E5%A2%9E-iOS-%E5%B9%B3%E5%8F%B0"><span class="toc-text">Azure Portal 新增 iOS 平台</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Runner-%E8%A8%AD%E5%AE%9A"><span class="toc-text">Runner 設定</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Info-plist-%E8%A8%AD%E5%AE%9A"><span class="toc-text">Info.plist 設定</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A8%8B%E5%BC%8F%E7%A2%BC"><span class="toc-text">程式碼</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B4%E5%90%88-MSAL-%E7%99%BB%E5%85%A5%E6%B5%81%E7%A8%8B-Android"><span class="toc-text">整合 MSAL 登入流程 (Android)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Azure-Portal-%E6%96%B0%E5%A2%9E-Android-%E5%B9%B3%E5%8F%B0"><span class="toc-text">Azure Portal 新增 Android 平台</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BB%BA%E7%AB%8B-msal-config-json"><span class="toc-text">建立 msal_config.json</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#AndroidManifest-xml-%E6%B7%BB%E5%8A%A0%E4%BE%9D%E8%B3%B4"><span class="toc-text">AndroidManifest.xml 添加依賴</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A8%8B%E5%BC%8F%E7%A2%BC-1"><span class="toc-text">程式碼</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#aad-oauth-%E4%BB%A5%E5%8F%8A-msal-auth-%E5%85%A9%E8%80%85%E5%A5%97%E4%BB%B6%E5%B7%AE%E7%95%B0%EF%BC%9F"><span class="toc-text">aad_oauth 以及 msal_auth 兩者套件差異？</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#aad-oauth"><span class="toc-text">aad_oauth</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#msal-auth"><span class="toc-text">msal_auth</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%B5%90%E8%AB%96"><span class="toc-text">結論</span></a></li></ol></li></ol></div><div class="widget-footer">
 
 <a class="top" onclick="util.scrollTop()"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 12c0-4.714 0-7.071 1.464-8.536C4.93 2 7.286 2 12 2c4.714 0 7.071 0 8.535 1.464C22 4.93 22 7.286 22 12c0 4.714 0 7.071-1.465 8.535C19.072 22 16.714 22 12 22s-7.071 0-8.536-1.465C2 19.072 2 16.714 2 12Z"/><path stroke-linecap="round" stroke-linejoin="round" d="m9 15.5l3-3l3 3m-6-4l3-3l3 3"/></g></svg><span>回到頂部</span></a></div></widget>
 </div></aside><div class='float-panel blur'>
