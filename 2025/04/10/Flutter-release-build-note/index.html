@@ -28,9 +28,10 @@
 <meta property="og:description" content="最近在做 Flutter 專案，當我在 build release 版本的 Android 時，遇到一些瓶頸。以下是我遇到的問題以及如何解決的過程。 問題描述當我使用 flutter build apk --release 建置專案時，出現了很多錯誤 主要問題有以下兩類： 第一類：SDK 與 AGP 版本問題  SDK 版本不匹配：某些套件需要 Android SDK 35，但我的配置是 34。">
 <meta property="og:locale" content="zh_TW">
 <meta property="og:image" content="http://example.com/pic/Flutter-release-build-note/Xnip2025-04-10_16-06-36.jpg">
+<meta property="og:image" content="http://example.com/pic/Flutter-release-build-note/Xnip2025-04-11_09-17-53.jpg">
 <meta property="og:image" content="http://example.com/pic/Flutter-release-build-note/Xnip2025-04-10_17-11-05.jpg">
 <meta property="article:published_time" content="2025-04-10T09:32:17.000Z">
-<meta property="article:modified_time" content="2025-04-11T01:15:51.537Z">
+<meta property="article:modified_time" content="2025-04-11T01:18:34.236Z">
 <meta property="article:author" content="Lando Hsieh">
 <meta property="article:tag" content="Flutter錯誤筆記">
 <meta name="twitter:card" content="summary">
@@ -80,7 +81,7 @@
   <div class="content">
     <div class="top bread-nav footnote"><div class="left"><div class="flex-row" id="breadcrumb"><a class="cap breadcrumb" href="/">首頁</a>
 <span class="sep"></span><a class="cap breadcrumb" href="/">網誌</a></div>
-<div class="flex-row" id="post-meta"><span class="text created">發布於：<time datetime="2025-04-10T09:32:17.000Z">2025-04-10</time></span><span class="sep updated"></span><span class="text updated">更新於：<time datetime="2025-04-11T01:15:51.537Z">2025-04-11</time></span></div></div></div>
+<div class="flex-row" id="post-meta"><span class="text created">發布於：<time datetime="2025-04-10T09:32:17.000Z">2025-04-10</time></span><span class="sep updated"></span><span class="text updated">更新於：<time datetime="2025-04-11T01:18:34.236Z">2025-04-11</time></span></div></div></div>
     
     <div class="bottom only-title">
       
@@ -118,7 +119,7 @@
 <li><p>Android Studio 首次打開專案需要一點時間等他跑完，你可以先去滑個手機等等他</p>
 </li>
 <li><p>打開 File → Project Structure 就能看到相關版本資訊 SDK, AGP, Gradle plugin version 等等</p>
-</li>
+<div class="tag-plugin image"><div class="image-bg"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="/pic/Flutter-release-build-note/Xnip2025-04-11_09-17-53.jpg" data-fancybox="true"/></div></div></li>
 </ol>
 <h2 id="添加-BouncyCastle-和-FindBugs-的依賴"><a href="#添加-BouncyCastle-和-FindBugs-的依賴" class="headerlink" title="添加 BouncyCastle 和 FindBugs 的依賴"></a>添加 BouncyCastle 和 FindBugs 的依賴</h2><p>（以下步驟為如果在 build release 版本時有遇到關於 BouncyCastle 的問題才需要做。）</p>
 <p>在 <code>android/app/build.gradle</code> 中 dependencies 的部分要加入以下依賴</p>
