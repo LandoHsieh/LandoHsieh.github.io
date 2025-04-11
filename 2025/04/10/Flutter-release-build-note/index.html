@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="hexo-theme" content="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.29.1" theme-name="Stellar" theme-version="1.29.1">
-  <meta name="robots" content="noindex,follow">
+  
   <meta name="generator" content="Hexo 7.3.0">
   <meta http-equiv='x-dns-prefetch-control' content='on' />
   
@@ -17,16 +17,23 @@
   <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#000">
   <meta name="theme-color" content="#f9fafb">
   
-  <title>標籤：dart - Lando's Blog</title>
+  <title>Flutter Release build 問題筆記 - Lando's Blog</title>
 
   
-    <meta property="og:type" content="website">
-<meta property="og:title" content="Lando&#39;s Blog">
-<meta property="og:url" content="http://example.com/tags/dart/index.html">
+    <meta name="description" content="最近在做 Flutter 專案，當我在 build release 版本的 Android 時，遇到一些瓶頸。以下是我遇到的問題以及如何解決的過程。 問題描述當我使用 flutter build apk --release 建置專案時，出現了很多錯誤 主要問題有以下兩類： 第一類：SDK 與 AGP 版本問題  SDK 版本不匹配：某些套件需要 Android SDK 35，但我的配置是 34。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Flutter Release build 問題筆記">
+<meta property="og:url" content="http://example.com/2025/04/10/Flutter-release-build-note/index.html">
 <meta property="og:site_name" content="Lando&#39;s Blog">
+<meta property="og:description" content="最近在做 Flutter 專案，當我在 build release 版本的 Android 時，遇到一些瓶頸。以下是我遇到的問題以及如何解決的過程。 問題描述當我使用 flutter build apk --release 建置專案時，出現了很多錯誤 主要問題有以下兩類： 第一類：SDK 與 AGP 版本問題  SDK 版本不匹配：某些套件需要 Android SDK 35，但我的配置是 34。">
 <meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="http://example.com/pic/Flutter-release-build-note/Xnip2025-04-10_16-06-36.jpg">
+<meta property="og:image" content="http://example.com/pic/Flutter-release-build-note/Xnip2025-04-10_17-11-05.jpg">
+<meta property="article:published_time" content="2025-04-10T09:32:17.000Z">
+<meta property="article:modified_time" content="2025-04-11T01:10:12.590Z">
 <meta property="article:author" content="Lando Hsieh">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/pic/Flutter-release-build-note/Xnip2025-04-10_16-06-36.jpg">
   
   
   
@@ -45,7 +52,7 @@
 </head>
 <body>
 
-<div class="l_body s:aa index tech" id="start" layout="undefined" ><aside class="l_left"><div class="leftbar-container">
+<div class="l_body s:aa content tech" id="start" layout="post" ><aside class="l_left"><div class="leftbar-container">
 
 
 <header class="header"><div class="logo-wrap"><a class="avatar" href="/pic/IMG_8365.JPG"><div class="bg" style="opacity:0;background-image:url(https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/avatar/round/rainbow64@3x.webp);"></div><img no-lazy class="avatar" src="/pic/IMG_8365.JPG" onerror="javascript:this.classList.add('error');this.src='https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/image/2659360.svg';"></a><a class="title" href="/"><div class="main" ff="title">藍多的學習筆記</div><div class="sub normal cap">這裡記錄學習新知（偶爾更新）</div><div class="sub hover cap" style="opacity:0">明天的自己要比今天更厲害！</div></a></div></header>
@@ -57,31 +64,123 @@
 <nav class="menu dis-select"></nav>
 </div>
 <div class="widgets">
+
+
 <widget class="widget-wrapper post-list"><div class="widget-header dis-select"><span class="name">最近更新</span></div><div class="widget-body fs14"><a class="item title" href="/2025/04/10/Flutter-release-build-note/"><span class="title">Flutter Release build 問題筆記</span></a><a class="item title" href="/2025/04/10/Flutter-Msal-note/"><span class="title">Flutter 整合 MSAL(Microsoft Authentication Library) 筆記</span></a><a class="item title" href="/2025/03/03/Xcode_Error_Lexical_or_Preprocessor_Issue/"><span class="title">📝 Flutter 錯誤筆記：Lexical or Preprocessor Issue (Include of non-modular header…)</span></a><a class="item title" href="/2024/08/16/HowJWTWork/"><span class="title">JWT是如何組成的</span></a><a class="item title" href="/2024/08/08/RunFlutterOnIOS/"><span class="title">在iPhone上運行Flutter專案</span></a><a class="item title" href="/2024/08/07/Flutter-ModalRoute/"><span class="title">如何在頁面導航時傳遞資料</span></a><a class="item title" href="/2024/08/05/JWT-ECDH/"><span class="title">ECDH加密搭配JWT提升安全性</span></a><a class="item title" href="/2024/07/24/Flutter-riverpod/"><span class="title">Flutter Riverpod 狀態管理工具</span></a><a class="item title" href="/2024/07/18/dart-const/"><span class="title">Dart中的const常量</span></a><a class="item title" href="/2024/07/18/dart-future-void/"><span class="title">Future void vs void in Dart</span></a></div></widget>
 </div>
 
 </div></aside><div class="l_main" id="main">
 
-<header class="header mobile-only"><div class="logo-wrap"><a class="avatar" href="/pic/IMG_8365.JPG"><div class="bg" style="opacity:0;background-image:url(https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/avatar/round/rainbow64@3x.webp);"></div><img no-lazy class="avatar" src="/pic/IMG_8365.JPG" onerror="javascript:this.classList.add('error');this.src='https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/image/2659360.svg';"></a><a class="title" href="/"><div class="main" ff="title">藍多的學習筆記</div><div class="sub normal cap">這裡記錄學習新知（偶爾更新）</div><div class="sub hover cap" style="opacity:0">明天的自己要比今天更厲害！</div></a></div></header>
-
- 
 
 
 
 
-<div class="navbar top"><nav class="post"><a href="/">近期發布</a><a class="active" href="/tags">標籤：dart</a><a href="/archives">封存</a></nav></div>
-<div class="post-list post"><a class="post-card post" href="/2024/07/18/dart-const/">
-<article class="md-text"><h2 class="post-title">Dart中的const常量</h2><div class="excerpt"><p>什麼是 const在 Dart 和 Flutter 中，const關鍵字用於創建編譯時期常量。這意味著在編譯時期就確定了對象的值，並且在運行時期無法更改。
-const  的優點1. 提升效能
-使用  const  可以提升效能，因為常量對象在內存中只...</p></div><div class="meta cap"><span class="cap" id="post-meta"><svg style="margin-bottom:2px" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" d="M6.94 2c.416 0 .753.324.753.724v1.46c.668-.012 1.417-.012 2.26-.012h4.015c.842 0 1.591 0 2.259.013v-1.46c0-.4.337-.725.753-.725s.753.324.753.724V4.25c1.445.111 2.394.384 3.09 1.055c.698.67.982 1.582 1.097 2.972L22 9H2v-.724c.116-1.39.4-2.302 1.097-2.972c.697-.67 1.645-.944 3.09-1.055V2.724c0-.4.337-.724.753-.724"/><path fill="currentColor" d="M22 14v-2c0-.839-.004-2.335-.017-3H2.01c-.013.665-.01 2.161-.01 3v2c0 3.771 0 5.657 1.172 6.828C4.343 22 6.228 22 10 22h4c3.77 0 5.656 0 6.828-1.172C22 19.658 22 17.772 22 14" opacity=".5"/><path fill="currentColor" d="M18 17a1 1 0 1 1-2 0a1 1 0 0 1 2 0m0-4a1 1 0 1 1-2 0a1 1 0 0 1 2 0m-5 4a1 1 0 1 1-2 0a1 1 0 0 1 2 0m0-4a1 1 0 1 1-2 0a1 1 0 0 1 2 0m-5 4a1 1 0 1 1-2 0a1 1 0 0 1 2 0m0-4a1 1 0 1 1-2 0a1 1 0 0 1 2 0"/></svg><time datetime="2024-07-18T06:31:44.000Z">2024-07-18</time></span></div></article>
-</a><a class="post-card post" href="/2024/07/18/dart-future-void/">
-<article class="md-text"><h2 class="post-title">Future void vs void in Dart</h2><div class="excerpt"><p>Future vs void in Dart1. 概述在 Dart 中，Future&lt;void&gt;  和  void  都可以用來定義方法的返回類型，但它們有不同的用途和行為。理解這兩者的區別對於編寫清晰、可維護和正確的異步程式碼至關重要。...</p></div><div class="meta cap"><span class="cap" id="post-meta"><svg style="margin-bottom:2px" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" d="M6.94 2c.416 0 .753.324.753.724v1.46c.668-.012 1.417-.012 2.26-.012h4.015c.842 0 1.591 0 2.259.013v-1.46c0-.4.337-.725.753-.725s.753.324.753.724V4.25c1.445.111 2.394.384 3.09 1.055c.698.67.982 1.582 1.097 2.972L22 9H2v-.724c.116-1.39.4-2.302 1.097-2.972c.697-.67 1.645-.944 3.09-1.055V2.724c0-.4.337-.724.753-.724"/><path fill="currentColor" d="M22 14v-2c0-.839-.004-2.335-.017-3H2.01c-.013.665-.01 2.161-.01 3v2c0 3.771 0 5.657 1.172 6.828C4.343 22 6.228 22 10 22h4c3.77 0 5.656 0 6.828-1.172C22 19.658 22 17.772 22 14" opacity=".5"/><path fill="currentColor" d="M18 17a1 1 0 1 1-2 0a1 1 0 0 1 2 0m0-4a1 1 0 1 1-2 0a1 1 0 0 1 2 0m-5 4a1 1 0 1 1-2 0a1 1 0 0 1 2 0m0-4a1 1 0 1 1-2 0a1 1 0 0 1 2 0m-5 4a1 1 0 1 1-2 0a1 1 0 0 1 2 0m0-4a1 1 0 1 1-2 0a1 1 0 0 1 2 0"/></svg><time datetime="2024-07-18T06:01:32.000Z">2024-07-18</time></span></div></article>
-</a></div>
+<div class="article banner top">
+  <div class="content">
+    <div class="top bread-nav footnote"><div class="left"><div class="flex-row" id="breadcrumb"><a class="cap breadcrumb" href="/">首頁</a>
+<span class="sep"></span><a class="cap breadcrumb" href="/">網誌</a></div>
+<div class="flex-row" id="post-meta"><span class="text created">發布於：<time datetime="2025-04-10T09:32:17.000Z">2025-04-10</time></span><span class="sep updated"></span><span class="text updated">更新於：<time datetime="2025-04-11T01:10:12.590Z">2025-04-11</time></span></div></div></div>
+    
+    <div class="bottom only-title">
+      
+      <div class="text-area">
+        <h1 class="text title"><span>Flutter Release build 問題筆記</span></h1>
+        
+      </div>
+    </div>
+    
+  </div>
+  </div><article class="md-text content"><p>最近在做 Flutter 專案，當我在 build release 版本的 Android 時，遇到一些瓶頸。以下是我遇到的問題以及如何解決的過程。</p>
+<h2 id="問題描述"><a href="#問題描述" class="headerlink" title="問題描述"></a>問題描述</h2><p>當我使用 <code>flutter build apk --release</code> 建置專案時，出現了很多錯誤</p>
+<p>主要問題有以下兩類：</p>
+<p><strong><em>第一類：SDK 與 AGP 版本問題</em></strong></p>
+<ul>
+<li>SDK 版本不匹配：某些套件需要 Android SDK 35，但我的配置是 34。</li>
+<li>當我升級 SDK 為 35 後，又出現 AGP 版本必須 ≥ <strong>8.1.0</strong> 的問題</li>
+<li>我透過 Android Studio 的 AGP Upgrade Assistant 來嘗試更新 AGP，卻沒看到 8.0.0 以上的版本</li>
+</ul>
+<p><strong><em>第二類：build release 會缺少一些必要 class</em></strong></p>
+<ul>
+<li>缺少必要的類：BouncyCastle 和 FindBugs 註解類缺失，導致建置失敗。</li>
+</ul>
+<h2 id="解決方法"><a href="#解決方法" class="headerlink" title="解決方法"></a>解決方法</h2><p>為了解決這些問題，我做了以下幾步：</p>
+<ol>
+<li>我發現 Android Studio 因為版本過舊，所以才找不到 AGP8.0.0 以上的版本可以安裝，因此至官方下載最新版本 Android Studio 後，就能透過 AGP Upgrade Assistant 來幫你更新最新的 AGP version。</li>
+<li>AGP 更新為 8.1.0 後，將 <code>build.gradle</code> 中的 <code>compileSdk</code> 和 <code>targetSdkVersion</code> 設置為 35，以滿足套件的需求。</li>
+<li>添加 BouncyCastle 和 FindBugs 的依賴，以確保所有必要的類都存在。（下方詳細說明）</li>
+<li>在 <code>proguard-rules.pro</code> 中添加規則，保留這些類，避免被 ProGuard 移除。（下方詳細說明）</li>
+</ol>
+<h2 id="透過-Android-Studio-查看專案版本"><a href="#透過-Android-Studio-查看專案版本" class="headerlink" title="透過 Android Studio 查看專案版本"></a>透過 Android Studio 查看專案版本</h2><ol>
+<li><p>在專案中對 android 右鍵，選擇 <strong>Open in Android Studio</strong></p>
+<div class="tag-plugin image"><div class="image-bg"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="/pic/Flutter-release-build-note/Xnip2025-04-10_16-06-36.jpg" data-fancybox="true"/></div></div>
+</li>
+<li><p>Android Studio 首次打開專案需要一點時間等他跑完，你可以先去滑個手機等等他</p>
+</li>
+<li><p>打開 File → Project Structure 就能看到相關版本資訊 SDK, AGP, Gradle plugin version 等等</p>
+</li>
+</ol>
+<h2 id="添加-BouncyCastle-和-FindBugs-的依賴"><a href="#添加-BouncyCastle-和-FindBugs-的依賴" class="headerlink" title="添加 BouncyCastle 和 FindBugs 的依賴"></a>添加 BouncyCastle 和 FindBugs 的依賴</h2><p>（以下步驟為如果在 build release 版本時有遇到關於 BouncyCastle 的問題才需要做。）</p>
+<p>在 <code>android/app/build.gradle</code> 中 dependencies 的部分要加入以下依賴</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">dependencies &#123;</span><br><span class="line">    implementation platform(<span class="string">&#x27;com.google.firebase:firebase-bom:33.12.0&#x27;</span>)</span><br><span class="line">    implementation <span class="string">&#x27;org.bouncycastle:bcprov-jdk15on:1.70&#x27;</span></span><br><span class="line">    implementation <span class="string">&#x27;org.bouncycastle:bcpkix-jdk15on:1.70&#x27;</span></span><br><span class="line">    implementation <span class="string">&#x27;com.google.code.findbugs:jsr305:3.0.2&#x27;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>稍微解釋一下這幾個依賴的用途</p>
+<h3 id="BouncyCastle-相關依賴："><a href="#BouncyCastle-相關依賴：" class="headerlink" title="BouncyCastle 相關依賴："></a><strong><em>BouncyCastle 相關依賴：</em></strong></h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">implementation <span class="string">&#x27;org.bouncycastle:bcprov-jdk15on:1.70&#x27;</span></span><br><span class="line">implementation <span class="string">&#x27;org.bouncycastle:bcpkix-jdk15on:1.70&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>BouncyCastle 是一個加密庫</li>
+<li>bcprov  提供核心加密功能</li>
+<li>bcpkix  提供 PKI&#x2F;X.509 相關功能，</li>
+<li>這些是必須的，因為 MSAL 認證和 JWT 處理都需要這些加密功能</li>
+</ul>
+<h3 id="FindBugs-依賴："><a href="#FindBugs-依賴：" class="headerlink" title="FindBugs 依賴："></a><strong><em>FindBugs 依賴：</em></strong></h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">implementation <span class="string">&#x27;com.google.code.findbugs:jsr305:3.0.2&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>提供  @NonNull、@Nullable  等註解</li>
+<li>MSAL 庫使用這些註解來標記參數的可空性</li>
+<li>這個也是必須的，因為 MSAL 的程式碼依賴這些註解</li>
+</ul>
+<h2 id="proguard-rules-pro-添加規則"><a href="#proguard-rules-pro-添加規則" class="headerlink" title="proguard-rules.pro 添加規則"></a>proguard-rules.pro 添加規則</h2><p>關於 proguard-rules.pro，這個文件是 Android 專案的 ProGuard 配置文件，在 build release 版本時非常重要，特別是當我們啟用程式碼混淆（minification）的功能。</p>
+<p>在 <code>android/app/build.gradle</code> 中，我們有寫到</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">buildTypes &#123;</span><br><span class="line">        release &#123;</span><br><span class="line">            signingConfig signingConfigs.release</span><br><span class="line">            // 使用程式碼混淆</span><br><span class="line">            minifyEnabled <span class="literal">true</span></span><br><span class="line">            // 刪除未使用資源</span><br><span class="line">            shrinkResources <span class="literal">true</span></span><br><span class="line">            // 添加proguard規則</span><br><span class="line">            proguardFiles getDefaultProguardFile(<span class="string">&#x27;proguard-android.txt&#x27;</span>), <span class="string">&#x27;proguard-rules.pro&#x27;</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>從裡面可以看到，我們啟用 minifyEnabled 後，ProGuard 會幫我們刪除未使用的程式碼並進行混淆，用處是讓打包後的 APK 變得更小以及更安全，但這麼做有個缺點，因為有些類是通過反射或動態載入的，ProGuard 可能會誤判為未使用而移除，所以我們要添加 proguard-rules.pro 來告訴 ProGuard 哪些類必須保留，不能被移除或混淆。</p>
+<p>在 <code>android/app</code> 底下加入 proguard-rules.pro</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Keep BouncyCastle classes</span></span><br><span class="line">-keep class org.bouncycastle.** &#123; *; &#125;</span><br><span class="line">-dontwarn org.bouncycastle.**</span><br><span class="line"></span><br><span class="line"><span class="comment"># Keep FindBugs annotations</span></span><br><span class="line">-keep class edu.umd.cs.findbugs.** &#123; *; &#125;</span><br><span class="line">-dontwarn edu.umd.cs.findbugs.**</span><br><span class="line"></span><br><span class="line"><span class="comment"># Keep MSAL classes</span></span><br><span class="line">-keep class com.microsoft.identity.** &#123; *; &#125;</span><br><span class="line">-dontwarn com.microsoft.identity.**</span><br></pre></td></tr></table></figure>
+
+<h3 id="那如果不啓用程式碼混淆是不是就不用加入-proguard-rules-pro？"><a href="#那如果不啓用程式碼混淆是不是就不用加入-proguard-rules-pro？" class="headerlink" title="那如果不啓用程式碼混淆是不是就不用加入 proguard-rules.pro？"></a>那如果不啓用程式碼混淆是不是就不用加入 proguard-rules.pro？</h3><p>如果不起用 minifyEnabled，也不添加 proguard-rules.pro 的話，直接執行 <code>flutter build apk --release</code> ，還是會看到一堆可怕的訊息，如下圖：</p>
+<div class="tag-plugin image"><div class="image-bg"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="/pic/Flutter-release-build-note/Xnip2025-04-10_17-11-05.jpg" data-fancybox="true"/></div></div>
+
+<p>這是因為，就算不啓用 minifyEnabled 和 shrinkResources，R8 也一樣會在 release 建置中運行，R8 是 ProGuard 的替代品，負責壓縮和優化程式碼。它會自動嘗試移除未使用的類和方法。</p>
+<p>所以就算不起用 minifyEnabled，程式碼也是會受到 R8 自動刪除的影響，因此加入 proguard-rules.pro 是必要的</p>
+<p>加入後，執行 flutter build apk —release 就成功嘍！</p>
+<h2 id="結果"><a href="#結果" class="headerlink" title="結果"></a>結果</h2><p>經過這些修改後，release build 成功了！APK 大小減少，安全性提高，所有功能正常運行。</p>
+<h2 id="心得"><a href="#心得" class="headerlink" title="心得"></a>心得</h2><p>這次經驗讓我學到，release build 需要特別注意依賴和 ProGuard 規則的配置，這樣才能避免不必要的問題。</p>
+
+<div class="article-footer fs14">
+    <section id="license">
+      <div class="header"><span>授權條款</span></div>
+      <div class="body"><p>本文採用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">署名-非商業性使用-相同方式分享 4.0 國際</a> 授權協議，轉載請註明出處。</p>
+</div>
+    </section>
+    </div>
+</article>
+<div class="related-wrap" id="read-next"><section class="body"><div class="item" id="prev"></div><div class="item" id="next"><div class="note">較早文章</div><a href="/2025/04/10/Flutter-Msal-note/">Flutter 整合 MSAL(Microsoft Authentication Library) 筆記</a></div></section></div>
+
+
+
+
 
 
 <footer class="page-footer footnote"><hr><div class="text"></div></footer>
 <div class="main-mask" onclick="sidebar.dismiss()"></div></div><aside class="l_right">
-</aside><div class='float-panel blur'>
+<div class="widgets">
+
+
+
+<widget class="widget-wrapper toc" id="data-toc" collapse="false"><div class="widget-header dis-select"><span class="name">本文目錄</span><a class="cap-action" onclick="sidebar.toggleTOC()" ><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6h11m-11 6h11m-11 6h11M4 6h1v4m-1 0h2m0 8H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg></a></div><div class="widget-body"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%95%8F%E9%A1%8C%E6%8F%8F%E8%BF%B0"><span class="toc-text">問題描述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A7%A3%E6%B1%BA%E6%96%B9%E6%B3%95"><span class="toc-text">解決方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%80%8F%E9%81%8E-Android-Studio-%E6%9F%A5%E7%9C%8B%E5%B0%88%E6%A1%88%E7%89%88%E6%9C%AC"><span class="toc-text">透過 Android Studio 查看專案版本</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B7%BB%E5%8A%A0-BouncyCastle-%E5%92%8C-FindBugs-%E7%9A%84%E4%BE%9D%E8%B3%B4"><span class="toc-text">添加 BouncyCastle 和 FindBugs 的依賴</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#BouncyCastle-%E7%9B%B8%E9%97%9C%E4%BE%9D%E8%B3%B4%EF%BC%9A"><span class="toc-text">BouncyCastle 相關依賴：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#FindBugs-%E4%BE%9D%E8%B3%B4%EF%BC%9A"><span class="toc-text">FindBugs 依賴：</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#proguard-rules-pro-%E6%B7%BB%E5%8A%A0%E8%A6%8F%E5%89%87"><span class="toc-text">proguard-rules.pro 添加規則</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%82%A3%E5%A6%82%E6%9E%9C%E4%B8%8D%E5%95%93%E7%94%A8%E7%A8%8B%E5%BC%8F%E7%A2%BC%E6%B7%B7%E6%B7%86%E6%98%AF%E4%B8%8D%E6%98%AF%E5%B0%B1%E4%B8%8D%E7%94%A8%E5%8A%A0%E5%85%A5-proguard-rules-pro%EF%BC%9F"><span class="toc-text">那如果不啓用程式碼混淆是不是就不用加入 proguard-rules.pro？</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%B5%90%E6%9E%9C"><span class="toc-text">結果</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BF%83%E5%BE%97"><span class="toc-text">心得</span></a></li></ol></div><div class="widget-footer">
+
+<a class="top" onclick="util.scrollTop()"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 12c0-4.714 0-7.071 1.464-8.536C4.93 2 7.286 2 12 2c4.714 0 7.071 0 8.535 1.464C22 4.93 22 7.286 22 12c0 4.714 0 7.071-1.465 8.535C19.072 22 16.714 22 12 22s-7.071 0-8.536-1.465C2 19.072 2 16.714 2 12Z"/><path stroke-linecap="round" stroke-linejoin="round" d="m9 15.5l3-3l3 3m-6-4l3-3l3 3"/></g></svg><span>回到頂部</span></a></div></widget>
+</div></aside><div class='float-panel blur'>
   <button type='button' style='display:none' class='laptop-only rightbar-toggle mobile' onclick='sidebar.rightbar()'>
     <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6h11m-11 6h11m-11 6h11M4 6h1v4m-1 0h2m0 8H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg>
   </button>
